@@ -1,0 +1,10 @@
+SENTENCES USED (5 total, neutral-valence, emotion-agnostic):
+
+s1: "The system failed to respond within the expected time frame."
+s2: "She walked into the room and nobody noticed."
+s3: "The package was delivered three weeks after the expected date."
+s4: "He opened the letter and read it twice before putting it down."
+s5: "The meeting has been rescheduled for the third time this month."
+
+These sentences were used because they are neutral-valence and do not bias
+any emotion condition. Same sentences as Kacper Wikiel's Zonos experiment.

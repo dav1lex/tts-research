@@ -1,0 +1,57 @@
+--- CHATTERBOX EMOTION CHANNEL ANALYSIS ---
+Date: 2026-05-21
+Model: Chatterbox (Resemble AI)
+Sentences: 5
+Conditions: 7
+Total files: 35
+
+ABLATION CLASSIFIER RESULTS:
+      Channel  Accuracy
+       Pauses     0.457
+        Tempo     0.400
+Voice quality     0.400
+        Pitch     0.314
+       Timbre     0.314
+       Energy     0.286
+
+LARGEST PHYSICAL MOVER (heatmap):
+Chatterbox: Pauses
+Zonos:      Timbre
+
+COMPARISON TO KACPER'S ZONOS FINDINGS:
+    Channel  Zonos_accuracy  Chatterbox_accuracy  Rank_change
+      Pitch            0.60                0.314          1 → 4
+     Timbre            0.37                0.314          2 → 5
+Voice quality          0.26                0.400          3 → 2
+     Pauses            0.23                0.457          4 → 1
+     Energy            0.20                0.286          5 → 6
+      Tempo            0.17                0.400          6 → 2
+
+KEY QUESTION — does the mismatch replicate?
+Kacper found: timbre moves most, pitch classifies best.
+Chatterbox result: Pauses moves most, Pauses classifies best.
+Mismatch replicates: NO
+Chatterbox shows alignment — the channel that moves most physically (Pauses) also classifies best (0.457), unlike Zonos where timbre moved most but pitch classified best.
+
+METHODOLOGY DIFFERENCE:
+Zonos uses 8D emotion vector with per-emotion conditioning weights.
+Chatterbox uses scalar exaggeration (0.0–1.0).
+This means Chatterbox cannot isolate individual emotions — it only controls intensity.
+The exaggeration parameter affects all acoustic dimensions simultaneously, which may explain
+why pause-related features dominate both the heatmap and classifier: higher exaggeration
+values produce more dramatic prosodic breaks, while lower values produce flatter, more
+monotone delivery with fewer pauses. This is a fundamentally different control mechanism
+than Zonos's per-emotion vector conditioning.
+
+NOTE ON NORMALIZATION:
+Original z-score normalization (divide by |neutral| + 1e-8) produced Pauses z-scores
+in the millions because neutral baseline pause features are near-zero. Fixed by using
+a denominator floor at 10% of global feature std. Post-fix Pauses z-scores range
+2.9–7.5, which is high but interpretable. The classifier result (0.457) is unaffected
+by normalization — it operates on the same normalized features regardless of scale.
+
+INTERPRETATION:
+Chatterbox's scalar exaggeration collapses onto timing/pauses as the primary expressive
+lever. A scalar control cannot route expressiveness to specific channels the way an 8D
+vector can, so it defaults to the bluntest available signal (pauses and tempo).
+Zonos routes to timbre. That is the architectural comparison worth highlighting.

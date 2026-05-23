@@ -1,0 +1,27 @@
+METHODOLOGY DIFFERENCE: Zonos vs Chatterbox
+
+1. EMOTION CONTROL
+   Zonos: 8D emotion vector — each emotion (happy, sad, angry, etc.) has an independent
+          weight. Can isolate and manipulate individual emotions.
+   Chatterbox: Scalar exaggeration (0.0–1.0) — single intensity control. Cannot isolate
+               individual emotions. All emotions are mapped to a single exaggeration value.
+
+2. MAPPING
+   Zonos: Direct emotion → vector weight mapping.
+   Chatterbox: Emotion → exaggeration value (heuristic mapping):
+     neutral=0.3, happy=0.7, sad=0.4, angry=0.9, fearful=0.8, surprised=0.85, low_energy=0.1
+   This mapping is subjective and not grounded in Chatterbox documentation.
+
+3. ACOUSTIC IMPLICATION
+   Zonos: Can produce emotion-specific acoustic patterns (e.g., happy = higher pitch +
+          faster tempo without changing timbre).
+   Chatterbox: Exaggeration affects all dimensions simultaneously. Higher values increase
+               expressiveness globally; lower values flatten everything.
+
+4. COMPARABILITY
+   The ablation classifier results are comparable (same algorithm, same validation).
+   The heatmap z-scores are comparable in structure but may differ in magnitude due to
+   the different control mechanisms.
+
+This is a finding, not a flaw: scalar vs vector control is an architectural difference
+that reveals how model design shapes the emotion-acoustic relationship.

@@ -1,0 +1,48 @@
+
+# Chatterbox Emotion Channel Analysis
+
+Replication of Zonos acoustic channel ablation methodology on Chatterbox TTS.
+
+## Key Findings
+
+- **Mismatch does not replicate** — Zonos showed timbre moves most but pitch classifies best. Chatterbox: Pauses both move most AND classify best (0.457).
+- **Scalar control collapses onto timing** — Chatterbox's single `exaggeration` knob cannot route expressiveness to specific channels like Zonos's 8D emotion vector. It defaults to pauses/tempo as primary expressive levers.
+- **All channels beat random baseline (0.143)** — exaggeration affects all acoustic dimensions, just to different degrees.
+
+## Ablation Accuracy
+
+| Channel       | Accuracy |
+|---------------|----------|
+| Pauses        | 0.457    |
+| Tempo         | 0.400    |
+| Voice quality | 0.400    |
+| Pitch         | 0.314    |
+| Timbre        | 0.314    |
+| Energy        | 0.286    |
+
+## Comparison: Zonos vs Chatterbox
+
+| Channel       | Zonos | Chatterbox |
+|---------------|-------|------------|
+| Pitch         | 0.60  | 0.314      |
+| Timbre        | 0.37  | 0.314      |
+| Voice quality | 0.26  | 0.400      |
+| Pauses        | 0.23  | 0.457      |
+| Energy        | 0.20  | 0.286      |
+| Tempo         | 0.17  | 0.400      |
+
+## Methodology
+
+1. Generate 5 neutral sentences in 7 emotion conditions (35 WAVs) via Chatterbox
+2. Extract 17 acoustic features across 6 channels using librosa
+3. Normalize via neutral-relative z-scores with denominator floor at 10% global std
+4. Train RandomForest (100 trees) per channel, LeaveOneGroupOut validation
+
+## Files
+
+- `features/` — raw + normalized feature CSVs
+- `results/report.html` — full HTML report
+- `results/heatmap_values.csv` — mean |z-score| per channel × emotion
+- `results/ablation_accuracy.csv` — per-channel accuracy scores
+- `results/comparison_table.csv` — Zonos vs Chatterbox
+- `results/chatterbox_emotion_channels_replication.pdf` — exported PDF
