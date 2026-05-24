@@ -1,4 +1,6 @@
-venv/
+*venv/
+*venv-new
+*venv-xtts
 __pycache__/
 *.pyc
 ideas.md

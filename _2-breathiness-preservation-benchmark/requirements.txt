@@ -1,6 +1,19 @@
-librosa>=0.10
-matplotlib>=3.8
-numpy>=1.24
-pandas>=2.0
-praat-parselmouth>=0.4
-soundfile>=0.12
+# Benchmark core (metrics extraction)
+librosa==0.10.2.post1
+matplotlib==3.9.0
+numpy==1.26.4
+pandas==2.2.2
+praat-parselmouth==0.4.4
+soundfile==0.12.1
+
+# TTS Models
+chatterbox-tts>=0.1.7
+kokoro>=0.7.12
+
+# PyTorch (CUDA 12.0+)
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch==2.3.0
+torchaudio==2.3.0
+
+# TTS (Coqui) - install separately from GitHub
+# pip install git+https://github.com/coqui-ai/TTS.git

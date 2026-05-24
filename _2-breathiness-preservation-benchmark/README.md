@@ -1,82 +1,56 @@
 # Breathiness Preservation Benchmark
 
-Objective benchmark for whether voice-cloning TTS preserves breathiness from reference audio.
+**Goal:** Does voice-cloning TTS preserve breathy vs neutral voice quality from reference audio?
 
-This benchmark intentionally treats model outputs as data. It does not hard-wire any TTS model.
+**Status:** ✅ Gate passed. Rankings valid. Report + PDF generated.
 
-## Layout
+## What we did
 
-```text
-references/          human reference WAVs
-outputs/<model>/     generated WAVs from any TTS system
-metadata.csv         manifest tying references, outputs, and breathy/neutral pairs
-features/            extracted acoustic metrics
-results/             gate result, preservation CSVs, report
-scripts/             pipeline code
-```
+1. **Picked 3 female speaker pairs** from VCTK dataset (Southern England, Welsh/American, Scottish/English NE). Same text within each pair. Breathy candidates chosen by lowest CPP+HNR scores, then confirmed by human listening.
 
-## Metadata Schema
+2. **Generated audio** with 3 models: Chatterbox, XTTS-v2, Kokoro (each produces 6 WAVs).
 
-Required columns:
+3. **Extracted breathiness metrics** using Praat (CPP primary, HNR + spectral tilt supporting).
 
-```text
-sample_id,pair_id,text,condition,reference_path,output_path,model,seed,notes
-```
+4. **Gate check:** Reference clips must clearly separate breathy from neutral before any ranking is trusted. Our references pass (CPP d=-4.15, HNR d=-2.03).
 
-Rules:
+## Results
 
-- `condition` must be `breathy` or `neutral`.
-- Every `pair_id` must contain one breathy row and one neutral row.
-- Paths are resolved relative to the `metadata.csv` file, not the shell working directory.
-- `output_path` can point to any model output; model-specific generation stays outside this benchmark.
+| Rank | Model | Score | Notes |
+|------|-------|-------|-------|
+| 1 | XTTS-v2 | 0.097 | Best breathiness preservation |
+| 2 | Chatterbox | 0.311 | Close on retention, higher absolute error |
+| 3 | Kokoro | 1.448 | No voice cloning = zero retention (baseline) |
 
-## Metrics
+## Caveats
 
-- Primary: Praat CPPS/CPP over voiced intervals.
-- Supporting: Praat harmonicity/HNR and voiced-frame spectral tilt.
-- Voiced filtering: low-energy, unvoiced, and low-confidence frames are excluded before metric extraction.
+- CPP and HNR are acoustic proxies, not perception — breathy-sounding doesn't always mean low CPP
+- Unmatched accents in pairs 002 and 003 may introduce phonetic confounds
+- Only 3 pairs, 1 sentence per pair — increase for publication
+- Kokoro has no voice cloning, included as "no adaptation" baseline only
+- Reference breathiness labels verified by perceptual listening check
 
-## Gate
+## Outputs
 
-The gate checks reference clips only. Analysis is blocked unless:
+- `results/report.html` — full 7-page report
+- `results/report.pdf` — PDF export
+- `results/model_rankings.csv` — raw numbers
+- `features/features.csv` — all extracted metrics per file
 
-- CPP separates breathy from neutral in the expected direction with sufficient effect size.
-- At least one supporting metric also separates in the expected direction.
-- Paired breathy-neutral contrasts are directionally consistent.
-
-This prevents model rankings when the measurement signal is not detectable.
-
-## Run
+## Run yourself
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-
+source venv-new/bin/activate
+python3 scripts/generate_chatterbox.py --metadata metadata.csv --output-dir outputs/chatterbox
+python3 scripts/generate_kokoro.py --metadata metadata.csv --output-dir outputs/kokoro
+source venv-xtts/bin/activate
+python3 scripts/generate_xtts.py --metadata metadata.csv --output-dir outputs/xtts
+source venv-new/bin/activate
 python3 scripts/extract_features.py --metadata metadata.csv --features-dir features
 python3 scripts/gate_check.py --features-dir features --results-dir results
 python3 scripts/analyze.py --features-dir features --results-dir results
 python3 scripts/make_report.py --results-dir results
 ```
 
-For smoke testing only:
-
-```bash
-python3 scripts/generate_placeholder.py references/breathy_001.wav --breathiness 0.85
-python3 scripts/generate_placeholder.py references/neutral_001.wav --breathiness 0.10
-```
-
-Generated placeholder audio is not valid scientific data.
-
-## Outputs
-
-- `features/features.csv`: one row per reference/output audio file.
-- `results/gate_check.json`: metric-level gate decision and effect sizes.
-- `results/per_sample_preservation.csv`: output-reference distances.
-- `results/paired_contrast_preservation.csv`: breathy-neutral contrast retention by model and pair.
-- `results/model_rankings.csv`: model-level summary.
-- `results/report.md`: human-readable summary.
-
-## Caveats
-
-CPP, HNR, and spectral tilt are acoustic proxies, not direct perception. Use matched text, matched recording conditions, clean audio, and enough pairs before treating results as meaningful.
+## Dataset
+VCTK Corpus 0.92: https://datashare.ed.ac.uk/handle/10283/3443
