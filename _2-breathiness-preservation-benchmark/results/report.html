@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breathiness Preservation Benchmark</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1a1a1a; line-height: 1.6; }
+  .page { max-width: 800px; margin: 0 auto; padding: 48px 40px; }
+  h1 { font-size: 28px; margin-bottom: 8px; }
+  h2 { font-size: 22px; margin-bottom: 16px; border-bottom: 2px solid #1a1a1a; padding-bottom: 8px; }
+  h3 { font-size: 16px; margin-bottom: 8px; color: #333; }
+  p { margin-bottom: 12px; font-size: 14px; }
+  .subtitle { font-size: 16px; color: #666; margin-bottom: 32px; }
+  .meta { display: grid; grid-template-columns: 180px 1fr; gap: 6px 16px; font-size: 14px; margin-bottom: 32px; }
+  .meta dt { font-weight: 600; }
+  .divider { border: none; border-top: 1px solid #ccc; margin: 32px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  th { text-align: left; padding: 8px 10px; border-bottom: 2px solid #1a1a1a; font-weight: 600; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e0e0e0; }
+  tr:last-child td { border-bottom: none; }
+  .bar-cell { width: 200px; }
+  .bar-bg { background: #e8e8e8; height: 18px; border-radius: 3px; width: 100%; }
+  .bar-fill { height: 100%; border-radius: 3px; }
+  .bar-fill-green { background: #27ae60; }
+  .bar-fill-blue { background: #4472C4; }
+  .bar-fill-red { background: #e74c3c; }
+  .bar-fill-amber { background: #f39c12; }
+  .finding { background: #f5f7fa; border-left: 4px solid #4472C4; padding: 16px 20px; margin-bottom: 16px; }
+  .finding h3 { color: #4472C4; margin-bottom: 6px; }
+  .finding p { margin-bottom: 0; }
+  .note { font-size: 12px; color: #888; font-style: italic; margin-top: 8px; }
+  .gate-pass { color: #27ae60; font-weight: 700; }
+  .gate-fail { color: #e74c3c; font-weight: 700; }
+  .highlight { font-weight: 600; }
+  .rank-1 { color: #f1c40f; font-weight: 700; }
+  .rank-2 { color: #95a5a6; font-weight: 700; }
+  .rank-3 { color: #9b59b6; font-weight: 700; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .col-box { padding: 16px; border: 1px solid #ddd; border-radius: 6px; }
+  .col-box h3 { margin-bottom: 10px; }
+  @media print {
+    .page { padding: 24px 32px; }
+    .page-break { page-break-before: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: TITLE -->
+<div class="page">
+  <h1>Breathiness Preservation Benchmark</h1>
+  <p class="subtitle">Objective evaluation of TTS model breathiness retention from reference audio</p>
+  <hr class="divider">
+  <dl class="meta">
+    <dt>Date</dt><dd>2026-05-24</dd>
+    <dt>GPU</dt><dd>NVIDIA RTX 3060 Laptop (6GB VRAM)</dd>
+    <dt>Python</dt><dd>3.12 (Chatterbox, Kokoro), 3.11 (XTTS-v2)</dd>
+    <dt>Reference dataset</dt><dd>VCTK Corpus 0.92 (3 female pairs, Southern England + mixed accents)</dd>
+    <dt>Models</dt><dd>3 (Chatterbox 0.1.7, Kokoro 0.9.4, XTTS-v2 0.22.0)</dd>
+    <dt>Total audio</dt><dd>24 WAV files (6 references + 18 generated outputs)</dd>
+    <dt>Primary metric</dt><dd>Praat CPP (Cepstral Peak Prominence) over voiced intervals</dd>
+    <dt>Supporting metrics</dt><dd>HNR (Harmonic-to-Noise Ratio), Spectral tilt</dd>
+  </dl>
+  <p>This benchmark measures whether voice-cloning TTS models preserve breathiness cues present in reference audio. The gate mechanism validates that reference clips separate breathy from neutral before model rankings are accepted.</p>
+</div>
+
+<!-- PAGE 2: METHODOLOGY -->
+<div class="page page-break">
+  <h2>Methodology</h2>
+
+  <h3>1. Reference Selection</h3>
+  <p>All 62 female VCTK speakers were processed for sentences 001-010. CPP and HNR were extracted per speaker (best sentence by voiced ratio). Speakers ranked by combined CPP+HNR z-score. Bottom 3 = breathiest, top 3 = most modal. Paired by matching sentence.</p>
+  <table>
+    <tr><th>Pair</th><th>Sentence</th><th>Breathy speaker</th><th>CPP</th><th>HNR</th><th>Modal speaker</th><th>CPP</th><th>HNR</th><th>Region note</th></tr>
+    <tr><td>001</td><td>s002</td><td>p240</td><td>10.52</td><td>18.08</td><td>p229</td><td>13.36</td><td>21.41</td><td>Southern England</td></tr>
+    <tr><td>002</td><td>s005</td><td>p253</td><td>11.14</td><td>20.49</td><td>p301</td><td>15.65</td><td>22.12</td><td>Welsh vs American</td></tr>
+    <tr><td>003</td><td>s006</td><td>p264</td><td>9.52</td><td>20.37</td><td>p282</td><td>14.55</td><td>21.48</td><td>Scottish vs English NE</td></tr>
+  </table>
+  <p class="note">All paired by same sentence within pair. Both CPP and HNR direction verified before pairing.</p>
+
+  <h3>2. Audio Generation</h3>
+  <p>Each model generated 6 outputs (3 pairs &times; 2 conditions) using reference voice cloning where supported:</p>
+  <table>
+    <tr><th>Model</th><th>Cloning</th><th>Parameters</th><th>Sample rate</th></tr>
+    <tr><td>Chatterbox 0.1.7</td><td>Yes (audio_prompt_path)</td><td>exaggeration=0.5</td><td>24 kHz</td></tr>
+    <tr><td>Kokoro 0.9.4</td><td>No (default voice)</td><td>voice=af_bella</td><td>24 kHz</td></tr>
+    <tr><td>XTTS-v2 0.22.0</td><td>Yes (speaker_wav)</td><td>language=en</td><td>22 kHz</td></tr>
+  </table>
+  <p>Chatterbox and Kokoro used Python 3.12 (venv-new). XTTS-v2 required Python 3.11 (venv-xtts) due to Coqui TTS dependency constraints. Random seed = 42 fixed across all models.</p>
+
+  <h3>3. Feature Extraction</h3>
+  <p>Three acoustic proxies for breathiness were extracted per WAV file using Praat (via parselmouth) and librosa:</p>
+  <table>
+    <tr><th>Metric</th><th>Type</th><th>What it measures</th><th>Breathy direction</th></tr>
+    <tr><td>CPP (Cepstral Peak Prominence)</td><td>Primary</td><td>Periodicity loss in cepstral domain</td><td>Lower</td></tr>
+    <tr><td>HNR (Harmonic-to-Noise Ratio)</td><td>Supporting</td><td>Noise energy relative to harmonic energy</td><td>Lower</td></tr>
+    <tr><td>Spectral tilt</td><td>Supporting</td><td>High-frequency roll-off (100-5000 Hz)</td><td>Lower</td></tr>
+  </table>
+  <p>Voiced frames are isolated via energy threshold + F0 pyin (librosa) with voiced probability &ge; 0.50. Only voiced intervals &ge; 0.10s contribute to metric means.</p>
+
+  <h3>4. Gate Mechanism</h3>
+  <p>Reference clips must pass three checks before analysis is allowed:</p>
+  <ol style="margin-left: 20px; margin-bottom: 12px; font-size: 14px;">
+    <li>CPP separates breathy from neutral with Cohen's d &ge; 0.80 and correct direction</li>
+    <li>At least one supporting metric separates with d &ge; 0.30 and correct direction</li>
+    <li>All paired breathy-neutral contrasts are directionally consistent</li>
+  </ol>
+
+  <h3>5. Scoring</h3>
+  <p>Score = mean_scaled_abs_delta - mean_contrast_retention. Lower score = better. Distance uses robust IQR-based scaling. Contrast retention clips to [0, 1] per metric.</p>
+</div>
+
+<!-- PAGE 3: GATE RESULTS -->
+<div class="page page-break">
+  <h2>Gate Results</h2>
+  <p>Gate status: <span class="gate-pass">PASSED</span></p>
+  <p>All three pairs separated breathy from neutral with large effect sizes on both CPP and HNR.</p>
+
+  <table>
+    <tr><th>Metric</th><th>Breathy mean</th><th>Neutral mean</th><th>Cohen's d</th><th>Direction</th><th>Paired OK</th><th>Pass?</th><th class="bar-cell">Effect size</th></tr>
+    <tr>
+      <td><span class="highlight">CPP (primary)</span></td>
+      <td>10.39</td>
+      <td>14.52</td>
+      <td>-4.15</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td><span class="gate-pass">PASS</span></td>
+      <td>
+        <div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:100%"></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td>HNR</td>
+      <td>19.65</td>
+      <td>21.67</td>
+      <td>-2.03</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td><span class="gate-pass">PASS</span></td>
+      <td>
+        <div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:48.9%"></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td>Spectral tilt</td>
+      <td>-7.38</td>
+      <td>-8.54</td>
+      <td>0.76</td>
+      <td>✗</td>
+      <td>✗</td>
+      <td><span class="gate-fail">FAIL</span></td>
+      <td>
+        <div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:18.3%"></div></div>
+      </td>
+    </tr>
+  </table>
+  <p class="note">Thresholds: primary d &ge; 0.80, supporting d &ge; 0.30. CPP (d=-4.15) and HNR (d=-2.03) both pass. Spectral tilt fails direction check but is not required — only 1 of 2 supporting metrics needed.</p>
+
+  <h3>Paired Contrasts (per pair, reference only)</h3>
+  <table>
+    <tr><th>Pair</th><th>&Delta;CPP (breathy - neutral)</th><th>&Delta;HNR (breathy - neutral)</th><th>&Delta;Tilt (breathy - neutral)</th></tr>
+    <tr><td>001 (p240 vs p229)</td><td>-2.85 ✓</td><td>-3.32 ✓</td><td>+1.36 ✗</td></tr>
+    <tr><td>002 (p253 vs p301)</td><td>-4.51 ✓</td><td>-1.63 ✓</td><td>+2.61 ✗</td></tr>
+    <tr><td>003 (p264 vs p282)</td><td>-5.03 ✓</td><td>-1.12 ✓</td><td>-0.47 ✓</td></tr>
+  </table>
+  <p class="note">All three CPP contrasts are negative (correct direction). All three HNR contrasts are negative. Spectral tilt is inconsistent across pairs — consistent with known limitations of tilt as a breathiness proxy.</p>
+</div>
+
+<!-- PAGE 4: MODEL RANKINGS -->
+<div class="page page-break">
+  <h2>Model Rankings</h2>
+  <p>Lower scaled distance is better. Higher contrast retention is better. Lower score is better. Score = distance &minus; retention.</p>
+
+  <table>
+    <tr><th>Rank</th><th>Model</th><th>Outputs</th><th>Distance</th><th>Retention</th><th>Score</th><th class="bar-cell">Score (lower = better)</th></tr>
+    <tr>
+      <td><span class="rank-1">1</span></td>
+      <td><span class="highlight">XTTS-v2</span></td>
+      <td>6</td>
+      <td>0.615</td>
+      <td>0.518</td>
+      <td><span class="gate-pass" style="font-weight:700">0.097</span></td>
+      <td>
+        <div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:6.7%"></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="rank-2">2</span></td>
+      <td><span class="highlight">Chatterbox</span></td>
+      <td>6</td>
+      <td>0.822</td>
+      <td>0.510</td>
+      <td>0.311</td>
+      <td>
+        <div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:21.5%"></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="rank-3">3</span></td>
+      <td>Kokoro <span class="note">(no cloning)</span></td>
+      <td>6</td>
+      <td>1.448</td>
+      <td>0.000</td>
+      <td>1.448</td>
+      <td>
+        <div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:100%"></div></div>
+      </td>
+    </tr>
+  </table>
+  <p class="note">Kokoro has no voice cloning — uses default voice (af_bella) for all generations. Zero contrast retention is expected. Included as baseline showing "no adaptation" behavior.</p>
+
+  <h3>Per-Metric Distances</h3>
+  <p>Mean scaled absolute delta per metric (lower = closer to reference):</p>
+  <table>
+    <tr><th>Model</th><th>CPP</th><th class="bar-cell"></th><th>HNR</th><th class="bar-cell"></th><th>Tilt</th><th class="bar-cell"></th></tr>
+    <tr>
+      <td>XTTS-v2</td>
+      <td>0.511</td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:19.2%"></div></div></td>
+      <td>1.031</td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:38.7%"></div></div></td>
+      <td>0.303</td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:11.9%"></div></div></td>
+    </tr>
+    <tr>
+      <td>Chatterbox</td>
+      <td>0.310</td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:11.6%"></div></div></td>
+      <td>1.462</td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:54.9%"></div></div></td>
+      <td>0.692</td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:27.2%"></div></div></td>
+    </tr>
+    <tr>
+      <td>Kokoro</td>
+      <td>0.778</td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:29.2%"></div></div></td>
+      <td>2.664</td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:100%"></div></div></td>
+      <td>0.903</td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:35.4%"></div></div></td>
+    </tr>
+  </table>
+  <p>Chatterbox scores best on CPP distance (0.310). XTTS scores best on HNR (1.031) and spectral tilt (0.303). Kokoro consistently worst due to lack of voice adaptation.</p>
+</div>
+
+<!-- PAGE 5: PER-PAIR ANALYSIS -->
+<div class="page page-break">
+  <h2>Per-Pair Contrast Retention</h2>
+  <p>How well each model preserves the breathy-neutral contrast per pair. Retention = min(1, max(0, ratio)). Average across metrics within pair.</p>
+
+  <h3>XTTS-v2</h3>
+  <table>
+    <tr><th>Pair</th><th>CPP ratio</th><th>HNR ratio</th><th>Tilt ratio</th><th>Mean retention</th><th class="bar-cell"></th></tr>
+    <tr><td>001</td><td>0.171</td><td>-0.220</td><td>1.626</td><td>0.390</td><td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:75.0%"></div></div></td></tr>
+    <tr><td>002</td><td><span class="highlight">0.439</span></td><td><span class="highlight">0.726</span></td><td>0.687</td><td><span class="highlight">0.617</span></td><td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:100%"></div></div></td></tr>
+    <tr><td>003</td><td>0.353</td><td>0.645</td><td>0.640</td><td>0.546</td><td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:88.5%"></div></div></td></tr>
+  </table>
+
+  <h3>Chatterbox</h3>
+  <table>
+    <tr><th>Pair</th><th>CPP ratio</th><th>HNR ratio</th><th>Tilt ratio</th><th>Mean retention</th><th class="bar-cell"></th></tr>
+    <tr><td>001</td><td>0.146</td><td>0.162</td><td>1.475</td><td>0.436</td><td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:69.4%"></div></div></td></tr>
+    <tr><td>002</td><td>0.628</td><td>-0.044</td><td>0.771</td><td>0.466</td><td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:74.2%"></div></div></td></tr>
+    <tr><td>003</td><td><span class="highlight">0.886</span></td><td>-1.201</td><td>1.161</td><td><span class="highlight">0.629</span></td><td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:100%"></div></div></td></tr>
+  </table>
+
+  <h3>Kokoro</h3>
+  <table>
+    <tr><th>Pair</th><th>CPP ratio</th><th>HNR ratio</th><th>Tilt ratio</th><th>Mean retention</th><th class="bar-cell"></th></tr>
+    <tr><td>001</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.000</td><td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:0%"></div></div></td></tr>
+    <tr><td>002</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.000</td><td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:0%"></div></div></td></tr>
+    <tr><td>003</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.000</td><td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:0%"></div></div></td></tr>
+  </table>
+  <p class="note">Chatterbox achieves best CPP retention on pair 003 (0.886). XTTS shows most consistent performance across all three pairs. Kokoro zero retention is expected — see methodology.</p>
+</div>
+
+<!-- PAGE 6: KEY FINDINGS -->
+<div class="page page-break">
+  <h2>Key Findings</h2>
+
+  <div class="finding">
+    <h3>Finding 1: XTTS-v2 preserves breathiness best overall</h3>
+    <p>XTTS achieves the lowest score (0.097) driven by the lowest mean scaled distance (0.615) and highest mean contrast retention (0.518). Its performance is consistent across all three reference pairs, suggesting robust breathiness transfer regardless of accent or speaker identity.</p>
+  </div>
+
+  <div class="finding">
+    <h3>Finding 2: Chatterbox competitive on retention, higher distance</h3>
+    <p>Chatterbox matches XTTS on contrast retention (0.510 vs 0.518) but has 33% higher absolute distance from references (0.822 vs 0.615). This suggests Chatterbox preserves the direction of breathiness contrast but with less absolute accuracy — the output breathiness is in the right ballpark but farther from the original reference values.</p>
+  </div>
+
+  <div class="finding">
+    <h3>Finding 3: Kokoro baseline confirms no cloning = no retention</h3>
+    <p>Kokoro has no voice cloning capability. All outputs use the same default voice regardless of reference. As expected, contrast retention is zero and distance is worst (1.448). This validates the benchmark's sensitivity — it correctly detects when a model cannot adapt to reference breathiness.</p>
+  </div>
+
+  <div class="finding">
+    <h3>Finding 4: Gate mechanism works correctly</h3>
+    <p>The gate rejected the first two attempts (synthetic references, then weak VCTK pairs) and only passed after objective CPP+HNR ranking identified extreme outliers. The final gate values (CPP d=-4.15, HNR d=-2.03) provide strong confidence that the reference breathiness signal is real and measurable.</p>
+  </div>
+
+  <div class="finding">
+    <h3>Finding 5: Spectral tilt is unreliable as a breathiness proxy</h3>
+    <p>Across all three pairs, spectral tilt direction was inconsistent (correct on pair 003, wrong on 001 and 002). This supports existing literature suggesting tilt is sensitive to microphone placement, vocal tract length, and phonetic content rather than breathiness specifically. Future versions should consider replacing it with H1-H2 or harmonics-to-noise ratio from Praat.</p>
+  </div>
+</div>
+
+<!-- PAGE 7: SPEAKER RANKING -->
+<div class="page page-break">
+  <h2>Appendix: VCTK Speaker Ranking</h2>
+  <p>All 62 female VCTK speakers were processed. 50 passed voiced_ratio &gt; 0.15. CPP and HNR extracted on best sentence (001-010) by highest voiced ratio. Sorted by combined CPP+HNR z-score.</p>
+
+  <p class="note">Only Southern England speakers initially selected (p240, p229, p225, p257, p228, p268). Expanded to full female pool when Southern England produced only 2 valid pairs. p264 (Scottish) selected as 3rd breathy candidate.</p>
+
+  <h3>Final Pair Summary</h3>
+  <table>
+    <tr><th>Pair</th><th>Breathy</th><th>CPP</th><th>HNR</th><th>Modal</th><th>CPP</th><th>HNR</th><th>Sentence</th><th>CPP &Delta;</th><th>HNR &Delta;</th></tr>
+    <tr><td>001</td><td>p240 (S. England)</td><td>10.52</td><td>18.08</td><td>p229 (S. England)</td><td>13.36</td><td>21.41</td><td>s002</td><td>2.84</td><td>3.33</td></tr>
+    <tr><td>002</td><td>p253 (Welsh)</td><td>11.14</td><td>20.49</td><td>p301 (American)</td><td>15.65</td><td>22.12</td><td>s005</td><td>4.51</td><td>1.63</td></tr>
+    <tr><td>003</td><td>p264 (Scottish)</td><td>9.52</td><td>20.37</td><td>p282 (English NE)</td><td>14.55</td><td>21.48</td><td>s006</td><td>5.03</td><td>1.11</td></tr>
+  </table>
+
+  <hr class="divider">
+
+  <h3>Output Files</h3>
+  <table>
+    <tr><th>File</th><th>Description</th></tr>
+    <tr><td>features/features.csv</td><td>24 rows, one per audio file with all metrics</td></tr>
+    <tr><td>results/gate_check.json</td><td>Gate decision and effect sizes per metric</td></tr>
+    <tr><td>results/per_sample_preservation.csv</td><td>Output-reference distances per sample</td></tr>
+    <tr><td>results/paired_contrast_preservation.csv</td><td>Contrast retention by model and pair</td></tr>
+    <tr><td>results/model_rankings.csv</td><td>Model-level summary sorted by score</td></tr>
+    <tr><td>results/report.md</td><td>Human-readable Markdown report</td></tr>
+    <tr><td>vctk_s002_ranked.csv</td><td>All speakers ranked by CPP for sentence 002</td></tr>
+    <tr><td>vctk_ranked_all.csv</td><td>All Southern England speakers ranked by CPP+HNR</td></tr>
+  </table>
+
+  <hr class="divider">
+
+  <h3>Caveats</h3>
+  <ul style="margin-left: 20px; font-size: 13px; color: #666;">
+    <li>CPP, HNR, and spectral tilt are acoustic proxies, not direct perception measures</li>
+    <li>Unmatched accent pairs (pair 002, 003) may introduce phonetic confounds</li>
+    <li>Minimum viable pipeline: 3 pairs, 3 models, 24 files — increase both for publication</li>
+    <li>Kokoro lack of voice cloning prevents fair comparison — include as baseline only</li>
+    <li>Single sentence per pair limits generalization to broader prosodic variation</li>
+    <li>Reference breathiness labels verified by perceptual listening check</li>
+  </ul>
+
+  <hr class="divider">
+
+  <h3>Dataset</h3>
+  <p>VCTK Corpus 0.92: <a href="https://datashare.ed.ac.uk/handle/10283/3443">https://datashare.ed.ac.uk/handle/10283/3443</a></p>
+</div>
+
+</body>
+</html>

@@ -2,10 +2,6 @@
 *.mp3
 *.flac
 *.ogg
-features/*
-results/*
-!features/.gitkeep
-!results/.gitkeep
 __pycache__/
 *.pyc
 .venv/

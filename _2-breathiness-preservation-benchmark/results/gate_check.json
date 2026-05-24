@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "metrics": [
+    {
+      "metric": "cpp_mean",
+      "breathy_mean": 10.394547999999999,
+      "neutral_mean": 14.522814333333335,
+      "cohens_d": -4.151393451001594,
+      "min_abs_d": 0.8,
+      "direction_ok": true,
+      "paired_direction_ok": true,
+      "paired_contrasts": [
+        -2.8464669999999987,
+        -4.510877000000001,
+        -5.027455000000002
+      ],
+      "passed": true,
+      "primary": true
+    },
+    {
+      "metric": "hnr_mean",
+      "breathy_mean": 19.646577333333333,
+      "neutral_mean": 21.670036999999997,
+      "cohens_d": -2.0312608652467357,
+      "min_abs_d": 0.3,
+      "direction_ok": true,
+      "paired_direction_ok": true,
+      "paired_contrasts": [
+        -3.3246010000000012,
+        -1.628903000000001,
+        -1.1168750000000003
+      ],
+      "passed": true,
+      "primary": false
+    },
+    {
+      "metric": "spectral_tilt_mean",
+      "breathy_mean": -7.376642666666666,
+      "neutral_mean": -8.54286,
+      "cohens_d": 0.7560573268320295,
+      "min_abs_d": 0.3,
+      "direction_ok": false,
+      "paired_direction_ok": false,
+      "paired_contrasts": [
+        1.3582840000000003,
+        2.614052000000001,
+        -0.47368400000000044
+      ],
+      "passed": false,
+      "primary": false
+    }
+  ]
+}
