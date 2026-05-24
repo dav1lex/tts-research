@@ -1,0 +1,3 @@
+sample_id,pair_id,text,condition,reference_path,output_path,model,seed,notes
+ref_breathy_001,pair_001,"Replace with matched benchmark text.",breathy,references/breathy_001.wav,outputs/model_name/breathy_001.wav,model_name,0,example row
+ref_neutral_001,pair_001,"Replace with matched benchmark text.",neutral,references/neutral_001.wav,outputs/model_name/neutral_001.wav,model_name,0,example row

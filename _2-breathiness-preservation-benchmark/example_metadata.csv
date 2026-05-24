@@ -1,0 +1,5 @@
+sample_id,pair_id,text,condition,reference_path,output_path,model,seed,notes
+sample_b_001,pair_001,"The quick brown fox jumps over the lazy dog.",breathy,references/breathy_001.wav,outputs/chatterbox/breathy_001.wav,chatterbox,1,matched breathy reference
+sample_n_001,pair_001,"The quick brown fox jumps over the lazy dog.",neutral,references/neutral_001.wav,outputs/chatterbox/neutral_001.wav,chatterbox,1,matched neutral reference
+sample_b_002,pair_002,"She sells sea shells by the sea shore.",breathy,references/breathy_002.wav,outputs/chatterbox/breathy_002.wav,chatterbox,1,matched breathy reference
+sample_n_002,pair_002,"She sells sea shells by the sea shore.",neutral,references/neutral_002.wav,outputs/chatterbox/neutral_002.wav,chatterbox,1,matched neutral reference
