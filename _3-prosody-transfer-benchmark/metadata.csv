@@ -1,0 +1,19 @@
+sample_id,pair_id,text,condition,reference_path,output_path,model,seed,notes
+p240_002,pair_001,Ask her to bring these things with her from the store.,breathy,references/breathy_p240_002.wav,outputs/chatterbox/p240_002_breathy.wav,chatterbox,42,p240 002
+p240_002,pair_001,Ask her to bring these things with her from the store.,breathy,references/breathy_p240_002.wav,outputs/xtts/p240_002_breathy.wav,xtts,42,p240 002
+p240_002,pair_001,Ask her to bring these things with her from the store.,breathy,references/breathy_p240_002.wav,outputs/kokoro/pair_001_breathy.wav,kokoro,42,p240 002
+p229_002,pair_001,Ask her to bring these things with her from the store.,modal,references/modal_p229_002.wav,outputs/chatterbox/p229_002_modal.wav,chatterbox,42,p229 002
+p229_002,pair_001,Ask her to bring these things with her from the store.,modal,references/modal_p229_002.wav,outputs/xtts/p229_002_modal.wav,xtts,42,p229 002
+p229_002,pair_001,Ask her to bring these things with her from the store.,modal,references/modal_p229_002.wav,outputs/kokoro/pair_001_modal.wav,kokoro,42,p229 002
+p253_005,pair_002,"She can scoop these things into three red bags, and we will go meet her Wednesday at the train station.",breathy,references/breathy_p253_005.wav,outputs/chatterbox/p253_005_breathy.wav,chatterbox,42,p253 005
+p253_005,pair_002,"She can scoop these things into three red bags, and we will go meet her Wednesday at the train station.",breathy,references/breathy_p253_005.wav,outputs/xtts/p253_005_breathy.wav,xtts,42,p253 005
+p253_005,pair_002,"She can scoop these things into three red bags, and we will go meet her Wednesday at the train station.",breathy,references/breathy_p253_005.wav,outputs/kokoro/pair_002_breathy.wav,kokoro,42,p253 005
+p301_005,pair_002,"She can scoop these things into three red bags, and we will go meet her Wednesday at the train station.",modal,references/modal_p301_005.wav,outputs/chatterbox/p301_005_modal.wav,chatterbox,42,p301 005
+p301_005,pair_002,"She can scoop these things into three red bags, and we will go meet her Wednesday at the train station.",modal,references/modal_p301_005.wav,outputs/xtts/p301_005_modal.wav,xtts,42,p301 005
+p301_005,pair_002,"She can scoop these things into three red bags, and we will go meet her Wednesday at the train station.",modal,references/modal_p301_005.wav,outputs/kokoro/pair_002_modal.wav,kokoro,42,p301 005
+p264_006,pair_003,"When the sunlight strikes raindrops in the air, they act as a prism and form a rainbow.",breathy,references/breathy_p264_006.wav,outputs/chatterbox/p264_006_breathy.wav,chatterbox,42,p264 006
+p264_006,pair_003,"When the sunlight strikes raindrops in the air, they act as a prism and form a rainbow.",breathy,references/breathy_p264_006.wav,outputs/xtts/p264_006_breathy.wav,xtts,42,p264 006
+p264_006,pair_003,"When the sunlight strikes raindrops in the air, they act as a prism and form a rainbow.",breathy,references/breathy_p264_006.wav,outputs/kokoro/pair_003_breathy.wav,kokoro,42,p264 006
+p282_006,pair_003,"When the sunlight strikes raindrops in the air, they act as a prism and form a rainbow.",modal,references/modal_p282_006.wav,outputs/chatterbox/p282_006_modal.wav,chatterbox,42,p282 006
+p282_006,pair_003,"When the sunlight strikes raindrops in the air, they act as a prism and form a rainbow.",modal,references/modal_p282_006.wav,outputs/xtts/p282_006_modal.wav,xtts,42,p282 006
+p282_006,pair_003,"When the sunlight strikes raindrops in the air, they act as a prism and form a rainbow.",modal,references/modal_p282_006.wav,outputs/kokoro/pair_003_modal.wav,kokoro,42,p282 006

@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "metrics": [
+    {
+      "metric": "f0_mean",
+      "breathy_values": [
+        238.912967,
+        231.192398,
+        189.259362
+      ],
+      "modal_values": [
+        192.720667,
+        183.147299,
+        203.950098
+      ],
+      "breathy_mean": 219.78824233333333,
+      "modal_mean": 193.27268800000002,
+      "cohens_d": 1.3076542936078035,
+      "abs_cohens_d": 1.3076542936078035,
+      "min_abs_d": 0.5,
+      "direction": "breathy_higher",
+      "passed": true
+    },
+    {
+      "metric": "f0_range",
+      "breathy_values": [
+        76.346421,
+        84.56589,
+        50.375343
+      ],
+      "modal_values": [
+        74.826717,
+        63.863788,
+        125.021076
+      ],
+      "breathy_mean": 70.42921799999999,
+      "modal_mean": 87.90386033333334,
+      "cohens_d": -0.664809881995112,
+      "abs_cohens_d": 0.664809881995112,
+      "min_abs_d": 0.5,
+      "direction": "modal_higher",
+      "passed": true
+    }
+  ]
+}

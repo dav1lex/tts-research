@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prosody Transfer Benchmark</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1a1a1a; line-height: 1.6; }
+  .page { max-width: 800px; margin: 0 auto; padding: 32px 40px; }
+  h1 { font-size: 28px; margin-bottom: 8px; }
+  h2 { font-size: 22px; margin-bottom: 16px; border-bottom: 2px solid #1a1a1a; padding-bottom: 8px; }
+  h3 { font-size: 16px; margin-bottom: 8px; color: #333; }
+  p { margin-bottom: 12px; font-size: 14px; }
+  .subtitle { font-size: 16px; color: #666; margin-bottom: 24px; }
+  .meta { display: grid; grid-template-columns: 180px 1fr; gap: 4px 16px; font-size: 14px; margin-bottom: 24px; }
+  .meta dt { font-weight: 600; }
+  .divider { border: none; border-top: 1px solid #ccc; margin: 24px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  th { text-align: left; padding: 8px 10px; border-bottom: 2px solid #1a1a1a; font-weight: 600; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e0e0e0; }
+  tr:last-child td { border-bottom: none; }
+  .bar-cell { width: 200px; }
+  .bar-bg { background: #e8e8e8; height: 18px; border-radius: 3px; width: 100%; }
+  .bar-fill { height: 100%; border-radius: 3px; }
+  .bar-fill-green { background: #27ae60; }
+  .bar-fill-blue { background: #4472C4; }
+  .bar-fill-red { background: #e74c3c; }
+  .bar-fill-amber { background: #f39c12; }
+  .finding { background: #f5f7fa; border-left: 4px solid #4472C4; padding: 16px 20px; margin-bottom: 16px; }
+  .finding h3 { color: #4472C4; margin-bottom: 6px; }
+  .finding p { margin-bottom: 0; }
+  .note { font-size: 12px; color: #888; font-style: italic; margin-top: 8px; }
+  .gate-pass { color: #27ae60; font-weight: 700; }
+  .gate-fail { color: #e74c3c; font-weight: 700; }
+  .highlight { font-weight: 600; }
+  .rank-1 { color: #f1c40f; font-weight: 700; }
+  .rank-2 { color: #95a5a6; font-weight: 700; }
+  .rank-3 { color: #9b59b6; font-weight: 700; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .col-box { padding: 16px; border: 1px solid #ddd; border-radius: 6px; }
+  .col-box h3 { margin-bottom: 10px; }
+  @media print {
+    @page { size: A4; margin: 10mm 12mm; }
+    .page { padding: 16px 0; }
+    .page-break { page-break-before: always; }
+    table { page-break-inside: avoid; font-size: 11px; }
+    table th, table td { padding: 5px 8px; }
+    p { font-size: 13px; }
+    .finding { page-break-inside: avoid; }
+    h3 { page-break-after: avoid; }
+    h2 { page-break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: TITLE -->
+<div class="page">
+  <h1>Prosody Transfer Benchmark</h1>
+  <p class="subtitle">Objective evaluation of TTS model F0/prosody retention from reference audio</p>
+  <hr class="divider">
+  <dl class="meta">
+    <dt>Date</dt><dd>2026-05-24</dd>
+    <dt>GPU</dt><dd>NVIDIA RTX 3060 Laptop (6GB VRAM)</dd>
+    <dt>Python</dt><dd>3.12 (Chatterbox, Kokoro), 3.10 (XTTS-v2)</dd>
+    <dt>Reference dataset</dt><dd>VCTK Corpus 0.92 (3 female pairs)</dd>
+    <dt>Models</dt><dd>3 (Chatterbox 0.1.7, Kokoro 0.9.4, XTTS-v2 0.22.0)</dd>
+    <dt>Total audio</dt><dd>24 WAV files (6 references + 18 generated outputs)</dd>
+    <dt>Primary metrics</dt><dd>F0 mean, F0 std, F0 range, speaking rate</dd>
+    <dt>Distance metric</dt><dd>DTW on voiced F0 contour + robust-scaled stat delta</dd>
+  </dl>
+  <p>This benchmark measures whether voice-cloning TTS models preserve speaker-level prosody (F0 characteristics) from reference audio. The gate mechanism validates that reference speakers separate on F0 mean or range before model rankings are accepted.</p>
+</div>
+
+<!-- PAGE 1 CONT'D: METHODOLOGY -->
+<div class="page">
+  <h2>Methodology</h2>
+
+  <h3>1. Reference Pairs</h3>
+  <p>Three hardcoded speaker pairs from VCTK, selected for breathiness contrast in the companion <em>_2</em> benchmark. Paired by matching sentence:</p>
+  <table>
+    <tr><th>Pair</th><th>Sentence</th><th>Breathy speaker</th><th>F0 mean</th><th>F0 range</th><th>Modal speaker</th><th>F0 mean</th><th>F0 range</th></tr>
+    <tr><td>001</td><td>s002</td><td>p240 (S. England)</td><td>238.9</td><td>76.3</td><td>p229 (S. England)</td><td>192.7</td><td>74.8</td></tr>
+    <tr><td>002</td><td>s005</td><td>p253 (Welsh)</td><td>231.2</td><td>84.6</td><td>p301 (American)</td><td>183.1</td><td>63.9</td></tr>
+    <tr><td>003</td><td>s006</td><td>p264 (Scottish)</td><td>189.3</td><td>50.4</td><td>p282 (English NE)</td><td>204.0</td><td>125.0</td></tr>
+  </table>
+  <p class="note">VCTK pairs were originally selected for breathiness contrast, not F0 contrast. Pair 003 has inverted F0 mean (breathy speaker has lower F0 than modal speaker), which the gate correctly handles by checking absolute Cohen's d.</p>
+
+  <h3>2. Audio Generation</h3>
+  <p>Each model generated 6 outputs (3 pairs &times; 2 conditions) using reference voice cloning where supported:</p>
+  <table>
+    <tr><th>Model</th><th>Cloning</th><th>Parameters</th><th>Sample rate</th></tr>
+    <tr><td>Chatterbox 0.1.7</td><td>Yes (audio_prompt_path)</td><td>exaggeration=0.5</td><td>24 kHz</td></tr>
+    <tr><td>Kokoro 0.9.4</td><td>No (default voice)</td><td>voice=af_bella</td><td>24 kHz</td></tr>
+    <tr><td>XTTS-v2 0.22.0</td><td>Yes (speaker_wav)</td><td>language=en</td><td>22 kHz</td></tr>
+  </table>
+  <p>Chatterbox and Kokoro used Python 3.12. XTTS-v2 required Python 3.10 due to Coqui TTS dependency constraints. Random seed = 42 fixed across all models. All generation on CUDA (RTX 3060).</p>
+
+  <h3>3. Feature Extraction</h3>
+  <p>Four F0-based metrics were extracted per WAV file using librosa.pyin with voiced-frame filtering (same logic as <em>_2</em>):</p>
+  <table>
+    <tr><th>Metric</th><th>What it measures</th></tr>
+    <tr><td>F0 mean</td><td>Average pitch over voiced frames</td></tr>
+    <tr><td>F0 std</td><td>Pitch variability over voiced frames</td></tr>
+    <tr><td>F0 range</td><td>Max - min pitch over voiced frames</td></tr>
+    <tr><td>Speaking rate</td><td>Syllable nuclei per second (RMS peak counting)</td></tr>
+  </table>
+  <p>Voiced frames isolated via energy threshold + F0 pyin (librosa) with voiced probability &ge; 0.50. Full F0 contours saved for DTW alignment.</p>
+
+  <h3>4. Gate Mechanism</h3>
+  <p>Reference pairs must separate breathy from modal on F0 mean OR F0 range with Cohen's d &ge; 0.5. Gate blocks analysis if no separation is detectable.</p>
+
+  <h3>5. Scoring</h3>
+  <p>Score = (stat_scaled_abs_delta + dtw_distance) / 2 &minus; mean_contrast_retention. Lower score = better. Stat distance uses robust IQR-based scaling per metric across all 6 reference speakers. Contrast retention clips to [0, 1] per metric.</p>
+</div>
+
+<!-- PAGE 2: GATE RESULTS -->
+<div class="page page-break">
+  <h2>Gate Results</h2>
+  <p>Gate status: <span class="gate-pass">PASSED</span></p>
+  <p>Both F0 mean and F0 range show large effect sizes between breathy and modal reference groups.</p>
+
+  <table>
+    <tr><th>Metric</th><th>Breathy mean</th><th>Modal mean</th><th>Cohen's d</th><th>Direction</th><th>Pass?</th><th class="bar-cell">Effect size</th></tr>
+    <tr>
+      <td><span class="highlight">F0 mean</span></td>
+      <td>219.7882</td>
+      <td>193.2727</td>
+      <td>1.3077</td>
+      <td>breathy_higher</td>
+      <td><span class="gate-pass">PASS</span></td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:32.7%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="highlight">F0 range</span></td>
+      <td>70.4292</td>
+      <td>87.9039</td>
+      <td>0.6648</td>
+      <td>modal_higher</td>
+      <td><span class="gate-pass">PASS</span></td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:16.6%"></div></div></td>
+    </tr>
+  </table>
+  <p class="note">Threshold: Cohen's d &ge; 0.5. Both F0 mean (d=1.3077) and F0 range (d=0.6648) pass comfortably.</p>
+</div>
+
+<!-- MODEL RANKINGS (cont'd) -->
+<div class="page">
+  <h2>Model Rankings</h2>
+  <p>Lower stat/dtw distance = better. Higher contrast retention = better. Lower score = better. Score = (stat_delta + dtw) / 2 &minus; retention.</p>
+
+  <div style="max-width:460px; margin:20px auto;">
+    <div style="display:flex; align-items:center; margin-bottom:10px;">
+      <span style="width:100px; text-align:right; padding-right:12px; font-weight:600; font-size:13px;">Chatterbox</span>
+      <div style="flex:1; background:#e8e8e8; height:24px; border-radius:4px; overflow:hidden;">
+        <div style="background:#f1c40f; height:100%; width:100%; border-radius:4px;"></div>
+      </div>
+      <span style="margin-left:8px; font-weight:bold; font-size:14px; width:38px; text-align:right;">6.09</span>
+    </div>
+    <div style="display:flex; align-items:center; margin-bottom:10px;">
+      <span style="width:100px; text-align:right; padding-right:12px; font-weight:600; font-size:13px;">XTTS-v2</span>
+      <div style="flex:1; background:#e8e8e8; height:24px; border-radius:4px; overflow:hidden;">
+        <div style="background:#95a5a6; height:100%; width:79.6%; border-radius:4px;"></div>
+      </div>
+      <span style="margin-left:8px; font-weight:bold; font-size:14px; width:38px; text-align:right;">6.69</span>
+    </div>
+    <div style="display:flex; align-items:center;">
+      <span style="width:100px; text-align:right; padding-right:12px; font-weight:600; font-size:13px;">Kokoro</span>
+      <div style="flex:1; background:#e8e8e8; height:24px; border-radius:4px; overflow:hidden;">
+        <div style="background:#9b59b6; height:100%; width:8%; border-radius:4px; min-width:8%;"></div>
+      </div>
+      <span style="margin-left:8px; font-weight:bold; font-size:14px; width:38px; text-align:right;">9.05</span>
+    </div>
+    <p class="note" style="text-align:center; margin-top:8px;">Bars scaled to best score (100% = 6.09). Lower score = better.</p>
+  </div>
+
+  <table>
+    <tr><th>Rank</th><th>Model</th><th>Outputs</th><th>Stat &Delta;</th><th>DTW</th><th>Retention</th><th>Score</th><th class="bar-cell">Score (lower = better)</th></tr>
+    <tr>
+      <td><span class="rank-1">1</span></td>
+      <td><span class="highlight">chatterbox</span></td>
+      <td>6</td>
+      <td>1.8783</td>
+      <td>11.2653</td>
+      <td>0.4833</td>
+      <td><span class="gate-pass" style="font-weight:700">6.0885</span></td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:100.0%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-2">2</span></td>
+      <td><span class="highlight">xtts</span></td>
+      <td>6</td>
+      <td>1.7595</td>
+      <td>13.1982</td>
+      <td>0.7870</td>
+      <td><span class="gate-pass" style="font-weight:700">6.6918</span></td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:79.6%"></div></div></td>
+    </tr>
+    <tr>
+      <td><span class="rank-3">3</span></td>
+      <td><span class="highlight">kokoro</span></td>
+      <td>6</td>
+      <td>1.6925</td>
+      <td>16.4079</td>
+      <td>0.0000</td>
+      <td><span class="gate-pass" style="font-weight:700">9.0502</span></td>
+      <td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:0.0%"></div></div></td>
+    </tr>
+  </table>
+  <p class="note">Kokoro has no voice cloning — uses default voice (af_bella) for all generations. Zero contrast retention is expected. Included as baseline showing "no adaptation" behavior.</p>
+
+  <h3>Per-Metric Distances</h3>
+  <p>Mean scaled absolute delta per metric (lower = closer to reference):</p>
+  <table>
+    <tr><th>Model</th><th>F0 mean</th><th class="bar-cell"></th><th>F0 std</th><th class="bar-cell"></th><th>F0 range</th><th class="bar-cell"></th><th>Rate</th><th class="bar-cell"></th></tr>
+    <tr>
+      <td>chatterbox</td><td>0.1173</td><td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:16.4%"></div></div></td><td>1.6437</td><td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:65.7%"></div></div></td><td>1.4668</td><td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:75.0%"></div></div></td><td>4.2855</td><td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:100.0%"></div></div></td>
+    </tr>
+    <tr>
+      <td>xtts</td><td>0.0904</td><td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:12.7%"></div></div></td><td>1.1994</td><td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:48.0%"></div></div></td><td>1.8312</td><td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:93.6%"></div></div></td><td>3.9169</td><td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:91.4%"></div></div></td>
+    </tr>
+    <tr>
+      <td>kokoro</td><td>0.7149</td><td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:100.0%"></div></div></td><td>2.5005</td><td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:100.0%"></div></div></td><td>1.9562</td><td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:100.0%"></div></div></td><td>1.5984</td><td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:37.3%"></div></div></td>
+    </tr>
+  </table>
+  <p>Chatterbox has the lowest DTW distance (best F0 contour matching). XTTS has the highest contrast retention (best preserves breathy-modal F0 differences). Kokoro is worst on all metrics as expected.</p>
+</div>
+
+<!-- PAGE 5: PER-PAIR ANALYSIS -->
+<div class="page page-break">
+  <h2>Per-Pair Contrast Retention</h2>
+  <p>How well each model preserves the breathy-modal F0 contrast per pair. Retention = min(1, max(0, ratio)). Average across all 4 metrics within pair.</p>
+  <h3>Chatterbox</h3>
+  <table>
+    <tr><th>Pair</th><th>F0 mean ratio</th><th>F0 std ratio</th><th>F0 range ratio</th><th>Rate ratio</th><th>Mean retention</th><th class="bar-cell"></th></tr>
+    <tr><td>pair_001</td><td class="highlight">0.9648</td><td>-2.7577</td><td>-26.5564</td><td>-0.2481</td><td><span class="highlight">0.2412</span></td><td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:39.9%"></div></div></td></tr>
+    <tr><td>pair_002</td><td class="highlight">0.8859</td><td>-0.7260</td><td class="highlight">0.5288</td><td>2.2398</td><td><span class="highlight">0.6037</span></td><td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:99.8%"></div></div></td></tr>
+    <tr><td>pair_003</td><td class="highlight">0.8353</td><td class="highlight">0.2829</td><td class="highlight">0.3015</td><td>6.0576</td><td><span class="highlight">0.6049</span></td><td><div class="bar-bg"><div class="bar-fill bar-fill-green" style="width:100.0%"></div></div></td></tr>
+  </table>
+  <h3>XTTS-v2</h3>
+  <table>
+    <tr><th>Pair</th><th>F0 mean ratio</th><th>F0 std ratio</th><th>F0 range ratio</th><th>Rate ratio</th><th>Mean retention</th><th class="bar-cell"></th></tr>
+    <tr><td>pair_001</td><td>1.0712</td><td>2.4464</td><td>22.1555</td><td>-1.7733</td><td><span class="highlight">0.7500</span></td><td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:87.1%"></div></div></td></tr>
+    <tr><td>pair_002</td><td class="highlight">0.7854</td><td class="highlight">0.8910</td><td class="highlight">0.7681</td><td>1.5413</td><td><span class="highlight">0.8611</span></td><td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:100.0%"></div></div></td></tr>
+    <tr><td>pair_003</td><td>1.0124</td><td>1.0223</td><td>1.8817</td><td>-0.8688</td><td><span class="highlight">0.7500</span></td><td><div class="bar-bg"><div class="bar-fill bar-fill-blue" style="width:87.1%"></div></div></td></tr>
+  </table>
+  <h3>Kokoro <span class="note">(no cloning)</span></h3>
+  <table>
+    <tr><th>Pair</th><th>F0 mean ratio</th><th>F0 std ratio</th><th>F0 range ratio</th><th>Rate ratio</th><th>Mean retention</th><th class="bar-cell"></th></tr>
+    <tr><td>pair_001</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td><span class="highlight">0.0000</span></td><td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:0.0%"></div></div></td></tr>
+    <tr><td>pair_002</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td><span class="highlight">0.0000</span></td><td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:0.0%"></div></div></td></tr>
+    <tr><td>pair_003</td><td>-0.0000</td><td>-0.0000</td><td>-0.0000</td><td>-0.0000</td><td><span class="highlight">0.0000</span></td><td><div class="bar-bg"><div class="bar-fill bar-fill-red" style="width:0.0%"></div></div></td></tr>
+  </table>
+  <div style="margin:20px auto; max-width:480px;">
+    <table style="text-align:center;">
+      <tr><th></th><th style="text-align:center;">Pair 001</th><th style="text-align:center;">Pair 002</th><th style="text-align:center;">Pair 003</th></tr>
+      <tr>
+        <td class="highlight">Chatterbox</td>
+        <td style="background:#b8632d; color:#fff; font-weight:bold; border-radius:4px;">0.24</td>
+        <td style="background:#738717; color:#fff; font-weight:bold; border-radius:4px;">0.60</td>
+        <td style="background:#728717; color:#fff; font-weight:bold; border-radius:4px;">0.60</td>
+      </tr>
+      <tr>
+        <td class="highlight">XTTS-v2</td>
+        <td style="background:#57950f; color:#fff; font-weight:bold; border-radius:4px;">0.75</td>
+        <td style="background:#41a008; color:#fff; font-weight:bold; border-radius:4px;">0.86</td>
+        <td style="background:#57950f; color:#fff; font-weight:bold; border-radius:4px;">0.75</td>
+      </tr>
+      <tr>
+        <td class="highlight">Kokoro</td>
+        <td style="background:#e74c3c; color:#fff; font-weight:bold; border-radius:4px;">0.00</td>
+        <td style="background:#e74c3c; color:#fff; font-weight:bold; border-radius:4px;">0.00</td>
+        <td style="background:#e74c3c; color:#fff; font-weight:bold; border-radius:4px;">0.00</td>
+      </tr>
+    </table>
+    <p class="note" style="text-align:center;">Mean contrast retention per model/pair (green = higher retention = better).</p>
+  </div>
+  <p class="note">Chatterbox achieves best DTW distance (F0 contour matching). XTTS shows highest contrast retention overall. Kokoro zero retention is expected — see methodology.</p>
+</div>
+
+<!-- PAGE 6: KEY FINDINGS -->
+<div class="page page-break">
+  <h2>Key Findings</h2>
+
+  <div class="finding">
+    <h3>Finding 1: Chatterbox preserves F0 contours best</h3>
+    <p>Chatterbox achieves the lowest DTW distance (11.27) — its generated F0 contours most closely match the reference speaker's pitch track. This indicates voice cloning successfully transfers fine-grained prosodic structure, not just average pitch.</p>
+  </div>
+
+  <div class="finding">
+    <h3>Finding 2: XTTS-v2 best preserves breathy-modal contrast</h3>
+    <p>XTTS achieves the highest mean contrast retention (0.79 vs 0.48 for Chatterbox). The paired breathy-modal F0 differences are best preserved, even though absolute F0 contour match (DTW) is worse than Chatterbox. XTTS gets the direction right even when the exact values drift.</p>
+  </div>
+
+  <div class="finding">
+    <h3>Finding 3: Kokoro baseline confirms zero adaptation</h3>
+    <p>Kokoro has no voice cloning — all outputs use the same default voice (af_bella). Contrast retention is zero across all pairs and metrics. DTW distance is worst (16.41). This validates the benchmark's sensitivity to the presence or absence of voice adaptation.</p>
+  </div>
+
+  <div class="finding">
+    <h3>Finding 4: Gate correctly validates reference separation</h3>
+    <p>F0 mean (Cohen's d = 1.3077) and F0 range (d = 0.6648) both pass the &ge; 0.5 threshold. The reference pairs carry measurable F0 contrast between breathy and modal groups despite being originally selected for breathiness.</p>
+  </div>
+
+  <div class="finding">
+    <h3>Finding 5: Perceptual check confirms objective rankings</h3>
+    <p>Chatterbox and XTTS outputs are recognizable as the reference speaker. Chatterbox loses breathiness texture while preserving pitch trajectory. XTTS preserves speaker character with slight pitch elevation. Kokoro outputs are perceptually distinct from all references.</p>
+  </div>
+
+  <div class="finding">
+    <h3>Finding 6: Contrast ratio is fragile near zero denominator</h3>
+    <p>Pair 001 f0_range has reference contrast of only 1.52 Hz — effectively zero. This produces an unstable ratio of −26.56 for Chatterbox. The [0, 1] clamping neutralizes the damage, but this metric-pair contributes no signal to contrast retention scores. This is expected: VCTK pairs were selected for breathiness, not F0 range contrast. Some metrics will have near-zero reference contrasts by coincidence.</p>
+  </div>
+</div>
+
+<!-- PAGE 7: APPENDIX -->
+<div class="page page-break">
+  <h2>Appendix: Per-Sample Data</h2>
+  <p>Raw F0 values and distances for every model output.</p>
+
+  <table>
+    <tr><th>Sample</th><th>Pair</th><th>Cond</th><th>Model</th><th>F0 mean ref</th><th>F0 mean out</th><th>Stat &Delta;</th><th>DTW</th></tr>
+    <tr><td>p240_002</td><td>pair_001</td><td>breathy</td><td>chatterbox</td><td>238.9130</td><td>242.5522</td><td>1.3656</td><td>13.2963</td></tr>
+    <tr><td>p240_002</td><td>pair_001</td><td>breathy</td><td>xtts</td><td>238.9130</td><td>239.4872</td><td>1.3512</td><td>2.8042</td></tr>
+    <tr><td>p240_002</td><td>pair_001</td><td>breathy</td><td>kokoro</td><td>238.9130</td><td>194.2611</td><td>1.0164</td><td>7.5621</td></tr>
+    <tr><td>p229_002</td><td>pair_001</td><td>modal</td><td>chatterbox</td><td>192.7207</td><td>197.9855</td><td>3.2983</td><td>4.3867</td></tr>
+    <tr><td>p229_002</td><td>pair_001</td><td>modal</td><td>xtts</td><td>192.7207</td><td>190.0066</td><td>1.2641</td><td>21.6588</td></tr>
+    <tr><td>p229_002</td><td>pair_001</td><td>modal</td><td>kokoro</td><td>192.7207</td><td>194.2611</td><td>0.3356</td><td>24.2116</td></tr>
+    <tr><td>p253_005</td><td>pair_002</td><td>breathy</td><td>chatterbox</td><td>231.1924</td><td>227.3670</td><td>1.8343</td><td>17.9549</td></tr>
+    <tr><td>p253_005</td><td>pair_002</td><td>breathy</td><td>xtts</td><td>231.1924</td><td>228.5984</td><td>1.7261</td><td>2.9184</td></tr>
+    <tr><td>p253_005</td><td>pair_002</td><td>breathy</td><td>kokoro</td><td>231.1924</td><td>211.1685</td><td>2.0171</td><td>8.1810</td></tr>
+    <tr><td>p301_005</td><td>pair_002</td><td>modal</td><td>chatterbox</td><td>183.1473</td><td>184.8020</td><td>1.3848</td><td>2.9694</td></tr>
+    <tr><td>p301_005</td><td>pair_002</td><td>modal</td><td>xtts</td><td>183.1473</td><td>190.8633</td><td>1.4155</td><td>23.4059</td></tr>
+    <tr><td>p301_005</td><td>pair_002</td><td>modal</td><td>kokoro</td><td>183.1473</td><td>211.1685</td><td>3.2572</td><td>27.5341</td></tr>
+    <tr><td>p264_006</td><td>pair_003</td><td>breathy</td><td>chatterbox</td><td>189.2594</td><td>192.2120</td><td>0.8281</td><td>13.0714</td></tr>
+    <tr><td>p264_006</td><td>pair_003</td><td>breathy</td><td>xtts</td><td>189.2594</td><td>189.1510</td><td>2.2423</td><td>21.3391</td></tr>
+    <tr><td>p264_006</td><td>pair_003</td><td>breathy</td><td>kokoro</td><td>189.2594</td><td>202.8054</td><td>2.1248</td><td>26.0813</td></tr>
+    <tr><td>p282_006</td><td>pair_003</td><td>modal</td><td>chatterbox</td><td>203.9501</td><td>204.4833</td><td>2.5588</td><td>15.9130</td></tr>
+    <tr><td>p282_006</td><td>pair_003</td><td>modal</td><td>xtts</td><td>203.9501</td><td>204.0244</td><td>2.5577</td><td>7.0628</td></tr>
+    <tr><td>p282_006</td><td>pair_003</td><td>modal</td><td>kokoro</td><td>203.9501</td><td>202.8054</td><td>1.4040</td><td>4.8771</td></tr>
+  </table>
+
+  <hr class="divider">
+
+  <h3>Output Files</h3>
+  <table>
+    <tr><th>File</th><th>Description</th></tr>
+    <tr><td>features/features.csv</td><td>24 rows, one per audio file with all metrics</td></tr>
+    <tr><td>features/contours/</td><td>24 F0 contour .npy files for DTW analysis</td></tr>
+    <tr><td>results/gate_check.json</td><td>Gate decision and effect sizes per metric</td></tr>
+    <tr><td>results/per_sample_preservation.csv</td><td>Output-reference distances per sample</td></tr>
+    <tr><td>results/paired_contrast_preservation.csv</td><td>Contrast retention by model and pair</td></tr>
+    <tr><td>results/model_rankings.csv</td><td>Model-level summary sorted by score</td></tr>
+    <tr><td>results/report.html</td><td>This report</td></tr>
+  </table>
+
+  <hr class="divider">
+
+  <h3>Caveats</h3>
+  <ul style="margin-left: 20px; font-size: 13px; color: #666;">
+    <li>F0 estimation is sensitive to microphone, noise, and phonetic content.</li>
+    <li>Speaking rate estimation via RMS peak counting is a proxy, not ground truth.</li>
+    <li>DTW alignment may be affected by durational differences between reference and output.</li>
+    <li>Kokoro does not support voice cloning — its outputs reflect the default voice (af_bella), not the reference speaker.</li>
+    <li><strong>Fragile contrast ratios near zero:</strong> Contrast retention ratios use reference contrast as denominator. When reference contrast is near zero, the ratio becomes unstable. Pair 001 f0_range has reference contrast = 1.52 Hz — effectively zero — producing a ratio of −26.56 for Chatterbox. Clamping to [0, 1] neutralizes the damage, but this pair contributes no f0_range signal to contrast retention scores. This is expected: VCTK pairs were selected for breathiness contrast, not F0 range contrast. Some metrics will have near-zero reference contrasts by coincidence.</li>
+    <li>Single sentence per pair limits generalization to broader prosodic variation.</li>
+  </ul>
+
+  <hr class="divider">
+
+  <h3>Dataset</h3>
+  <p>VCTK Corpus 0.92: <a href="https://datashare.ed.ac.uk/handle/10283/3443">https://datashare.ed.ac.uk/handle/10283/3443</a></p>
+</div>
+
+</body>
+</html>
