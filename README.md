@@ -21,10 +21,12 @@ Objective benchmark measuring whether voice-cloning TTS preserves speaker-level 
 Finding: Chatterbox best F0 contour match (DTW 11.27), XTTS-v2 best breathy-modal contrast retention (0.79). Kokoro baseline zero.
 → _3-prosody-transfer-benchmark/
 
-## Related
-- CodeSOTA TTS ELO: https://codesota.com/text-to-speech/elo
 
 ### 4. Identity Drift Benchmark
 Measures whether TTS voice characteristics (F0, breathiness via Praat CPP, spectral features) drift over 5-minute synthesized monologues compared to a short reference clip.
 Finding: all models drift measurably (+0.07–0.08 increase), Chatterbox stays closest to reference (0.491) but drifts fastest. Breathiness (CPP) is the least stable channel. Acoustic drift below perceptual threshold at 5 minutes (single-listener check).
 → _4-identity-drift/
+
+
+### Related
+- CodeSOTA TTS ELO: https://codesota.com/text-to-speech/elo
