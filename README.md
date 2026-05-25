@@ -29,8 +29,8 @@ Finding: all models drift measurably (+0.07–0.08 increase), Chatterbox stays c
 
 
 ### 5. Punctuation Sensitivity Benchmark
-Measures whether TTS models respect punctuation: periods, questions, exclamations, commas, dashes, ellipses, quotation marks, capitalization.
-Finding: XTTS has perfect pause hierarchy but zero question F0 rise. Chatterbox has best F0-based differentiation but weak pause timing. No model does both well. F5-TTS added as new model.
+Measures whether TTS models respect punctuation: periods, questions, exclamations, commas, dashes, ellipses, quotation marks, capitalization across 3 models × 28 utterances.
+Finding: Chatterbox has best F0-based differentiation (question rise +68.5 Hz/s) but weak pause hierarchy (0.67). XTTS-v2 has perfect pause ordering (1.00) but near-zero question F0 rise (−5.0 Hz/s). Kokoro (no-adaptation baseline) shows intermediate F0 sensitivity (+25.7 Hz/s) with same hierarchy score (0.67). F0 sensitivity and pause ordering are independent dimensions — no model scores high on both.
 → _5-punctuation-sensitivity/
 
 ### Related
