@@ -98,9 +98,8 @@ def fig1_sentence_end(data):
 
 
 def fig2_pause_hierarchy(data):
-    """Pause duration by punctuation type, per model (4-panel)."""
-    fig, axes = plt.subplots(2, 2, figsize=(12, 9))
-    axes = axes.flatten()
+    """Pause duration by punctuation type, per model (3-panel side-by-side)."""
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5.5))
 
     for idx, model in enumerate(MODEL_ORDER):
         ax = axes[idx]

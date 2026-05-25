@@ -15,6 +15,7 @@ FEATURES_DIR = RESULTS_DIR / "features"
 FIGURES_DIR = RESULTS_DIR / "figures"
 
 REPORT_PATH = RESULTS_DIR / "report.html"
+PDF_PATH = RESULTS_DIR / "report.pdf"
 
 CSV_PATH = FEATURES_DIR / "pause_features.csv"
 ANALYSIS_PATH = RESULTS_DIR / "analysis.json"
@@ -830,6 +831,12 @@ def main():
         f.write(html)
     size_kb = os.path.getsize(REPORT_PATH) / 1024
     print(f"Report written to {REPORT_PATH} ({size_kb:.0f} KB)")
+
+    # PDF via weasyprint (Python-native, no headless browser)
+    from weasyprint import HTML
+    HTML(filename=str(REPORT_PATH)).write_pdf(str(PDF_PATH))
+    pdf_kb = os.path.getsize(PDF_PATH) / 1024
+    print(f"PDF written to {PDF_PATH} ({pdf_kb:.0f} KB)")
 
 
 if __name__ == "__main__":
