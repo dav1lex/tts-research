@@ -28,5 +28,10 @@ Finding: all models drift measurably (+0.07–0.08 increase), Chatterbox stays c
 → _4-identity-drift/
 
 
+### 5. Punctuation Sensitivity Benchmark
+Measures whether TTS models respect punctuation: periods, questions, exclamations, commas, dashes, ellipses, quotation marks, capitalization.
+Finding: XTTS has perfect pause hierarchy but zero question F0 rise. Chatterbox has best F0-based differentiation but weak pause timing. No model does both well. F5-TTS added as new model.
+→ _5-punctuation-sensitivity/
+
 ### Related
 - CodeSOTA TTS ELO: https://codesota.com/text-to-speech/elo
