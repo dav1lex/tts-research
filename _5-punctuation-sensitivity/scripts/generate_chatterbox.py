@@ -39,7 +39,8 @@ def main():
         wav = model.generate(text=text, audio_prompt_path=REF_AUDIO, exaggeration=0.3)
         if wav.ndim == 2:
             wav = wav.squeeze(0)
-        torch.save(wav.cpu(), out_path)
+        import soundfile as sf
+        sf.write(str(out_path), wav.cpu().numpy(), 24000)
 
         if device == "cuda":
             torch.cuda.empty_cache()
