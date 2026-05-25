@@ -3,4 +3,5 @@
 *venv-xtts
 __pycache__/
 *.pyc
-ideas.mdvenvs/
+ideas.md
+venvs/
