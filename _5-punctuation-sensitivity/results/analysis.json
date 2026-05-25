@@ -1,0 +1,274 @@
+{
+  "sentence_end": {
+    "chatterbox": {
+      "period": {
+        "mean_slope": -8.3,
+        "n": 3
+      },
+      "exclamation": {
+        "mean_slope": -106.5,
+        "n": 3
+      },
+      "question": {
+        "mean_slope": 60.2,
+        "n": 3
+      },
+      "question_period_diff": 68.5
+    },
+    "kokoro": {
+      "period": {
+        "mean_slope": -251.9,
+        "n": 2
+      },
+      "exclamation": {
+        "mean_slope": -488.5,
+        "n": 2
+      },
+      "question": {
+        "mean_slope": -226.2,
+        "n": 2
+      },
+      "question_period_diff": 25.7
+    },
+    "xtts": {
+      "period": {
+        "mean_slope": -83.0,
+        "n": 3
+      },
+      "exclamation": {
+        "mean_slope": -158.9,
+        "n": 3
+      },
+      "question": {
+        "mean_slope": -88.0,
+        "n": 3
+      },
+      "question_period_diff": -5.0
+    },
+    "f5tts": {
+      "period": {
+        "mean_slope": -87.0,
+        "n": 3
+      },
+      "exclamation": {
+        "mean_slope": -489.0,
+        "n": 3
+      },
+      "question": {
+        "mean_slope": -55.2,
+        "n": 3
+      },
+      "question_period_diff": 31.8
+    }
+  },
+  "pause_hierarchy": {
+    "chatterbox": {
+      "comma": {
+        "mean_ms": 112.5,
+        "median_ms": 65.0,
+        "n": 20
+      },
+      "semicolon": {
+        "mean_ms": 119.1,
+        "median_ms": 60.0,
+        "n": 23
+      },
+      "em_dash": {
+        "mean_ms": 110.8,
+        "median_ms": 70.0,
+        "n": 24
+      },
+      "ellipsis": {
+        "mean_ms": 118.1,
+        "median_ms": 65.0,
+        "n": 26
+      },
+      "hierarchy_score": 0.67
+    },
+    "kokoro": {
+      "comma": {
+        "mean_ms": 135.8,
+        "median_ms": 110.0,
+        "n": 12
+      },
+      "semicolon": {
+        "mean_ms": 154.5,
+        "median_ms": 110.0,
+        "n": 11
+      },
+      "em_dash": {
+        "mean_ms": 126.9,
+        "median_ms": 40.0,
+        "n": 13
+      },
+      "ellipsis": {
+        "mean_ms": 166.7,
+        "median_ms": 150.0,
+        "n": 12
+      },
+      "hierarchy_score": 0.67
+    },
+    "xtts": {
+      "comma": {
+        "mean_ms": 146.2,
+        "median_ms": 80.0,
+        "n": 13
+      },
+      "semicolon": {
+        "mean_ms": 194.6,
+        "median_ms": 60.0,
+        "n": 13
+      },
+      "em_dash": {
+        "mean_ms": 220.0,
+        "median_ms": 55.0,
+        "n": 14
+      },
+      "ellipsis": {
+        "mean_ms": 247.6,
+        "median_ms": 70.0,
+        "n": 21
+      },
+      "hierarchy_score": 1.0
+    },
+    "f5tts": {
+      "comma": {
+        "mean_ms": 218.8,
+        "median_ms": 70.0,
+        "n": 48
+      },
+      "semicolon": {
+        "mean_ms": 354.7,
+        "median_ms": 80.0,
+        "n": 34
+      },
+      "em_dash": {
+        "mean_ms": 341.3,
+        "median_ms": 60.0,
+        "n": 38
+      },
+      "ellipsis": {
+        "mean_ms": 334.5,
+        "median_ms": 60.0,
+        "n": 40
+      },
+      "hierarchy_score": 0.33
+    }
+  },
+  "trailing": {
+    "chatterbox": {
+      "ellipsis": {
+        "f0_slope_mean": -124.6,
+        "amp_decay_mean": -4.85211e-05,
+        "pause_mean": 235.0
+      },
+      "period": {
+        "f0_slope_mean": -148.8,
+        "amp_decay_mean": -9.8369e-05,
+        "pause_mean": 220.0
+      },
+      "trailing_f0_diff": 24.2
+    },
+    "kokoro": {
+      "ellipsis": {
+        "f0_slope_mean": 63.1,
+        "amp_decay_mean": -4.89e-08,
+        "pause_mean": 500.0
+      },
+      "period": {
+        "f0_slope_mean": 2.4,
+        "amp_decay_mean": -1.823e-07,
+        "pause_mean": 505.0
+      },
+      "trailing_f0_diff": 60.7
+    },
+    "xtts": {
+      "ellipsis": {
+        "f0_slope_mean": -60.9,
+        "amp_decay_mean": 0.0,
+        "pause_mean": 590.0
+      },
+      "period": {
+        "f0_slope_mean": -43.8,
+        "amp_decay_mean": 0.0,
+        "pause_mean": 690.0
+      },
+      "trailing_f0_diff": -17.1
+    },
+    "f5tts": {
+      "ellipsis": {
+        "f0_slope_mean": -86.0,
+        "amp_decay_mean": -0.00036764,
+        "pause_mean": 1285.0
+      },
+      "period": {
+        "f0_slope_mean": -87.2,
+        "amp_decay_mean": -0.0002450045,
+        "pause_mean": 1305.0
+      },
+      "trailing_f0_diff": 1.1
+    }
+  },
+  "capitalization": {
+    "chatterbox": {
+      "rms_boost": true,
+      "f0_boost": false
+    },
+    "kokoro": {
+      "rms_boost": true,
+      "f0_boost": null
+    },
+    "xtts": {
+      "rms_boost": true,
+      "f0_boost": 0.0
+    },
+    "f5tts": {
+      "rms_boost": true,
+      "f0_boost": true
+    }
+  },
+  "quotation": {
+    "chatterbox": {
+      "f0_mean_shift": 8.5,
+      "f0_range_shift": 50.0,
+      "shift_detected": "True"
+    },
+    "kokoro": {
+      "f0_mean_shift": 5.8,
+      "f0_range_shift": 3.7,
+      "shift_detected": "False"
+    },
+    "xtts": {
+      "f0_mean_shift": 1.8,
+      "f0_range_shift": 3.9,
+      "shift_detected": "False"
+    },
+    "f5tts": {
+      "f0_mean_shift": 12.4,
+      "f0_range_shift": 11.7,
+      "shift_detected": "True"
+    }
+  },
+  "overall": {
+    "chatterbox": {
+      "model": "chatterbox",
+      "question_vs_period_f0_diff_hz": 68.5,
+      "comma_to_ellipsis_pause_diff_ms": 5.6
+    },
+    "kokoro": {
+      "model": "kokoro",
+      "question_vs_period_f0_diff_hz": 25.7,
+      "comma_to_ellipsis_pause_diff_ms": 30.8
+    },
+    "xtts": {
+      "model": "xtts",
+      "question_vs_period_f0_diff_hz": -5.0,
+      "comma_to_ellipsis_pause_diff_ms": 101.5
+    },
+    "f5tts": {
+      "model": "f5tts",
+      "question_vs_period_f0_diff_hz": 31.8,
+      "comma_to_ellipsis_pause_diff_ms": 115.8
+    }
+  }
+}
