@@ -1,0 +1,29 @@
+id,category,subcategory,text,punct_type,expected_pause_ms,expected_f0_slope,notes
+s01,sentence_end,statement,"I'm going home now.",period,>=150,flat_or_fall,Baseline terminal boundary
+s02,sentence_end,exclamation,"I'm going home now!",exclamation,>=150,rise_fall,Exclamatory F0 should rise then fall
+s03,sentence_end,question,"I'm going home now?",question,>=150,rise,Question F0 should rise at end
+s04,sentence_end,statement,"She said she would come.",period,>=150,flat_or_fall,Second terminal test
+s05,sentence_end,exclamation,"She said she would come!",exclamation,>=150,rise_fall,Second exclamation test
+s06,sentence_end,question,"She said she would come?",question,>=150,rise,Second question test
+s07,sentence_end,statement,"Wait for me.",period,>=150,flat_or_fall,Third terminal test
+s08,sentence_end,exclamation,"Wait for me!",exclamation,>=150,rise_fall,Third exclamation
+s09,sentence_end,question,"Wait for me?",question,>=150,rise,Third question
+p01,pause_hierarchy,comma,"I went to the store, bought some bread, and then walked home.",comma,>=50,flat,Comma should produce small pause
+p02,pause_hierarchy,em_dash,"I went to the store — bought some bread — and then walked home.",em_dash,>=100,flat,Em-dash longer pause than comma
+p03,pause_hierarchy,ellipsis,"I went to the store... bought some bread... and then walked home.",ellipsis,>=150,trailing_f0,Ellipsis longer pause with trailing F0
+p04,pause_hierarchy,semicolon,"I went to the store; bought some bread; and then walked home.",semicolon,>=80,flat,Semicolon between comma and period
+p05,pause_hierarchy,comma,"The sun was setting, the birds fell silent, and a chill crept in.",comma,>=50,flat,Second comma test
+p06,pause_hierarchy,em_dash,"The sun was setting — the birds fell silent — and a chill crept in.",em_dash,>=100,flat,Second em-dash test
+p07,pause_hierarchy,ellipsis,"The sun was setting... the birds fell silent... and a chill crept in.",ellipsis,>=150,trailing_f0,Second ellipsis test
+p08,pause_hierarchy,semicolon,"The sun was setting; the birds fell silent; and a chill crept in.",semicolon,>=80,flat,Second semicolon test
+q01,quotation,quoted,"She said ""wait for me.""",quoted,>=150,shift,Quoted speech should shift prosody
+q02,quotation,reported,"She said wait for me.",reported,>=150,none,No quotation marks means no prosody shift
+q03,quotation,quoted,"""I can't believe it,"" she whispered.",quoted,>=150,shift,Quoted with dialogue tag
+q04,quotation,reported,"I can't believe it, she whispered.",reported,>=150,none,No quotes means flat reporting
+t01,trailing,ellipsis,"I thought you knew...",ellipsis,>=200,trailing_f0,Ellipsis suggests unfinished thought
+t02,trailing,period,"I thought you knew.",period,>=150,fall,Firm ending contrast
+t03,trailing,ellipsis,"Maybe tomorrow...",ellipsis,>=200,trailing_f0,Ellipsis = uncertainty
+t04,trailing,period,"Maybe tomorrow.",period,>=150,fall,Period = definite statement
+c01,capitalization,all_caps,"STOP!",all_caps,>=150,rise_fall,All-caps perceived as shouted
+c02,capitalization,title_case,"Stop!",title_case,>=150,rise_fall,Normal exclamation control
+c03,capitalization,lowercase,"stop!",lowercase,>=150,rise_fall,Lowercase may reduce emphasis
