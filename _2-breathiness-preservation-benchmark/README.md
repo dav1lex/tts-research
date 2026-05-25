@@ -40,12 +40,12 @@
 ## Run yourself
 
 ```bash
-source venv-new/bin/activate
+source ../venvs/py312/bin/activate
 python3 scripts/generate_chatterbox.py --metadata metadata.csv --output-dir outputs/chatterbox
 python3 scripts/generate_kokoro.py --metadata metadata.csv --output-dir outputs/kokoro
-source venv-xtts/bin/activate
+source ../venvs/py310/bin/activate
 python3 scripts/generate_xtts.py --metadata metadata.csv --output-dir outputs/xtts
-source venv-new/bin/activate
+source ../venvs/py312/bin/activate
 python3 scripts/extract_features.py --metadata metadata.csv --features-dir features
 python3 scripts/gate_check.py --features-dir features --results-dir results
 python3 scripts/analyze.py --features-dir features --results-dir results
