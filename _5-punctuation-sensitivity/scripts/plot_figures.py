@@ -167,23 +167,30 @@ def fig3_trailing(data):
     ax.axhline(y=0, color="black", linewidth=0.5, linestyle="--")
     ax.grid(axis="y", alpha=0.3)
 
-    # Amplitude decay
+    # Amplitude decay — values span 5 orders of magnitude (1e-5 to 0)
+    # Use symlog scale: linear near zero, log far from zero.
     ax2 = axes[1]
-    for j, (punct, label) in enumerate([("ellipsis", "Ellipsis"), ("period", "Period")]):
+    for j, (punct, label, color) in enumerate([("ellipsis", "Ellipsis", "#9C27B0"), ("period", "Period", "#607D8B")]):
         means = []
         for model in MODEL_ORDER:
             t_items = [r for r in data[model] if r["category"] == "trailing" and r["punct_type"] == punct]
             decays = [safe_float(r["amplitude_decay_300ms"]) for r in t_items]
-            # Keep zeros — they mean "no fade". Filter only None.
             decays = [d for d in decays if d is not None]
-            means.append(np.mean(decays) * 1e6 if decays else 0)  # scale to micro-units
-        ax2.bar(x + j * width, means, width, label=label,
-                color=["#9C27B0", "#607D8B"][j], alpha=0.85)
+            means.append(np.mean(decays) * 1e6 if decays else 0)
+        bars = ax2.bar(x + j * width, means, width, label=label,
+                       color=color, alpha=0.85, linewidth=1.5, edgecolor="black")
+        for bi, (bar, val) in enumerate(zip(bars, means)):
+            bx = bar.get_x() + bar.get_width() / 2
+            ax2.annotate(f"{val:.2f}", (bx, val if val != 0 else 1),
+                         xytext=(0, 10 if val <= 0 else -14),
+                         textcoords="offset points", fontsize=8, ha="center", color=color, fontweight="bold")
     ax2.set_xticks(x + width/2)
     ax2.set_xticklabels([MODEL_LABELS[m] for m in MODEL_ORDER], fontsize=9)
     ax2.set_ylabel("Amplitude Decay (×10⁻⁶)")
     ax2.set_title("Trailing: Amplitude Fade\n(more negative = stronger fade)")
     ax2.legend(fontsize=9)
+    ax2.axhline(y=0, color="black", linewidth=0.5, linestyle="--")
+    ax2.set_yscale("symlog", linthresh=1)
     ax2.grid(axis="y", alpha=0.3)
 
     # Pause duration comparison
