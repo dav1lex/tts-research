@@ -174,7 +174,8 @@ def fig3_trailing(data):
         for model in MODEL_ORDER:
             t_items = [r for r in data[model] if r["category"] == "trailing" and r["punct_type"] == punct]
             decays = [safe_float(r["amplitude_decay_300ms"]) for r in t_items]
-            decays = [d for d in decays if d is not None and d != 0]
+            # Keep zeros — they mean "no fade". Filter only None.
+            decays = [d for d in decays if d is not None]
             means.append(np.mean(decays) * 1e6 if decays else 0)  # scale to micro-units
         ax2.bar(x + j * width, means, width, label=label,
                 color=["#9C27B0", "#607D8B"][j], alpha=0.85)
