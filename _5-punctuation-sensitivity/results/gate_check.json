@@ -23,8 +23,8 @@
   {
     "model": "f5tts",
     "period_items": 5,
-    "periods_passing": 5,
-    "pass_rate": 1.0,
-    "gate_passed": true
+    "periods_passing": 3,
+    "pass_rate": 0.6,
+    "gate_passed": false
   }
 ]

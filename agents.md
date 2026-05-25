@@ -55,5 +55,4 @@ All voice-cloning benchmarks use VCTK `p229_002.wav` (female, Southern England, 
 ## To-Do
 
 - [ ] Add CosyVoice 3 venv (needs `git clone --recursive https://github.com/FunAudioLLM/CosyVoice.git` — slow submodules, timed out)
-- [ ] Clean up old venvs in `_2/` and `_3/` (kept for backward compat, 17GB)
 - [ ] Add Fish Speech S2, Spark-TTS venvs
