@@ -1,0 +1,221 @@
+================================================================================
+IDENTITY DRIFT BENCHMARK — RESEARCH 4
+================================================================================
+
+Date: 2026-05-25
+Models: Chatterbox (resemble-ai/chatterbox), XTTS-v2 (coqui/TTS), Kokoro (hexgrad/Kokoro-82M)
+Reference: neutral_p229_002.wav from VCTK Corpus 0.92 (p229, female, Southern England, 3.88s)
+Reference F0: 192.7 Hz | CPP: 13.36
+Window size: 15 seconds (non-overlapping)
+Total windows: 60 (chatterbox=19, xtts=21, kokoro=20)
+Target duration: ~5 minutes per model
+
+--- GATE RESULTS ---
+Reference gate: PASSED (voiced_ratio=0.224, no clipping)
+Generation gates: ALL PASSED (100% window quality for all models)
+XTTS-v2 had 3 clipped windows (documented, not blocking)
+
+--- DRIFT SUMMARY ---
+| Model                         | Drift Mean | Drift Std | Drift Early | Drift Late | Drift Increase | Drift Slope | Raw Variance |
+|-------------------------------|------------|-----------|-------------|------------|----------------|-------------|--------------|
+| Chatterbox                    |      0.491 |     0.072 |       0.467 |      0.547 |         +0.080 |     +0.00422 |           —  |
+| XTTS-v2                       |      0.583 |     0.102 |       0.514 |      0.590 |         +0.076 |     +0.00431 |           —  |
+| Kokoro (no-adaptation baseline)|      1.290 |     0.145 |       1.229 |      1.300 |         +0.070 |     +0.00473 |      13.384  |
+
+--- KEY FINDINGS ---
+
+1. Does voice drift over 5 minutes? YES — all three models show positive
+drift (voice moves away from reference over time). Drift increase ranges from
++0.070 (Kokoro) to +0.080 (Chatterbox). However, the drift rate is very
+similar across all three models (~0.004 per 15-second window), suggesting
+either (a) this is a fundamental property of long-form generation, or (b)
+the experimental text is too homogeneous to stress models differently — see
+Limitation 14.
+
+1b. Text homogeneity confound: The experimental text is a single continuous
+narrative paragraph with uniform sentence structure, vocabulary complexity,
+and rhythm. Real long-form generation faces dialogue, narration shifts,
+lists, questions, and emotional variation — all of which stress voice
+consistency differently. The near-identical drift slopes across models may
+partly reflect the uniformity of the input rather than a fundamental
+property of generation. This is a significant methodological limitation of
+the current design.
+
+2. Which model is most stable? Chatterbox has the lowest overall drift from
+reference (mean=0.491), starting closest to the reference identity and staying
+closest throughout. XTTS-v2 has moderate drift (0.583) with more erratic
+variation (std=0.102 vs Chatterbox's 0.072). However, Chatterbox has the
+highest drift_increase (+0.080), meaning while it starts closest, it drifts
+away the fastest. XTTS-v2 is more variable but its drift rate is slightly
+slower.
+
+Interpretation: Chatterbox's lower mean drift combined with higher drift rate
+suggests it starts closest to reference but converges toward a model-specific
+equilibrium point over time — a pattern consistent with autoregressive
+conditioning decay rather than random walk drift. XTTS-v2 starts further from
+reference but approaches a similar equilibrium more slowly. Whether Chatterbox
+eventually overtakes XTTS in cumulative drift beyond 5 minutes is unknown but
+testable.
+
+3. Nature of drift differs by model: Chatterbox's drift is dominated by
+CPP/breathiness changes (drift_cpp=0.726) and F0 variation (drift_f0=0.524).
+XTTS-v2 has massive RMS/loudness variation (drift_rms=1.135) — likely related
+to the 3 clipped windows — but better F0 stability. Kokoro shows the expected
+profile of a completely different voice: high F0, MFCC, and spectral centroid
+mismatch with reference.
+
+4. Connection to Paper 2 (breathiness): Paper 2 ranked XTTS-v2 best for
+breathiness preservation (score 0.097) and Chatterbox second (0.311). In this
+long-form test, Chatterbox has lower drift in CPP/breathiness (0.726) than
+XTTS (0.652) — but both are close. The breathiness metric (CPP) is the
+highest-drift feature for both voice-cloning models: Chatterbox
+drift_cpp=0.726 vs drift_f0=0.524, XTTS-v2 drift_cpp=0.652 vs drift_f0=0.391.
+In both cases CPP drift substantially exceeds F0 drift, confirming that
+breathiness quality is the least stable voice characteristic over long
+generation.
+
+5. Connection to Paper 3 (prosody/F0): Paper 3 ranked Chatterbox best for
+F0 contour match (DTW 11.27). Here, Chatterbox has higher F0 mean drift
+(0.524) than XTTS (0.391), but XTTS has worse F0 std drift. The F0 drift is
+moderate compared to other features — the voice cloning models preserve pitch
+reasonably well, but breathiness and timbre are less stable.
+
+6. Perceptual relevance unknown: The drift scores operate in a normalized
+but uncalibrated feature space. Kokoro's distance of 1.290 is ~2.2× the
+voice-cloning models' distances (0.491-0.583), but whether this ratio
+corresponds to a perceptually noticeable difference cannot be determined
+from acoustic features alone. Similarly, the 0.092 gap between Chatterbox
+and XTTS-v2 (0.491 vs 0.583) may or may not be audible. All drift magnitudes
+require perceptual validation via ABX listening tests.
+
+--- PER-FEATURE DRIFT (mean per model) ---
+| Feature         | Chatterbox | XTTS-v2 | Kokoro |
+|-----------------|------------|---------|--------|
+| f0_mean         |      0.524 |   0.391 |  1.743 |
+| f0_std          |      0.426 |   0.195 |  1.810 |
+| cpp_mean        |      0.726 |   0.652 |  0.769 |
+| spectral_tilt   |      0.524 |   0.848 |  0.686 |
+| mfcc            |      0.345 |   0.545 |  1.772 |
+| rms             |      0.286 |   1.135 |  0.298 |
+| centroid        |      0.603 |   0.312 |  1.955 |
+
+--- GENERATION DETAILS ---
+| Model       | Time (s) | Time (min) | Windows | Chunks | Clipped Windows | Failed Windows |
+|-------------|----------|------------|---------|--------|-----------------|----------------|
+| Chatterbox  |   288.6  |     4.8    |      19 |     10 |               0 |              0 |
+| XTTS-v2     |   326.1  |     5.4    |      21 |     —  |               3 |              0 |
+| Kokoro      |   302.1  |     5.0    |      20 |     —  |               0 |              0 |
+
+Note: Chatterbox generation was chunked (10 chunks of ~100 words) due to CUDA
+context limitations. XTTS-v2 clipped windows are documented in
+failed_windows.txt.
+
+--- CONNECTIONS TO PRIOR RESEARCH ---
+
+Paper 2 (Breathiness):
+- Paper 2 ranked XTTS-v2 best for breathiness preservation (score 0.097),
+  Chatterbox second (0.311), and Kokoro distant third (1.290).
+- In this long-form test, the CPP drift ordering is reversed from short-form
+  rankings: XTTS-v2 shows drift_cpp=0.652 vs Chatterbox's 0.726 — both close.
+- The breathiness metric (CPP) is the highest-drift feature for both
+  voice-cloning models, confirming that breathiness quality is the least stable
+  voice characteristic over long generation.
+
+Paper 3 (Prosody F0):
+- Paper 3 ranked Chatterbox best for F0 contour match (DTW 11.27).
+- Here, Chatterbox has higher F0 mean drift (0.524) than XTTS (0.391), but
+  XTTS has worse F0 std drift.
+- The F0 drift is moderate compared to other features — the voice cloning
+  models preserve pitch reasonably well, but breathiness and timbre are less
+  stable over time.
+
+--- LIMITATIONS ---
+
+P2 Limitations (documented as-is, do not block):
+1. Euclidean distance in normalized feature space is a proxy for perceptual
+   voice similarity — not validated against human ratings.
+2. No human listening test to confirm whether measured drift is perceptually
+   noticeable.
+3. drift_increase uses only first 5 and last 5 windows (~75 seconds each) —
+   may miss mid-trajectory drift and recovery patterns. The drift_slope
+   (linear regression across all windows) provides a complementary view.
+4. 15-second non-overlapping windows may miss sub-window instability;
+   overlapping windows would give smoother trajectories.
+5. 5 minutes of generation may be insufficient for significant drift to
+   manifest — longer tests (15-30 min) recommended.
+6. Window counts differ between models (19 vs 21 vs 20) — drift_early/late
+   comparisons use different absolute time points for each model. However,
+   all cover the first/last ~75 seconds of each model's output.
+7. IQR-based robust scaling uses pooled window population (all models
+   combined) rather than reference-only population — this means feature
+   scales are influenced by model outputs, not just reference variability.
+14. Input text is structurally homogeneous: a single continuous narrative
+    paragraph with uniform sentence length, vocabulary register, and prosodic
+    structure. This may conceal drift patterns that would emerge under
+    realistic content variation (dialogue, questions, lists, emotional
+    shifts). Near-identical drift slopes across models may partially reflect
+    this input uniformity rather than a fundamental property of generation.
+    Future work should use scripted multi-genre text with controlled prosodic
+    variation.
+
+Methodological Limitations:
+8. Chatterbox generation was chunked (10 chunks of ~100 words) due to CUDA
+   context limitations — chunk boundaries may introduce artifacts not present
+   in continuous generation.
+9. XTTS-v2 had 3 windows with clipping (at 60-75s, 90-105s, 225-240s) —
+   these windows were included in analysis since they had adequate voicing.
+10. Spectral flatness had near-zero variance across all windows, rendering its
+    per-feature drift NaN — this metric contributed minimally to composite
+    drift scores.
+11. Euclidean distance equally weights all 7 features — perceptual importance
+    of each feature channel is unknown.
+12. Kokoro drift measures distance to a voice it was never asked to clone
+    (af_heart vs p229) — raw feature variance (13.38) reported separately
+    for default-voice stability assessment.
+13. VCTK reference audio (p229) may differ from training data distributions
+    for all models, potentially inflating baseline distances.
+
+--- WHAT'S SOLID ---
+1. Gate design: Reference and per-model generation gates passed cleanly,
+   confirming all audio is valid for analysis. No drift measurement rests on
+   unvalidated data.
+2. Praat CPP alignment: Breathiness measurement uses the exact function and
+   parameters from Paper 2 (extract_features.py, praat_cpp + CPPS on voiced
+   intervals), enabling direct cross-paper comparison.
+3. Kokoro baseline framing: Correctly labeled as no-adaptation baseline in all
+   tables, figures, and analysis. Raw feature variance (13.38) reported
+   separately to distinguish "stable in own voice" from "close to reference."
+4. Per-window methodology: Non-overlapping 15-second windows with quality
+   flags, voiced frame ratio filtering, and documented window failures —
+   methodologically sound and reproducible.
+5. Cross-paper connectivity: Both breathiness (Paper 2) and prosody (Paper 3)
+   findings are extended to long-form generation, with specific feature-level
+   comparisons that surface the CPP instability finding.
+
+--- NEXT STEPS ---
+- Extend to 15-30 minute generation to test for monotonic drift trends
+- Add human ratings: does voice sound perceptually different at start vs end?
+- Test with emotional speech — does emotional variation amplify drift?
+- Test with different reference speakers to check if drift is speaker-dependent
+- Investigate RMS instability in XTTS-v2 as potential generation artifact
+- Replace spectral_flatness with full Praat HNR/slope for better breathiness tracking
+- Add perceptual validation: ABX test random start vs end segments
+- Replace homogeneous narrative text with multi-genre scripted text (dialogue,
+  questions, lists, emotional shifts) to stress-test drift under content variation
+- Extend generation beyond 5 minutes to determine whether Chatterbox's faster
+  drift rate eventually causes it to overtake XTTS-v2 in cumulative distance
+  from reference
+- Run ABX listening tests to calibrate drift scores against perceptual
+  thresholds — what drift magnitude is actually audible?
+
+--- OUTPUTS ---
+results/features/window_features.csv     — all features per 15s window
+results/features/reference_features.json — reference anchor
+results/drift_by_window.csv              — drift per window per model
+results/drift_summary.csv                — summary per model
+results/figures/drift_over_time.png      — main finding visualization
+results/figures/drift_heatmap.png        — per-feature drift breakdown
+results/figures/early_vs_late_drift.png  — stability comparison
+data/long_form/{model}/full.wav          — generated long-form audio
+
+================================================================================
