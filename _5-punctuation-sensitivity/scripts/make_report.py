@@ -346,29 +346,34 @@ def build_html():
 
 <p>
 This benchmark evaluates how four TTS models interpret punctuation in prosody.
-The central finding is a <span class="finding">clear trade-off between F0-based
-and pause-based punctuation sensitivity</span>:
+Two independent dimensions emerged: <strong>F0 sensitivity</strong> (does the
+model pitch-bend for questions, exclamations, and quoted speech?) and
+<strong>pause ordering</strong> (does comma &lt; semicolon &lt; em-dash &lt; ellipsis
+hold?). No model scores high on both.
 </p>
 
 <ul style="margin-left:1.5em; margin-bottom:1em;">
     <li><strong>Chatterbox</strong> leads in F0 modulation: question marks trigger a
         <strong>+68.5 Hz/s</strong> rising slope versus periods, and quotation
-        shifts the F0 range by 50 Hz.</li>
-    <li><strong>XTTS-v2</strong> excels at pause-driven hierarchy: its comma-to-ellipsis
-        pause gradient (101.5 ms) is the largest among all models, yielding a
-        perfect hierarchy score of 1.0.</li>
-    <li><strong>F5-TTS</strong> shows moderate F0 sensitivity (question rise +31.8 Hz/s)
-        but has the weakest pause hierarchy (0.33).</li>
-    <li><strong>Kokoro</strong> produces minimal F0 variation across punctuation and
-        serves as an energetic baseline with moderate pause differentiation.</li>
+        shifts the F0 range by 50 Hz. Pause ordering is moderate (0.67).</li>
+    <li><strong>XTTS-v2</strong> has perfect pause ordering (1.00) with a clear
+        comma-to-ellipsis gradient (101.5 ms), but shows <em>zero</em>
+        question-mark F0 rise (−5.0 Hz/s).</li>
+    <li><strong>F5-TTS</strong> produces the largest pause magnitudes overall
+        (comma−ellipsis gradient 115.8 ms) but its pause <em>ordering</em> is
+        inverted (0.33) due to noisy, excessive internal pauses. Moderate
+        F0 sensitivity (+31.8 Hz/s).</li>
+    <li><strong>Kokoro</strong> (no-adaptation baseline) produces near-identical
+        terminal F0 for all punctuation types and has the smallest pause
+        gradient (31.0 ms). Serves as a punctuation-blind reference.</li>
 </ul>
 """)
 
     # ── Key Results Summary Table ──────────────────────────────────────────
     key_rows = [
         ("Chatterbox", "+68.5", "0.67", "YES", "F0 cues"),
-        ("XTTS-v2", "−5.0", "1.00", "NO", "Pause timing"),
-        ("F5-TTS", "+31.8", "0.33", "YES", "—"),
+        ("XTTS-v2", "−5.0", "1.00", "NO", "Pause ordering"),
+        ("F5-TTS", "+31.8", "0.33", "YES", "Noisy pauses"),
         ("Kokoro", "+25.7", "0.67", "NO", "baseline"),
     ]
     parts.append("""<h3>Key Results Summary</h3>
@@ -418,15 +423,20 @@ computed over the final 100 ms of each voiced region via linear regression.
 </p>
 
 <p>
-<strong>Gate check.</strong> A sanity gate was applied before analysis: each
-model's period-marked utterances were verified to have at least 50% of frames
-voiced in their final segment. All four models passed every gate item.
+<strong>Gate check.</strong> A minimum viability check was applied before
+analysis: each model's period-marked utterances were verified to have at least
+50% of frames voiced in their final segment. All four models passed every item
+(100% pass rate). This gate only confirms the model produced audible speech
+at utterance boundaries; it cannot detect mispronunciation, incorrect words,
+or prosodic failure modes such as flat intonation on questions.
 </p>
 """)
 
     # ── 3. Gate Check ──────────────────────────────────────────────────────
     parts.append("""<h2>3 &ensp; Gate Check Results</h2>
-<p>All models passed the sanity gate with a 100% pass rate on period-ending utterances.</p>
+<p>All models passed the minimum viability check with a 100% pass rate on period-ending utterances.
+This confirms that each model produced audible speech at utterance boundaries,
+but cannot detect mispronunciation or prosodic failure.</p>
 <table>
 <thead>
 <tr><th>Model</th><th>Period Items</th><th>Passing</th><th>Pass Rate</th><th>Status</th></tr>
@@ -487,7 +497,7 @@ for questions should show a large positive difference.
     parts.append("""
 <p>
 <strong>Interpretation.</strong> Chatterbox shows the strongest question-mark
-differentiation (+68.5 Hz/s relative to periods), followed by F5-TSS (+31.8 Hz/s)
+differentiation (+68.5 Hz/s relative to periods), followed by F5-TTS (+31.8 Hz/s)
 and Kokoro (+25.7 Hz/s). XTTS-v2 is essentially flat (−5.0 Hz/s), treating
 questions and statements with nearly identical F0 trajectories. For exclamation
 marks, F5-TTS produces the steepest downward slope (−489 Hz/s), indicating an
@@ -532,7 +542,7 @@ ordering across all pairs.
         parts.append(
             f"<tr><td>{name}</td><td>{fmt(comma)}</td><td>{fmt(semi)}</td>"
             f"<td>{fmt(dash)}</td><td>{fmt(ellip)}</td>"
-            f"<td><strong>{fmt(score)}</strong></td></tr>\n"
+            f"<td><strong>{fmt(score, 2)}</strong></td></tr>\n"
         )
     parts.append("</tbody></table>\n")
 
@@ -645,24 +655,27 @@ flag indicates whether the model changes its F0 profile for quotation marks.
 
     parts.append("""
 <p>
-<strong>Interpretation.</strong> Chatterbox shows the strongest quotation
-sensitivity, with a 50 Hz F0 range expansion — the widest shift of any model —
-clearly separating quoted from reported speech. F5-TTS also shifts F0 range
+<strong>Interpretation.</strong> Chatterbox shows a preliminary quotation
+sensitivity signal, with a 50 Hz F0 range expansion — the widest shift of any
+model — but based on only 2 utterances per condition (quoted vs reported).
+This is suggestive, not definitive. F5-TTS also shifts F0 range
 (+11.7 Hz) and the shift is flagged as detected. XTTS-v2 and Kokoro produce
 negligible range shifts (3.9 Hz and 3.7 Hz) and were not flagged, indicating
-they do not modulate F0 in response to quotation marks.
+they do not modulate F0 in response to quotation marks. Larger per-condition
+samples are needed before drawing firm conclusions.
 </p>
 """)
 
     # ── 8. Summary: F0 vs Pause Trade-Off ──────────────────────────────────
     overall = analysis["overall"]
     parts.append("""
-<h2>8 &ensp; Summary: The F0 vs Pause Trade-Off</h2>
+<h2>8 &ensp; Summary: Two Independent Dimensions</h2>
 
 <p>
-The scatter plot below visualises the central finding: models cluster along a
-diagonal trade-off between F0-based sensitivity (question-vs-period rise) and
-pause-based sensitivity (comma-to-ellipsis pause gradation).
+The scatter plot below shows that <strong>F0 sensitivity</strong> and
+<strong>pause ordering</strong> are independent dimensions. Models that
+score high on one tend to score low on the other — but F5-TTS is an
+exception, producing large pauses with inverted ordering.
 </p>
 
 <div class="figure-container">
@@ -685,40 +698,51 @@ pause-based sensitivity (comma-to-ellipsis pause gradation).
 
     parts.append("""<table>
 <thead>
-<tr><th>Model</th><th>Question Rise (Hz/s)</th><th>Pause Gradient (ms)</th><th>Dominant Strategy</th></tr>
+<tr><th>Model</th><th>Question Rise (Hz/s)</th><th>Pause Gradient (ms)</th><th>Pause Hierarchy</th><th>Dominant Strategy</th></tr>
 </thead>
 <tbody>
 """)
-    # Compute pause gradient: ellipsis mean - comma mean
     for m in MODEL_ORDER:
         d = overall.get(m, {})
         rise = d.get("question_vs_period_f0_diff_hz", "—")
         pause_diff = d.get("comma_to_ellipsis_pause_diff_ms", "—")
         name = MODEL_DISPLAY.get(m, m.title())
-        # classify strategy
+
+        # Get hierarchy score from pause_hierarchy data
+        ph_d = analysis["pause_hierarchy"].get(m, {})
+        hier_score = ph_d.get("hierarchy_score", 0)
+
         rv = rise if isinstance(rise, (int, float)) else -999
         pv = pause_diff if isinstance(pause_diff, (int, float)) else -999
-        if rv > 30 and pv < 50:
+
+        if rv > 30 and hier_score >= 0.6:
             strat = "F0-driven"
-        elif pv > 80:
-            strat = "Pause-driven"
-        elif rv > 10:
-            strat = "Mixed"
-        else:
+        elif hier_score >= 0.9 and rv < 20:
+            strat = "Pause-ordering"
+        elif pv > 80 and hier_score < 0.5:
+            strat = "Noisy pauses"
+        elif rv <= 10 and hier_score < 0.5:
             strat = "Minimal"
+        else:
+            strat = "Mixed"
+
         parts.append(
             f"<tr><td>{name}</td><td>{fmt(rise)}</td>"
-            f"<td>{fmt(pause_diff)}</td><td><em>{strat}</em></td></tr>\n"
+            f"<td>{fmt(pause_diff)}</td><td>{fmt(hier_score, 2)}</td>"
+            f"<td><em>{strat}</em></td></tr>\n"
         )
     parts.append("</tbody></table>\n")
 
     parts.append("""
 <div class="highlight">
-<p><strong>Key finding.</strong> Models that rely on F0 modulation for punctuation
-sensitivity (Chatterbox, F5-TTS) show weaker pause hierarchies, while the model
-with the strongest pause hierarchy (XTTS-v2) shows no F0-based punctuation
-differentiation. This trade-off suggests two distinct prosodic strategies in
-current TTS architectures.
+<p><strong>Key finding.</strong> F0 sensitivity and pause ordering are
+independent abilities in current TTS architectures. Chatterbox is
+F0-strong but has only moderate pause ordering (0.67). XTTS-v2 has
+perfect pause ordering (1.00) but zero question F0 rise. F5-TTS generates
+the largest pause magnitudes (115.8 ms comma−ellipsis gradient) but its
+pause <em>ordering</em> is inverted (0.33) due to excessive insertions of
+random pauses between words. No model combines strong F0 sensitivity with
+strong pause ordering.
 </p>
 </div>
 """)
