@@ -1,0 +1,4 @@
+model,window_idx,time_start,time_end,flags
+xtts,4,60.0,75.0,too_little_voicing=False,has_clipping=True
+xtts,6,90.0,105.0,too_little_voicing=False,has_clipping=True
+xtts,15,225.0,240.0,too_little_voicing=False,has_clipping=True
