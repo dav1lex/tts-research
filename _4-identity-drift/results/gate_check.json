@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "reference": {
+    "path": "/home/davilex/tts-benchmark/_4-identity-drift/data/reference/reference.wav",
+    "duration_sec": 3.8782,
+    "voiced_frame_ratio": 0.224,
+    "voiced_seconds": 0.86,
+    "has_clipping": false,
+    "passed": true
+  },
+  "models": {
+    "chatterbox": {
+      "total_windows": 19,
+      "passed_windows": 19,
+      "passed_ratio": 1.0,
+      "quality_flagged": false
+    },
+    "xtts": {
+      "total_windows": 21,
+      "passed_windows": 21,
+      "passed_ratio": 1.0,
+      "quality_flagged": false
+    },
+    "kokoro": {
+      "total_windows": 20,
+      "passed_windows": 20,
+      "passed_ratio": 1.0,
+      "quality_flagged": false
+    }
+  }
+}
