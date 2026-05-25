@@ -554,7 +554,8 @@ ordering across all pairs.
 <strong>Interpretation.</strong> XTTS-v2 achieves a perfect hierarchy score (1.0),
 with a clear monotonic increase from commas (146 ms) to ellipses (248 ms).
 Chatterbox and Kokoro tie at 0.67 — both show the correct general trend but with
-occasional inversions (e.g., em-dash shorter than semicolon). F5-TTS scores
+occasional inversions (em-dash is the <em>shortest</em> pause among all four
+marks for both Chatterbox and Kokoro — below even the comma). F5-TTS scores
 lowest (0.33); its pause durations are dominated by a high baseline — all marks
 produce pauses ≥200 ms — and the ordering between categories is inconsistent.
 </p>
