@@ -44,21 +44,6 @@
         "n": 3
       },
       "question_period_diff": -5.0
-    },
-    "f5tts": {
-      "period": {
-        "mean_slope": -87.0,
-        "n": 3
-      },
-      "exclamation": {
-        "mean_slope": -489.0,
-        "n": 3
-      },
-      "question": {
-        "mean_slope": -55.2,
-        "n": 3
-      },
-      "question_period_diff": 31.8
     }
   },
   "pause_hierarchy": {
@@ -130,41 +115,18 @@
         "n": 21
       },
       "hierarchy_score": 1.0
-    },
-    "f5tts": {
-      "comma": {
-        "mean_ms": 218.8,
-        "median_ms": 70.0,
-        "n": 48
-      },
-      "semicolon": {
-        "mean_ms": 354.7,
-        "median_ms": 80.0,
-        "n": 34
-      },
-      "em_dash": {
-        "mean_ms": 341.3,
-        "median_ms": 60.0,
-        "n": 38
-      },
-      "ellipsis": {
-        "mean_ms": 334.5,
-        "median_ms": 60.0,
-        "n": 40
-      },
-      "hierarchy_score": 0.33
     }
   },
   "trailing": {
     "chatterbox": {
       "ellipsis": {
         "f0_slope_mean": -124.6,
-        "amp_decay_mean": -4.85211e-05,
+        "amp_decay_mean": -4.85054e-05,
         "pause_mean": 235.0
       },
       "period": {
         "f0_slope_mean": -148.8,
-        "amp_decay_mean": -9.8369e-05,
+        "amp_decay_mean": -9.83538e-05,
         "pause_mean": 220.0
       },
       "trailing_f0_diff": 24.2
@@ -194,19 +156,6 @@
         "pause_mean": 690.0
       },
       "trailing_f0_diff": -17.1
-    },
-    "f5tts": {
-      "ellipsis": {
-        "f0_slope_mean": -86.0,
-        "amp_decay_mean": -0.00036764,
-        "pause_mean": 1285.0
-      },
-      "period": {
-        "f0_slope_mean": -87.2,
-        "amp_decay_mean": -0.0002450045,
-        "pause_mean": 1305.0
-      },
-      "trailing_f0_diff": 1.1
     }
   },
   "capitalization": {
@@ -221,16 +170,12 @@
     "xtts": {
       "rms_boost": true,
       "f0_boost": 0.0
-    },
-    "f5tts": {
-      "rms_boost": true,
-      "f0_boost": true
     }
   },
   "quotation": {
     "chatterbox": {
-      "f0_mean_shift": 8.5,
-      "f0_range_shift": 50.0,
+      "f0_mean_shift": 3.1,
+      "f0_range_shift": 249.0,
       "shift_detected": "True"
     },
     "kokoro": {
@@ -242,11 +187,6 @@
       "f0_mean_shift": 1.8,
       "f0_range_shift": 3.9,
       "shift_detected": "False"
-    },
-    "f5tts": {
-      "f0_mean_shift": 12.4,
-      "f0_range_shift": 11.7,
-      "shift_detected": "True"
     }
   },
   "overall": {
@@ -264,11 +204,6 @@
       "model": "xtts",
       "question_vs_period_f0_diff_hz": -5.0,
       "comma_to_ellipsis_pause_diff_ms": 101.5
-    },
-    "f5tts": {
-      "model": "f5tts",
-      "question_vs_period_f0_diff_hz": 31.8,
-      "comma_to_ellipsis_pause_diff_ms": 115.8
     }
   }
 }

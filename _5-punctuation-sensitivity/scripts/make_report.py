@@ -69,11 +69,10 @@ def fmt_int(val):
 MODEL_DISPLAY = {
     "chatterbox": "Chatterbox",
     "xtts": "XTTS-v2",
-    "f5tts": "F5-TTS",
     "kokoro": "Kokoro",
 }
 
-MODEL_ORDER = ["chatterbox", "kokoro", "xtts", "f5tts"]
+MODEL_ORDER = ["chatterbox", "kokoro", "xtts"]
 
 
 # ── load data ────────────────────────────────────────────────────────────────
@@ -334,8 +333,8 @@ def build_html():
 
 <h1>Punctuation Sensitivity Benchmark</h1>
 <p class="subtitle">
-    Comparative analysis of F0 and pause behaviour across four TTS models<br>
-    &mdash; Chatterbox, XTTS-v2, F5-TTS, and Kokoro &mdash;<br>
+    Comparative analysis of F0 and pause behaviour across three TTS models<br>
+    &mdash; Chatterbox, XTTS-v2, and Kokoro &mdash;<br>
     across 28 utterances spanning 5 punctuation categories.
 </p>
 """)
@@ -345,7 +344,7 @@ def build_html():
 <h2>1 &ensp; Executive Summary</h2>
 
 <p>
-This benchmark evaluates how four TTS models interpret punctuation in prosody.
+This benchmark evaluates how three TTS models interpret punctuation in prosody.
 Two independent dimensions emerged: <strong>F0 sensitivity</strong> (does the
 model pitch-bend for questions, exclamations, and quoted speech?) and
 <strong>pause ordering</strong> (does comma &lt; semicolon &lt; em-dash &lt; ellipsis
@@ -357,12 +356,8 @@ hold?). No model scores high on both.
         <strong>+68.5 Hz/s</strong> rising slope versus periods, and quotation
         shifts the F0 range by 50 Hz. Pause ordering is moderate (0.67).</li>
     <li><strong>XTTS-v2</strong> has perfect pause ordering (1.00) with a clear
-        comma-to-ellipsis gradient (101.5 ms), but shows <em>zero</em>
+        comma-to-ellipsis gradient (101.5 ms), but shows <em>near-zero</em>
         question-mark F0 rise (−5.0 Hz/s).</li>
-    <li><strong>F5-TTS</strong> produces the largest pause magnitudes overall
-        (comma−ellipsis gradient 115.8 ms) but its pause <em>ordering</em> is
-        inverted (0.33) due to noisy, excessive internal pauses. Moderate
-        F0 sensitivity (+31.8 Hz/s).</li>
     <li><strong>Kokoro</strong> (no-adaptation baseline) has near-identical
         terminal F0 for sentence-end punctuation but shows the strongest
         trailing-punctuation F0 differentiation (+60.7 Hz/s ellipsis vs
@@ -376,7 +371,6 @@ hold?). No model scores high on both.
     key_rows = [
         ("Chatterbox", "+68.5", "0.67", "YES", "F0 cues"),
         ("XTTS-v2", "−5.0", "1.00", "NO", "Pause ordering"),
-        ("F5-TTS", "+31.8", "0.33", "YES", "Noisy pauses"),
         ("Kokoro", "+25.7", "0.67", "NO", "baseline"),
     ]
     parts.append("""<h3>Key Results Summary</h3>
@@ -411,7 +405,7 @@ em-dash, ellipsis), <em>trailing punctuation</em> (ellipsis vs period),
 </p>
 
 <p>
-<strong>Models (4).</strong> Chatterbox, XTTS-v2, F5-TTS, and Kokoro were each
+<strong>Models (3).</strong> Chatterbox, XTTS-v2, and Kokoro were each
 used to generate 28 audio clips at 24 kHz. Synthesis used default sampling
 parameters (temperature=0.7, top-k=40 where applicable) with no voice cloning
 or speaker conditioning.
@@ -500,11 +494,9 @@ for questions should show a large positive difference.
     parts.append("""
 <p>
 <strong>Interpretation.</strong> Chatterbox shows the strongest question-mark
-differentiation (+68.5 Hz/s relative to periods), followed by F5-TTS (+31.8 Hz/s)
-and Kokoro (+25.7 Hz/s). XTTS-v2 is essentially flat (−5.0 Hz/s), treating
-questions and statements with nearly identical F0 trajectories. For exclamation
-marks, F5-TTS produces the steepest downward slope (−489 Hz/s), indicating an
-aggressive terminal fall.
+differentiation (+68.5 Hz/s relative to periods), followed by
+Kokoro (+25.7 Hz/s). XTTS-v2 is near-zero (−5.0 Hz/s), treating
+questions and statements with nearly identical F0 trajectories.
 </p>
 """)
 
@@ -555,9 +547,7 @@ ordering across all pairs.
 with a clear monotonic increase from commas (146 ms) to ellipses (248 ms).
 Chatterbox and Kokoro tie at 0.67 — both show the correct general trend but with
 occasional inversions (em-dash is the <em>shortest</em> pause among all four
-marks for both Chatterbox and Kokoro — below even the comma). F5-TTS scores
-lowest (0.33); its pause durations are dominated by a high baseline — all marks
-produce pauses ≥200 ms — and the ordering between categories is inconsistent.
+marks for both Chatterbox and Kokoro — below even the comma).
 </p>
 """)
 
@@ -608,8 +598,8 @@ different F0 and pause behaviour between the two.
 <strong>Interpretation.</strong> Kokoro shows the largest F0 difference between
 ellipsis and period (+60.7 Hz/s), indicating distinct prosodic treatment of
 suspension vs finality. Chatterbox also differentiates (+24.2 Hz/s). XTTS-v2
-and F5-TTS show negligible differences (−17.1 and +1.1 Hz/s respectively),
-suggesting they do not prosodically distinguish trailing ellipsis from a period.
+shows a negligible difference (−17.1 Hz/s),
+suggesting it does not prosodically distinguish trailing ellipsis from a period.
 Pause durations are broadly similar within each model across the two conditions.
 </p>
 """)
@@ -662,8 +652,7 @@ flag indicates whether the model changes its F0 profile for quotation marks.
 <strong>Interpretation.</strong> Chatterbox shows a preliminary quotation
 sensitivity signal, with a 50 Hz F0 range expansion — the widest shift of any
 model — but based on only 2 utterances per condition (quoted vs reported).
-This is suggestive, not definitive. F5-TTS also shifts F0 range
-(+11.7 Hz) and the shift is flagged as detected. XTTS-v2 and Kokoro produce
+This is suggestive, not definitive. XTTS-v2 and Kokoro produce
 negligible range shifts (3.9 Hz and 3.7 Hz) and were not flagged, indicating
 they do not modulate F0 in response to quotation marks. Larger per-condition
 samples are needed before drawing firm conclusions.
@@ -678,8 +667,7 @@ samples are needed before drawing firm conclusions.
 <p>
 The scatter plot below shows that <strong>F0 sensitivity</strong> and
 <strong>pause ordering</strong> are independent dimensions. Models that
-score high on one tend to score low on the other — but F5-TTS is an
-exception, producing large pauses with inverted ordering.
+score high on one tend to score low on the other.
 </p>
 
 <div class="figure-container">
@@ -742,10 +730,8 @@ exception, producing large pauses with inverted ordering.
 <p><strong>Key finding.</strong> F0 sensitivity and pause ordering are
 independent abilities in current TTS architectures. Chatterbox is
 F0-strong but has only moderate pause ordering (0.67). XTTS-v2 has
-perfect pause ordering (1.00) but zero question F0 rise. F5-TTS generates
-the largest pause magnitudes (115.8 ms comma−ellipsis gradient) but its
-pause <em>ordering</em> is inverted (0.33) due to excessive insertions of
-random pauses between words. No model combines strong F0 sensitivity with
+perfect pause ordering (1.00) but near-zero question F0 rise.
+No model combines strong F0 sensitivity with
 strong pause ordering.
 </p>
 </div>
@@ -785,7 +771,7 @@ boost and F0 boost relative to the lowercase baseline.
 <p>
 <strong>Interpretation.</strong> All models increase RMS amplitude for ALL CAPS
 text, suggesting a universal "louder = emphatic" strategy. F0 boost in ALL CAPS
-is less common: only F5-TTS shows a clear F0 elevation. Chatterbox and XTTS-v2
+is less common across models. Chatterbox and XTTS-v2
 do not raise F0 for all-caps, while Kokoro's data was inconclusive.
 </p>
 """)
@@ -823,7 +809,7 @@ do not raise F0 for all-caps, while Kokoro's data was inconclusive.
     parts.append("""
 <div class="footer">
     Generated from the Punctuation Sensitivity Benchmark &mdash; analysis of
-    112 utterances across Chatterbox, XTTS-v2, F5-TTS, and Kokoro.
+    84 utterances across Chatterbox, XTTS-v2, and Kokoro.
     <br>Report generated with Python 3.12 &bull; stdlib only.
 </div>
 

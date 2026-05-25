@@ -13,10 +13,5 @@
     "model": "xtts",
     "question_vs_period_f0_diff_hz": -5.0,
     "comma_to_ellipsis_pause_diff_ms": 101.5
-  },
-  "f5tts": {
-    "model": "f5tts",
-    "question_vs_period_f0_diff_hz": 31.8,
-    "comma_to_ellipsis_pause_diff_ms": 115.8
   }
 }

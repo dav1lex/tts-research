@@ -14,9 +14,9 @@ FEATURES = PROJECT / "results" / "features" / "pause_features.csv"
 FIG_DIR = PROJECT / "results" / "figures"
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 
-MODEL_ORDER = ["chatterbox", "xtts", "f5tts", "kokoro"]
-MODEL_LABELS = {"chatterbox": "Chatterbox", "xtts": "XTTS-v2", "f5tts": "F5-TTS", "kokoro": "Kokoro\n(no-adaptation baseline)"}
-MODEL_COLORS = {"chatterbox": "#2196F3", "xtts": "#FF9800", "f5tts": "#4CAF50", "kokoro": "#9E9E9E"}
+MODEL_ORDER = ["chatterbox", "xtts", "kokoro"]
+MODEL_LABELS = {"chatterbox": "Chatterbox", "xtts": "XTTS-v2", "kokoro": "Kokoro\n(no-adaptation baseline)"}
+MODEL_COLORS = {"chatterbox": "#2196F3", "xtts": "#FF9800", "kokoro": "#9E9E9E"}
 PUNCT_ORDER = ["period", "exclamation", "question"]
 PUNCT_LABELS = {"period": "Period (.)", "exclamation": "Exclamation (!)", "question": "Question (?)"}
 HIERARCHY_ORDER = ["comma", "semicolon", "em_dash", "ellipsis"]

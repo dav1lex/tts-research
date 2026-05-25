@@ -117,7 +117,7 @@ def main():
     with open(CORPUS) as f:
         rows = list(csv.DictReader(f))
 
-    models = ["chatterbox", "kokoro", "xtts", "f5tts"]
+    models = ["chatterbox", "kokoro", "xtts"]
     all_features = []
 
     for model in models:
