@@ -4,14 +4,14 @@
     "question_vs_period_f0_diff_hz": 68.5,
     "comma_to_ellipsis_pause_diff_ms": 5.6
   },
-  "kokoro": {
-    "model": "kokoro",
-    "question_vs_period_f0_diff_hz": 25.7,
-    "comma_to_ellipsis_pause_diff_ms": 30.8
-  },
   "xtts": {
     "model": "xtts",
     "question_vs_period_f0_diff_hz": -5.0,
     "comma_to_ellipsis_pause_diff_ms": 101.5
+  },
+  "kokoro": {
+    "model": "kokoro",
+    "question_vs_period_f0_diff_hz": 25.7,
+    "comma_to_ellipsis_pause_diff_ms": 30.8
   }
 }

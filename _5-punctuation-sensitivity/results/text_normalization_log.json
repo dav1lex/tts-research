@@ -1,0 +1,506 @@
+{
+  "chatterbox/s01": {
+    "model": "chatterbox",
+    "id": "s01",
+    "expected_text": "I'm going home now.",
+    "text_sent_to_model": "I'm going home now."
+  },
+  "chatterbox/s02": {
+    "model": "chatterbox",
+    "id": "s02",
+    "expected_text": "I'm going home now!",
+    "text_sent_to_model": "I'm going home now!"
+  },
+  "chatterbox/s03": {
+    "model": "chatterbox",
+    "id": "s03",
+    "expected_text": "I'm going home now?",
+    "text_sent_to_model": "I'm going home now?"
+  },
+  "chatterbox/s04": {
+    "model": "chatterbox",
+    "id": "s04",
+    "expected_text": "She said she would come.",
+    "text_sent_to_model": "She said she would come."
+  },
+  "chatterbox/s05": {
+    "model": "chatterbox",
+    "id": "s05",
+    "expected_text": "She said she would come!",
+    "text_sent_to_model": "She said she would come!"
+  },
+  "chatterbox/s06": {
+    "model": "chatterbox",
+    "id": "s06",
+    "expected_text": "She said she would come?",
+    "text_sent_to_model": "She said she would come?"
+  },
+  "chatterbox/s07": {
+    "model": "chatterbox",
+    "id": "s07",
+    "expected_text": "Wait for me.",
+    "text_sent_to_model": "Wait for me."
+  },
+  "chatterbox/s08": {
+    "model": "chatterbox",
+    "id": "s08",
+    "expected_text": "Wait for me!",
+    "text_sent_to_model": "Wait for me!"
+  },
+  "chatterbox/s09": {
+    "model": "chatterbox",
+    "id": "s09",
+    "expected_text": "Wait for me?",
+    "text_sent_to_model": "Wait for me?"
+  },
+  "chatterbox/p01": {
+    "model": "chatterbox",
+    "id": "p01",
+    "expected_text": "I went to the store, bought some bread, and then walked home.",
+    "text_sent_to_model": "I went to the store, bought some bread, and then walked home."
+  },
+  "chatterbox/p02": {
+    "model": "chatterbox",
+    "id": "p02",
+    "expected_text": "I went to the store \u2014 bought some bread \u2014 and then walked home.",
+    "text_sent_to_model": "I went to the store \u2014 bought some bread \u2014 and then walked home."
+  },
+  "chatterbox/p03": {
+    "model": "chatterbox",
+    "id": "p03",
+    "expected_text": "I went to the store... bought some bread... and then walked home.",
+    "text_sent_to_model": "I went to the store... bought some bread... and then walked home."
+  },
+  "chatterbox/p04": {
+    "model": "chatterbox",
+    "id": "p04",
+    "expected_text": "I went to the store; bought some bread; and then walked home.",
+    "text_sent_to_model": "I went to the store; bought some bread; and then walked home."
+  },
+  "chatterbox/p05": {
+    "model": "chatterbox",
+    "id": "p05",
+    "expected_text": "The sun was setting, the birds fell silent, and a chill crept in.",
+    "text_sent_to_model": "The sun was setting, the birds fell silent, and a chill crept in."
+  },
+  "chatterbox/p06": {
+    "model": "chatterbox",
+    "id": "p06",
+    "expected_text": "The sun was setting \u2014 the birds fell silent \u2014 and a chill crept in.",
+    "text_sent_to_model": "The sun was setting \u2014 the birds fell silent \u2014 and a chill crept in."
+  },
+  "chatterbox/p07": {
+    "model": "chatterbox",
+    "id": "p07",
+    "expected_text": "The sun was setting... the birds fell silent... and a chill crept in.",
+    "text_sent_to_model": "The sun was setting... the birds fell silent... and a chill crept in."
+  },
+  "chatterbox/p08": {
+    "model": "chatterbox",
+    "id": "p08",
+    "expected_text": "The sun was setting; the birds fell silent; and a chill crept in.",
+    "text_sent_to_model": "The sun was setting; the birds fell silent; and a chill crept in."
+  },
+  "chatterbox/q01": {
+    "model": "chatterbox",
+    "id": "q01",
+    "expected_text": "She said \"wait for me.\"",
+    "text_sent_to_model": "She said \"wait for me.\""
+  },
+  "chatterbox/q02": {
+    "model": "chatterbox",
+    "id": "q02",
+    "expected_text": "She said wait for me.",
+    "text_sent_to_model": "She said wait for me."
+  },
+  "chatterbox/q03": {
+    "model": "chatterbox",
+    "id": "q03",
+    "expected_text": "\"I can't believe it,\" she whispered.",
+    "text_sent_to_model": "\"I can't believe it,\" she whispered."
+  },
+  "chatterbox/q04": {
+    "model": "chatterbox",
+    "id": "q04",
+    "expected_text": "I can't believe it, she whispered.",
+    "text_sent_to_model": "I can't believe it, she whispered."
+  },
+  "chatterbox/t01": {
+    "model": "chatterbox",
+    "id": "t01",
+    "expected_text": "I thought you knew...",
+    "text_sent_to_model": "I thought you knew..."
+  },
+  "chatterbox/t02": {
+    "model": "chatterbox",
+    "id": "t02",
+    "expected_text": "I thought you knew.",
+    "text_sent_to_model": "I thought you knew."
+  },
+  "chatterbox/t03": {
+    "model": "chatterbox",
+    "id": "t03",
+    "expected_text": "Maybe tomorrow...",
+    "text_sent_to_model": "Maybe tomorrow..."
+  },
+  "chatterbox/t04": {
+    "model": "chatterbox",
+    "id": "t04",
+    "expected_text": "Maybe tomorrow.",
+    "text_sent_to_model": "Maybe tomorrow."
+  },
+  "chatterbox/c01": {
+    "model": "chatterbox",
+    "id": "c01",
+    "expected_text": "STOP!",
+    "text_sent_to_model": "STOP!"
+  },
+  "chatterbox/c02": {
+    "model": "chatterbox",
+    "id": "c02",
+    "expected_text": "Stop!",
+    "text_sent_to_model": "Stop!"
+  },
+  "chatterbox/c03": {
+    "model": "chatterbox",
+    "id": "c03",
+    "expected_text": "stop!",
+    "text_sent_to_model": "stop!"
+  },
+  "kokoro/s01": {
+    "model": "kokoro",
+    "id": "s01",
+    "expected_text": "I'm going home now.",
+    "text_sent_to_model": "I'm going home now."
+  },
+  "kokoro/s02": {
+    "model": "kokoro",
+    "id": "s02",
+    "expected_text": "I'm going home now!",
+    "text_sent_to_model": "I'm going home now!"
+  },
+  "kokoro/s03": {
+    "model": "kokoro",
+    "id": "s03",
+    "expected_text": "I'm going home now?",
+    "text_sent_to_model": "I'm going home now?"
+  },
+  "kokoro/s04": {
+    "model": "kokoro",
+    "id": "s04",
+    "expected_text": "She said she would come.",
+    "text_sent_to_model": "She said she would come."
+  },
+  "kokoro/s05": {
+    "model": "kokoro",
+    "id": "s05",
+    "expected_text": "She said she would come!",
+    "text_sent_to_model": "She said she would come!"
+  },
+  "kokoro/s06": {
+    "model": "kokoro",
+    "id": "s06",
+    "expected_text": "She said she would come?",
+    "text_sent_to_model": "She said she would come?"
+  },
+  "kokoro/s07": {
+    "model": "kokoro",
+    "id": "s07",
+    "expected_text": "Wait for me.",
+    "text_sent_to_model": "Wait for me."
+  },
+  "kokoro/s08": {
+    "model": "kokoro",
+    "id": "s08",
+    "expected_text": "Wait for me!",
+    "text_sent_to_model": "Wait for me!"
+  },
+  "kokoro/s09": {
+    "model": "kokoro",
+    "id": "s09",
+    "expected_text": "Wait for me?",
+    "text_sent_to_model": "Wait for me?"
+  },
+  "kokoro/p01": {
+    "model": "kokoro",
+    "id": "p01",
+    "expected_text": "I went to the store, bought some bread, and then walked home.",
+    "text_sent_to_model": "I went to the store, bought some bread, and then walked home."
+  },
+  "kokoro/p02": {
+    "model": "kokoro",
+    "id": "p02",
+    "expected_text": "I went to the store \u2014 bought some bread \u2014 and then walked home.",
+    "text_sent_to_model": "I went to the store \u2014 bought some bread \u2014 and then walked home."
+  },
+  "kokoro/p03": {
+    "model": "kokoro",
+    "id": "p03",
+    "expected_text": "I went to the store... bought some bread... and then walked home.",
+    "text_sent_to_model": "I went to the store... bought some bread... and then walked home."
+  },
+  "kokoro/p04": {
+    "model": "kokoro",
+    "id": "p04",
+    "expected_text": "I went to the store; bought some bread; and then walked home.",
+    "text_sent_to_model": "I went to the store; bought some bread; and then walked home."
+  },
+  "kokoro/p05": {
+    "model": "kokoro",
+    "id": "p05",
+    "expected_text": "The sun was setting, the birds fell silent, and a chill crept in.",
+    "text_sent_to_model": "The sun was setting, the birds fell silent, and a chill crept in."
+  },
+  "kokoro/p06": {
+    "model": "kokoro",
+    "id": "p06",
+    "expected_text": "The sun was setting \u2014 the birds fell silent \u2014 and a chill crept in.",
+    "text_sent_to_model": "The sun was setting \u2014 the birds fell silent \u2014 and a chill crept in."
+  },
+  "kokoro/p07": {
+    "model": "kokoro",
+    "id": "p07",
+    "expected_text": "The sun was setting... the birds fell silent... and a chill crept in.",
+    "text_sent_to_model": "The sun was setting... the birds fell silent... and a chill crept in."
+  },
+  "kokoro/p08": {
+    "model": "kokoro",
+    "id": "p08",
+    "expected_text": "The sun was setting; the birds fell silent; and a chill crept in.",
+    "text_sent_to_model": "The sun was setting; the birds fell silent; and a chill crept in."
+  },
+  "kokoro/q01": {
+    "model": "kokoro",
+    "id": "q01",
+    "expected_text": "She said \"wait for me.\"",
+    "text_sent_to_model": "She said \"wait for me.\""
+  },
+  "kokoro/q02": {
+    "model": "kokoro",
+    "id": "q02",
+    "expected_text": "She said wait for me.",
+    "text_sent_to_model": "She said wait for me."
+  },
+  "kokoro/q03": {
+    "model": "kokoro",
+    "id": "q03",
+    "expected_text": "\"I can't believe it,\" she whispered.",
+    "text_sent_to_model": "\"I can't believe it,\" she whispered."
+  },
+  "kokoro/q04": {
+    "model": "kokoro",
+    "id": "q04",
+    "expected_text": "I can't believe it, she whispered.",
+    "text_sent_to_model": "I can't believe it, she whispered."
+  },
+  "kokoro/t01": {
+    "model": "kokoro",
+    "id": "t01",
+    "expected_text": "I thought you knew...",
+    "text_sent_to_model": "I thought you knew..."
+  },
+  "kokoro/t02": {
+    "model": "kokoro",
+    "id": "t02",
+    "expected_text": "I thought you knew.",
+    "text_sent_to_model": "I thought you knew."
+  },
+  "kokoro/t03": {
+    "model": "kokoro",
+    "id": "t03",
+    "expected_text": "Maybe tomorrow...",
+    "text_sent_to_model": "Maybe tomorrow..."
+  },
+  "kokoro/t04": {
+    "model": "kokoro",
+    "id": "t04",
+    "expected_text": "Maybe tomorrow.",
+    "text_sent_to_model": "Maybe tomorrow."
+  },
+  "kokoro/c01": {
+    "model": "kokoro",
+    "id": "c01",
+    "expected_text": "STOP!",
+    "text_sent_to_model": "STOP!"
+  },
+  "kokoro/c02": {
+    "model": "kokoro",
+    "id": "c02",
+    "expected_text": "Stop!",
+    "text_sent_to_model": "Stop!"
+  },
+  "kokoro/c03": {
+    "model": "kokoro",
+    "id": "c03",
+    "expected_text": "stop!",
+    "text_sent_to_model": "stop!"
+  },
+  "xtts/s01": {
+    "model": "xtts",
+    "id": "s01",
+    "expected_text": "I'm going home now.",
+    "text_sent_to_model": "I'm going home now."
+  },
+  "xtts/s02": {
+    "model": "xtts",
+    "id": "s02",
+    "expected_text": "I'm going home now!",
+    "text_sent_to_model": "I'm going home now!"
+  },
+  "xtts/s03": {
+    "model": "xtts",
+    "id": "s03",
+    "expected_text": "I'm going home now?",
+    "text_sent_to_model": "I'm going home now?"
+  },
+  "xtts/s04": {
+    "model": "xtts",
+    "id": "s04",
+    "expected_text": "She said she would come.",
+    "text_sent_to_model": "She said she would come."
+  },
+  "xtts/s05": {
+    "model": "xtts",
+    "id": "s05",
+    "expected_text": "She said she would come!",
+    "text_sent_to_model": "She said she would come!"
+  },
+  "xtts/s06": {
+    "model": "xtts",
+    "id": "s06",
+    "expected_text": "She said she would come?",
+    "text_sent_to_model": "She said she would come?"
+  },
+  "xtts/s07": {
+    "model": "xtts",
+    "id": "s07",
+    "expected_text": "Wait for me.",
+    "text_sent_to_model": "Wait for me."
+  },
+  "xtts/s08": {
+    "model": "xtts",
+    "id": "s08",
+    "expected_text": "Wait for me!",
+    "text_sent_to_model": "Wait for me!"
+  },
+  "xtts/s09": {
+    "model": "xtts",
+    "id": "s09",
+    "expected_text": "Wait for me?",
+    "text_sent_to_model": "Wait for me?"
+  },
+  "xtts/p01": {
+    "model": "xtts",
+    "id": "p01",
+    "expected_text": "I went to the store, bought some bread, and then walked home.",
+    "text_sent_to_model": "I went to the store, bought some bread, and then walked home."
+  },
+  "xtts/p02": {
+    "model": "xtts",
+    "id": "p02",
+    "expected_text": "I went to the store \u2014 bought some bread \u2014 and then walked home.",
+    "text_sent_to_model": "I went to the store \u2014 bought some bread \u2014 and then walked home."
+  },
+  "xtts/p03": {
+    "model": "xtts",
+    "id": "p03",
+    "expected_text": "I went to the store... bought some bread... and then walked home.",
+    "text_sent_to_model": "I went to the store... bought some bread... and then walked home."
+  },
+  "xtts/p04": {
+    "model": "xtts",
+    "id": "p04",
+    "expected_text": "I went to the store; bought some bread; and then walked home.",
+    "text_sent_to_model": "I went to the store; bought some bread; and then walked home."
+  },
+  "xtts/p05": {
+    "model": "xtts",
+    "id": "p05",
+    "expected_text": "The sun was setting, the birds fell silent, and a chill crept in.",
+    "text_sent_to_model": "The sun was setting, the birds fell silent, and a chill crept in."
+  },
+  "xtts/p06": {
+    "model": "xtts",
+    "id": "p06",
+    "expected_text": "The sun was setting \u2014 the birds fell silent \u2014 and a chill crept in.",
+    "text_sent_to_model": "The sun was setting \u2014 the birds fell silent \u2014 and a chill crept in."
+  },
+  "xtts/p07": {
+    "model": "xtts",
+    "id": "p07",
+    "expected_text": "The sun was setting... the birds fell silent... and a chill crept in.",
+    "text_sent_to_model": "The sun was setting... the birds fell silent... and a chill crept in."
+  },
+  "xtts/p08": {
+    "model": "xtts",
+    "id": "p08",
+    "expected_text": "The sun was setting; the birds fell silent; and a chill crept in.",
+    "text_sent_to_model": "The sun was setting; the birds fell silent; and a chill crept in."
+  },
+  "xtts/q01": {
+    "model": "xtts",
+    "id": "q01",
+    "expected_text": "She said \"wait for me.\"",
+    "text_sent_to_model": "She said \"wait for me.\""
+  },
+  "xtts/q02": {
+    "model": "xtts",
+    "id": "q02",
+    "expected_text": "She said wait for me.",
+    "text_sent_to_model": "She said wait for me."
+  },
+  "xtts/q03": {
+    "model": "xtts",
+    "id": "q03",
+    "expected_text": "\"I can't believe it,\" she whispered.",
+    "text_sent_to_model": "\"I can't believe it,\" she whispered."
+  },
+  "xtts/q04": {
+    "model": "xtts",
+    "id": "q04",
+    "expected_text": "I can't believe it, she whispered.",
+    "text_sent_to_model": "I can't believe it, she whispered."
+  },
+  "xtts/t01": {
+    "model": "xtts",
+    "id": "t01",
+    "expected_text": "I thought you knew...",
+    "text_sent_to_model": "I thought you knew..."
+  },
+  "xtts/t02": {
+    "model": "xtts",
+    "id": "t02",
+    "expected_text": "I thought you knew.",
+    "text_sent_to_model": "I thought you knew."
+  },
+  "xtts/t03": {
+    "model": "xtts",
+    "id": "t03",
+    "expected_text": "Maybe tomorrow...",
+    "text_sent_to_model": "Maybe tomorrow..."
+  },
+  "xtts/t04": {
+    "model": "xtts",
+    "id": "t04",
+    "expected_text": "Maybe tomorrow.",
+    "text_sent_to_model": "Maybe tomorrow."
+  },
+  "xtts/c01": {
+    "model": "xtts",
+    "id": "c01",
+    "expected_text": "STOP!",
+    "text_sent_to_model": "STOP!"
+  },
+  "xtts/c02": {
+    "model": "xtts",
+    "id": "c02",
+    "expected_text": "Stop!",
+    "text_sent_to_model": "Stop!"
+  },
+  "xtts/c03": {
+    "model": "xtts",
+    "id": "c03",
+    "expected_text": "stop!",
+    "text_sent_to_model": "stop!"
+  }
+}

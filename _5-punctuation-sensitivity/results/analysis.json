@@ -2,48 +2,78 @@
   "sentence_end": {
     "chatterbox": {
       "period": {
-        "mean_slope": -8.3,
+        "mean": -8.3,
+        "ci_low": -43.7,
+        "ci_high": 23.4,
         "n": 3
       },
       "exclamation": {
-        "mean_slope": -106.5,
+        "mean": -106.5,
+        "ci_low": -195.2,
+        "ci_high": -17.4,
         "n": 3
       },
       "question": {
-        "mean_slope": 60.2,
+        "mean": 60.2,
+        "ci_low": 50.7,
+        "ci_high": 77.4,
         "n": 3
       },
-      "question_period_diff": 68.5
+      "question_period_diff": 68.5,
+      "question_vs_period_effect_size": {
+        "d": 2.63,
+        "interpretation": "large"
+      }
     },
     "kokoro": {
       "period": {
-        "mean_slope": -251.9,
+        "mean": -251.9,
+        "ci_low": -411.6,
+        "ci_high": -92.2,
         "n": 2
       },
       "exclamation": {
-        "mean_slope": -488.5,
+        "mean": -488.5,
+        "ci_low": -666.5,
+        "ci_high": -310.5,
         "n": 2
       },
       "question": {
-        "mean_slope": -226.2,
+        "mean": -226.2,
+        "ci_low": -433.5,
+        "ci_high": -18.8,
         "n": 2
       },
-      "question_period_diff": 25.7
+      "question_period_diff": 25.7,
+      "question_vs_period_effect_size": {
+        "d": 0.098,
+        "interpretation": "negligible"
+      }
     },
     "xtts": {
       "period": {
-        "mean_slope": -83.0,
+        "mean": -83.0,
+        "ci_low": -115.6,
+        "ci_high": -66.4,
         "n": 3
       },
       "exclamation": {
-        "mean_slope": -158.9,
+        "mean": -158.9,
+        "ci_low": -189.9,
+        "ci_high": -135.9,
         "n": 3
       },
       "question": {
-        "mean_slope": -88.0,
+        "mean": -88.0,
+        "ci_low": -105.4,
+        "ci_high": -66.3,
         "n": 3
       },
-      "question_period_diff": -5.0
+      "question_period_diff": -5.0,
+      "question_vs_period_effect_size": {
+        "d": -0.205,
+        "interpretation": "small"
+      }
     }
   },
   "pause_hierarchy": {
@@ -51,21 +81,29 @@
       "comma": {
         "mean_ms": 112.5,
         "median_ms": 65.0,
+        "ci_low_ms": 66.5,
+        "ci_high_ms": 165.0,
         "n": 20
       },
       "semicolon": {
         "mean_ms": 119.1,
         "median_ms": 60.0,
+        "ci_low_ms": 77.8,
+        "ci_high_ms": 168.7,
         "n": 23
       },
       "em_dash": {
         "mean_ms": 110.8,
         "median_ms": 70.0,
+        "ci_low_ms": 77.9,
+        "ci_high_ms": 151.3,
         "n": 24
       },
       "ellipsis": {
         "mean_ms": 118.1,
         "median_ms": 65.0,
+        "ci_low_ms": 83.1,
+        "ci_high_ms": 158.5,
         "n": 26
       },
       "hierarchy_score": 0.67
@@ -74,21 +112,29 @@
       "comma": {
         "mean_ms": 135.8,
         "median_ms": 110.0,
+        "ci_low_ms": 79.2,
+        "ci_high_ms": 201.7,
         "n": 12
       },
       "semicolon": {
         "mean_ms": 154.5,
         "median_ms": 110.0,
+        "ci_low_ms": 91.8,
+        "ci_high_ms": 220.0,
         "n": 11
       },
       "em_dash": {
         "mean_ms": 126.9,
         "median_ms": 40.0,
+        "ci_low_ms": 66.1,
+        "ci_high_ms": 190.0,
         "n": 13
       },
       "ellipsis": {
         "mean_ms": 166.7,
         "median_ms": 150.0,
+        "ci_low_ms": 94.2,
+        "ci_high_ms": 243.4,
         "n": 12
       },
       "hierarchy_score": 0.67
@@ -97,21 +143,29 @@
       "comma": {
         "mean_ms": 146.2,
         "median_ms": 80.0,
+        "ci_low_ms": 76.9,
+        "ci_high_ms": 231.5,
         "n": 13
       },
       "semicolon": {
         "mean_ms": 194.6,
         "median_ms": 60.0,
+        "ci_low_ms": 80.8,
+        "ci_high_ms": 321.6,
         "n": 13
       },
       "em_dash": {
         "mean_ms": 220.0,
         "median_ms": 55.0,
+        "ci_low_ms": 91.4,
+        "ci_high_ms": 368.6,
         "n": 14
       },
       "ellipsis": {
         "mean_ms": 247.6,
         "median_ms": 70.0,
+        "ci_low_ms": 82.4,
+        "ci_high_ms": 444.3,
         "n": 21
       },
       "hierarchy_score": 1.0
@@ -121,41 +175,71 @@
     "chatterbox": {
       "ellipsis": {
         "f0_slope_mean": -124.6,
+        "f0_slope_ci_low": -130.5,
+        "f0_slope_ci_high": -118.7,
+        "n_f0": 2,
         "amp_decay_mean": -4.85054e-05,
         "pause_mean": 235.0
       },
       "period": {
         "f0_slope_mean": -148.8,
+        "f0_slope_ci_low": -222.9,
+        "f0_slope_ci_high": -74.7,
+        "n_f0": 2,
         "amp_decay_mean": -9.83538e-05,
         "pause_mean": 220.0
       },
-      "trailing_f0_diff": 24.2
+      "trailing_f0_diff": 24.2,
+      "trailing_effect_size": {
+        "d": 0.326,
+        "interpretation": "small"
+      }
     },
     "kokoro": {
       "ellipsis": {
         "f0_slope_mean": 63.1,
+        "f0_slope_ci_low": 55.4,
+        "f0_slope_ci_high": 70.7,
+        "n_f0": 2,
         "amp_decay_mean": -4.89e-08,
         "pause_mean": 500.0
       },
       "period": {
         "f0_slope_mean": 2.4,
+        "f0_slope_ci_low": -37.1,
+        "f0_slope_ci_high": 41.9,
+        "n_f0": 2,
         "amp_decay_mean": -1.823e-07,
         "pause_mean": 505.0
       },
-      "trailing_f0_diff": 60.7
+      "trailing_f0_diff": 60.7,
+      "trailing_effect_size": {
+        "d": 1.507,
+        "interpretation": "large"
+      }
     },
     "xtts": {
       "ellipsis": {
         "f0_slope_mean": -60.9,
+        "f0_slope_ci_low": -61.7,
+        "f0_slope_ci_high": -60.2,
+        "n_f0": 2,
         "amp_decay_mean": 0.0,
         "pause_mean": 590.0
       },
       "period": {
         "f0_slope_mean": -43.8,
+        "f0_slope_ci_low": -44.3,
+        "f0_slope_ci_high": -43.3,
+        "n_f0": 2,
         "amp_decay_mean": 0.0,
         "pause_mean": 690.0
       },
-      "trailing_f0_diff": -17.1
+      "trailing_f0_diff": -17.1,
+      "trailing_effect_size": {
+        "d": -18.78,
+        "interpretation": "large"
+      }
     }
   },
   "capitalization": {
@@ -176,17 +260,32 @@
     "chatterbox": {
       "f0_mean_shift": 3.1,
       "f0_range_shift": 249.0,
-      "shift_detected": "True"
+      "shift_threshold_hz": 10,
+      "shift_detected": true,
+      "range_effect_size": {
+        "d": -1.27,
+        "interpretation": "large"
+      }
     },
     "kokoro": {
       "f0_mean_shift": 5.8,
       "f0_range_shift": 3.7,
-      "shift_detected": "False"
+      "shift_threshold_hz": 10,
+      "shift_detected": false,
+      "range_effect_size": {
+        "d": -0.293,
+        "interpretation": "small"
+      }
     },
     "xtts": {
       "f0_mean_shift": 1.8,
       "f0_range_shift": 3.9,
-      "shift_detected": "False"
+      "shift_threshold_hz": 10,
+      "shift_detected": false,
+      "range_effect_size": {
+        "d": -0.695,
+        "interpretation": "medium"
+      }
     }
   },
   "overall": {
@@ -195,15 +294,22 @@
       "question_vs_period_f0_diff_hz": 68.5,
       "comma_to_ellipsis_pause_diff_ms": 5.6
     },
-    "kokoro": {
-      "model": "kokoro",
-      "question_vs_period_f0_diff_hz": 25.7,
-      "comma_to_ellipsis_pause_diff_ms": 30.8
-    },
     "xtts": {
       "model": "xtts",
       "question_vs_period_f0_diff_hz": -5.0,
       "comma_to_ellipsis_pause_diff_ms": 101.5
+    },
+    "kokoro": {
+      "model": "kokoro",
+      "question_vs_period_f0_diff_hz": 25.7,
+      "comma_to_ellipsis_pause_diff_ms": 30.8
     }
+  },
+  "metadata": {
+    "description": "Descriptive statistics from a 28-item punctuation-prosody probe. Not a validated benchmark. CIs are bootstrap 95% percentile intervals.",
+    "n_items_per_model": 28,
+    "bootstrap_iterations": 1000,
+    "gate_threshold_ms": 150,
+    "quotation_range_threshold_hz": 10
   }
 }

@@ -4,20 +4,23 @@
     "period_items": 5,
     "periods_passing": 5,
     "pass_rate": 1.0,
-    "gate_passed": true
+    "gate_passed": true,
+    "gate_description": "Period-ending pauses >= 150ms for >= 80% of items. This confirms audible speech at boundaries, not prosodic quality."
   },
   {
     "model": "kokoro",
     "period_items": 5,
     "periods_passing": 5,
     "pass_rate": 1.0,
-    "gate_passed": true
+    "gate_passed": true,
+    "gate_description": "Period-ending pauses >= 150ms for >= 80% of items. This confirms audible speech at boundaries, not prosodic quality."
   },
   {
     "model": "xtts",
     "period_items": 5,
     "periods_passing": 5,
     "pass_rate": 1.0,
-    "gate_passed": true
+    "gate_passed": true,
+    "gate_description": "Period-ending pauses >= 150ms for >= 80% of items. This confirms audible speech at boundaries, not prosodic quality."
   }
 ]

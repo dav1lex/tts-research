@@ -1,19 +1,25 @@
 #!/usr/bin/env python3
 """Generate punctuation test utterances with XTTS-v2."""
-import csv, sys, torch
+import csv
+import sys
+import torch
 from pathlib import Path
 
-PROJECT = Path("/home/davilex/tts-research/_5-punctuation-sensitivity")
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT = SCRIPT_DIR.parent  # _5-punctuation-sensitivity/
+
 CORPUS = PROJECT / "data" / "test_corpus.csv"
-REF_AUDIO = "/home/davilex/tts-research/_2-breathiness-preservation-benchmark/references/neutral_p229_002.wav"
+REF_AUDIO = PROJECT.parent / "_2-breathiness-preservation-benchmark" / "references" / "neutral_p229_002.wav"
 OUT_DIR = PROJECT / "outputs" / "xtts"
 SEED = 42
+
 
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     from TTS.api import TTS
+
     tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", progress_bar=False)
     if device == "cuda":
         tts.to(device)
@@ -37,6 +43,7 @@ def main():
 
     print(f"Done. {len(rows)} files in {OUT_DIR}")
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())

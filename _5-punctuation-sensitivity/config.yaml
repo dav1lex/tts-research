@@ -1,0 +1,28 @@
+# Punctuation Sensitivity Benchmark — Configuration
+# All tunable parameters in one place.
+
+vad:
+  energy_threshold_factor: 0.05   # fraction of max(rms) for silence detection
+  min_pause_ms: 30                # minimum silence duration to count as pause
+  frame_ms: 20                    # RMS frame length
+  hop_ms: 10                      # RMS hop length
+
+gate:
+  period_min_ms: 150              # minimum pause for period utterances to pass
+  pass_rate: 0.80                 # fraction of items that must pass
+
+f0:
+  fmin: 50                        # pyin min frequency (Hz)
+  fmax: 600                       # pyin max frequency (Hz)
+  frame_length: 2048
+  win_length: 1024
+  hop_length: 256
+
+quotation:
+  range_shift_threshold_hz: 10    # F0 range diff > this = shift detected
+
+analysis:
+  terminal_window_ms: 400         # window for terminal F0 slope computation
+  terminal_min_voiced: 3          # min voiced frames for slope computation
+  internal_cutoff_fraction: 0.95  # pauses after this fraction of duration = trailing
+  bootstrap_iterations: 1000      # for CI computation

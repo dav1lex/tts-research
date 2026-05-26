@@ -1,20 +1,27 @@
 #!/usr/bin/env python3
-"""Gate check: period pauses >= 150ms for >= 80% of items."""
-import csv, json, sys
-from pathlib import Path
+"""Gate check: period pauses >= configured ms for >= configured fraction of items.
+
+This is a minimum viability check. All models passing means the audio is
+intelligible and produces detectable silences at sentence boundaries. It does
+NOT validate prosodic appropriateness or naturalness.
+"""
+import json
+import sys
 from collections import defaultdict
 
-PROJECT = Path("/home/davilex/tts-research/_5-punctuation-sensitivity")
-FEATURES = PROJECT / "results" / "features" / "pause_features.csv"
-RESULTS_DIR = PROJECT / "results"
-RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+from common import (
+    CONFIG,
+    FEATURES_CSV,
+    GATE_JSON,
+    load_csv,
+)
 
-PERIOD_MIN_MS = 150
-PASS_RATE = 0.80
+PERIOD_MIN_MS = CONFIG["gate"]["period_min_ms"]
+PASS_RATE = CONFIG["gate"]["pass_rate"]
 
 
 def main():
-    rows = list(csv.DictReader(open(FEATURES)))
+    rows = list(load_csv(FEATURES_CSV))
     gate_results = []
 
     # Group by model
@@ -36,7 +43,7 @@ def main():
         passed = pass_rate >= PASS_RATE
 
         print(f"{model}: {periods_passing}/{num_periods} periods >= {PERIOD_MIN_MS}ms "
-              f"({pass_rate:.0%}) → {'PASS' if passed else 'FAIL'}")
+              f"({pass_rate:.0%}) -> {'PASS' if passed else 'FAIL'}")
 
         gate_results.append({
             "model": model,
@@ -44,16 +51,20 @@ def main():
             "periods_passing": periods_passing,
             "pass_rate": round(pass_rate, 3),
             "gate_passed": passed,
+            "gate_description": (
+                f"Period-ending pauses >= {PERIOD_MIN_MS}ms for >= {PASS_RATE:.0%} of items. "
+                "This confirms audible speech at boundaries, not prosodic quality."
+            ),
         })
 
-        # Also show per-item details
+        # Per-item details
         for r in period_items:
             pause = float(r["best_pause_ms"]) if r["best_pause_ms"] else 0
             status = "OK" if pause >= PERIOD_MIN_MS else "FAIL"
-            print(f"  {r['id']}: {r['subcategory']} — {pause}ms {status}")
+            print(f"  {r['id']}: {r['subcategory']} - {int(float(r['best_pause_ms']))}ms {status}")
 
     # Write gate report
-    with open(RESULTS_DIR / "gate_check.json", "w") as f:
+    with open(GATE_JSON, "w") as f:
         json.dump(gate_results, f, indent=2)
 
     all_pass = all(g["gate_passed"] for g in gate_results)

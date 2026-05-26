@@ -1,17 +1,23 @@
 #!/usr/bin/env python3
 """Generate punctuation test utterances with Chatterbox."""
-import csv, sys, torch
+import csv
+import sys
+import torch
 from pathlib import Path
 
-PROJECT = Path("/home/davilex/tts-research/_5-punctuation-sensitivity")
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT = SCRIPT_DIR.parent  # _5-punctuation-sensitivity/
+
 CORPUS = PROJECT / "data" / "test_corpus.csv"
-REF_AUDIO = "/home/davilex/tts-research/_2-breathiness-preservation-benchmark/references/neutral_p229_002.wav"
+REF_AUDIO = PROJECT.parent / "_2-breathiness-preservation-benchmark" / "references" / "neutral_p229_002.wav"
 OUT_DIR = PROJECT / "outputs" / "chatterbox"
 SEED = 42
+
 
 def main():
     # Monkey-patch broken perth watermarker
     import perth
+
     if perth.PerthImplicitWatermarker is None:
         perth.PerthImplicitWatermarker = perth.DummyWatermarker
 
@@ -19,6 +25,7 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     from chatterbox.tts import ChatterboxTTS
+
     model = ChatterboxTTS.from_pretrained(device=device)
 
     with open(CORPUS) as f:
@@ -40,6 +47,7 @@ def main():
         if wav.ndim == 2:
             wav = wav.squeeze(0)
         import soundfile as sf
+
         sf.write(str(out_path), wav.cpu().numpy(), 24000)
 
         if device == "cuda":
@@ -47,6 +55,7 @@ def main():
 
     print(f"Done. {len(rows)} files in {OUT_DIR}")
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())
