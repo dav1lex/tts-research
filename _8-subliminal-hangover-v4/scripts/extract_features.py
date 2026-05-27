@@ -13,6 +13,7 @@ Writes:
 
 from __future__ import annotations
 
+import argparse
 import csv
 import json
 import sys
@@ -162,6 +163,14 @@ def main() -> int:
         print("ERROR: CUDA is required for WhisperX alignment in this workflow. Refusing to run on CPU.", file=sys.stderr)
         return 2
 
+    ap = argparse.ArgumentParser()
+    ap.add_argument(
+        "--model",
+        default="",
+        help="Optional model filter (e.g. chatterbox, kokoro, xtts). Comma-separated allowed.",
+    )
+    args = ap.parse_args()
+
     if not MANIFEST_CSV.exists():
         print(f"ERROR: missing {MANIFEST_CSV}", file=sys.stderr)
         return 2
@@ -174,6 +183,11 @@ def main() -> int:
 
     with MANIFEST_CSV.open("r", newline="", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
+
+    model_filter = None
+    if args.model.strip():
+        model_filter = {m.strip() for m in args.model.split(",") if m.strip()}
+        rows = [r for r in rows if (r.get("model") or "").strip() in model_filter]
 
     # Load WhisperX models once
     wx_model = whisperx.load_model(WHISPER_MODEL, device=DEVICE, compute_type=COMPUTE_TYPE)
@@ -214,7 +228,18 @@ def main() -> int:
 
         wav_path = PROJECT_DIR / out_rel
         if not wav_path.exists():
-            logs.append({"id": sample_id, "path": str(wav_path), "status": "error", "error": "missing wav"})
+            logs.append(
+                {
+                    "id": sample_id,
+                    "model": model,
+                    "condition": cond,
+                    "target_id": target_id,
+                    "repetition": rep,
+                    "path": str(wav_path),
+                    "status": "error",
+                    "error": "missing wav",
+                }
+            )
             continue
 
         y_seg, sr, log = _extract_segment(wav_path, first_word, last_word, wx_model, align_model, metadata)
