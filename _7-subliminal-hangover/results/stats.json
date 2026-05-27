@@ -1,0 +1,258 @@
+{
+  "descriptive": {
+    "chatterbox": {
+      "f0_std": {
+        "control": {
+          "n": 5,
+          "mean": 24.956,
+          "std": 5.1891,
+          "se": 2.3206,
+          "min": 17.5,
+          "max": 29.68
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 18.648,
+          "std": 4.5107,
+          "se": 2.0173,
+          "min": 15.32,
+          "max": 26.38
+        }
+      },
+      "f0_mean": {
+        "control": {
+          "n": 5,
+          "mean": 188.446,
+          "std": 5.8499,
+          "se": 2.6161,
+          "min": 181.29,
+          "max": 194.85
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 177.306,
+          "std": 4.0464,
+          "se": 1.8096,
+          "min": 173.16,
+          "max": 183.35
+        }
+      },
+      "energy_std": {
+        "control": {
+          "n": 5,
+          "mean": 0.0592,
+          "std": 0.0053,
+          "se": 0.0024,
+          "min": 0.0544,
+          "max": 0.0674
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 0.0576,
+          "std": 0.0043,
+          "se": 0.0019,
+          "min": 0.0543,
+          "max": 0.0648
+        }
+      }
+    },
+    "kokoro": {
+      "f0_std": {
+        "control": {
+          "n": 5,
+          "mean": 64.082,
+          "std": 2.0977,
+          "se": 0.9381,
+          "min": 60.33,
+          "max": 65.05
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 53.552,
+          "std": 2.7397,
+          "se": 1.2252,
+          "min": 50.15,
+          "max": 57.16
+        }
+      },
+      "f0_mean": {
+        "control": {
+          "n": 5,
+          "mean": 197.336,
+          "std": 1.9367,
+          "se": 0.8661,
+          "min": 196.43,
+          "max": 200.8
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 201.836,
+          "std": 6.3464,
+          "se": 2.8382,
+          "min": 192.04,
+          "max": 207.95
+        }
+      },
+      "energy_std": {
+        "control": {
+          "n": 5,
+          "mean": 0.0398,
+          "std": 0.0,
+          "se": 0.0,
+          "min": 0.0397,
+          "max": 0.0398
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 0.0401,
+          "std": 0.0015,
+          "se": 0.0007,
+          "min": 0.0381,
+          "max": 0.0414
+        }
+      }
+    },
+    "xtts": {
+      "f0_std": {
+        "control": {
+          "n": 5,
+          "mean": 63.642,
+          "std": 21.291,
+          "se": 9.5216,
+          "min": 41.8,
+          "max": 94.8
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 51.344,
+          "std": 8.185,
+          "se": 3.6604,
+          "min": 42.83,
+          "max": 63.87
+        }
+      },
+      "f0_mean": {
+        "control": {
+          "n": 5,
+          "mean": 197.67,
+          "std": 17.6276,
+          "se": 7.8833,
+          "min": 167.07,
+          "max": 208.47
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 205.078,
+          "std": 7.6511,
+          "se": 3.4217,
+          "min": 191.78,
+          "max": 209.96
+        }
+      },
+      "energy_std": {
+        "control": {
+          "n": 5,
+          "mean": 0.0974,
+          "std": 0.0056,
+          "se": 0.0025,
+          "min": 0.0882,
+          "max": 0.1027
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 0.12,
+          "std": 0.0107,
+          "se": 0.0048,
+          "min": 0.108,
+          "max": 0.1309
+        }
+      }
+    }
+  },
+  "paired_tests": {
+    "chatterbox": {
+      "metric": "f0_std",
+      "control_mean": 24.956,
+      "subliminal_mean": 18.648,
+      "mean_difference": 6.308,
+      "mean_difference_pct": 25.28,
+      "control_values": [
+        29.68,
+        25.64,
+        17.5,
+        29.67,
+        22.29
+      ],
+      "subliminal_values": [
+        15.32,
+        18.28,
+        15.57,
+        17.69,
+        26.38
+      ],
+      "wilcoxon_statistic": 13.0,
+      "wilcoxon_p_value": 0.09375,
+      "significance": "not significant",
+      "n_pairs": 5
+    },
+    "kokoro": {
+      "metric": "f0_std",
+      "control_mean": 64.082,
+      "subliminal_mean": 53.552,
+      "mean_difference": 10.53,
+      "mean_difference_pct": 16.43,
+      "control_values": [
+        65.05,
+        65.01,
+        64.97,
+        65.05,
+        60.33
+      ],
+      "subliminal_values": [
+        52.01,
+        55.26,
+        53.18,
+        57.16,
+        50.15
+      ],
+      "wilcoxon_statistic": 15.0,
+      "wilcoxon_p_value": 0.03125,
+      "significance": "significant",
+      "n_pairs": 5
+    },
+    "xtts": {
+      "metric": "f0_std",
+      "control_mean": 63.642,
+      "subliminal_mean": 51.344,
+      "mean_difference": 12.298,
+      "mean_difference_pct": 19.32,
+      "control_values": [
+        68.67,
+        41.8,
+        94.8,
+        45.58,
+        67.36
+      ],
+      "subliminal_values": [
+        54.12,
+        49.93,
+        42.83,
+        63.87,
+        45.97
+      ],
+      "wilcoxon_statistic": 11.0,
+      "wilcoxon_p_value": 0.21875,
+      "significance": "not significant",
+      "n_pairs": 5
+    }
+  },
+  "analysis_params": {
+    "primary_metric": "f0_std",
+    "test": "wilcoxon signed-rank (one-sided, alternative='greater': control > subliminal)",
+    "metrics_tracked": [
+      "f0_std",
+      "f0_mean",
+      "energy_std"
+    ]
+  }
+}

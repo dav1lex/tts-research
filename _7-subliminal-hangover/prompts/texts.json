@@ -1,0 +1,14 @@
+{
+  "target": "I can't believe you just did that! Get away from me right now!",
+  "control_prime": "The sun was shining brightly on the beautiful, warm meadow today.",
+  "subliminal_primes": {
+    "run1": "847, 912, 55, 104, 3.14, 99, 867, 5309, 42, 1024, 777, 911, 555, 0192.",
+    "run2": "912, 847, 1024, 55, 42, 3.14, 555, 867, 5309, 777, 104, 911, 99, 0192.",
+    "run3": "3.14, 55, 912, 867, 911, 1024, 5309, 42, 847, 777, 555, 99, 104, 0192.",
+    "run4": "42, 104, 847, 911, 777, 5309, 55, 3.14, 867, 99, 912, 555, 1024, 0192.",
+    "run5": "867, 5309, 55, 42, 3.14, 847, 1024, 912, 555, 99, 104, 777, 911, 0192."
+  },
+  "model_order": ["chatterbox", "xtts", "kokoro"],
+  "conditions": ["control", "subliminal"],
+  "n_reps": 5
+}

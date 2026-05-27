@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Subliminal Hangover Benchmark — Report</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 960px; margin: 40px auto; padding: 0 20px; color: #222; line-height: 1.6; }
+h1 { color: #1a1a2e; border-bottom: 3px solid #e94560; padding-bottom: 8px; }
+h2 { color: #16213e; margin-top: 32px; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+th { background: #1a1a2e; color: white; padding: 8px 12px; text-align: left; }
+td { padding: 6px 12px; border-bottom: 1px solid #ddd; }
+tr:hover td { background: #f5f5f5; }
+.fig-container { text-align: center; margin: 24px 0; }
+.gate-pass { color: #2e7d32; font-weight: bold; }
+.gate-fail { color: #c62828; font-weight: bold; }
+.sig { color: #2e7d32; }
+.ns { color: #888; }
+pre { background: #f4f4f4; padding: 12px; border-radius: 4px; overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<h1>🔬 Subliminal Hangover Benchmark</h1>
+<p><em>Does robotic-number context bleed into emotional target prosody?</em></p>
+
+<h2>Hypothesis</h2>
+<p>
+If forced context window processing carries acoustic inertia, then a monotone/robotic prime
+(reading disconnected numbers) should suppress pitch variance (F0 StdDev) in a subsequent
+highly emotional target sentence, compared to a neutral-but-natural prime (nature scene).
+</p>
+
+<h2>Methodology</h2>
+<ol>
+    <li><b>Target sentence (constant):</b> <code>"I can't believe you just did that! Get away from me right now!"</code></li>
+    <li><b>Control prime:</b> <code>"The sun was shining brightly on the beautiful, warm meadow today."</code></li>
+    <li><b>Subliminal prime:</b> Randomized number sequences (14 numbers per run, 5 unique shuffles).</li>
+    <li><b>Generation:</b> Prime + Target concatenated into a single string → single audio generation (same context window).</li>
+    <li><b>Segmentation:</b> VAD-based pause detection finds prime-target boundary; features extracted from target segment only.</li>
+    <li><b>Primary metric:</b> F0 Standard Deviation (f0_std) — lower = more monotone / robotic.</li>
+    <li><b>Test:</b> Wilcoxon signed-rank (one-sided, control > subliminal).</li>
+    <li><b>Models:</b> Chatterbox (voice-cloned), XTTS-v2 (voice-cloned), Kokoro (no-adaptation baseline).</li>
+    <li><b>Reference:</b> VCTK p229_002 (female, Southern England) for voice-cloning models.</li>
+</ol>
+
+<h2>Gate Check</h2>
+<pre>{
+  "chatterbox_control": {
+    "viable": 5,
+    "total": 5,
+    "passed": true
+  },
+  "chatterbox_subliminal": {
+    "viable": 5,
+    "total": 5,
+    "passed": true
+  },
+  "kokoro_control": {
+    "viable": 5,
+    "total": 5,
+    "passed": true
+  },
+  "kokoro_subliminal": {
+    "viable": 5,
+    "total": 5,
+    "passed": true
+  },
+  "xtts_control": {
+    "viable": 5,
+    "total": 5,
+    "passed": true
+  },
+  "xtts_subliminal": {
+    "viable": 5,
+    "total": 5,
+    "passed": true
+  }
+}</pre>
+<p class="gate-pass">
+    Gate: PASSED (30/30 rows viable)
+</p>
+
+<h2>Results: F0 StdDev (Hz)</h2>
+
+<table>
+<tr><th>Model</th><th>Control</th><th>Subliminal</th><th>Change</th><th>Test</th></tr>
+
+        <tr>
+            <td>Chatterbox</td>
+            <td>24.96</td>
+            <td>18.65</td>
+            <td>+25.3%</td>
+            <td>W=13.0, p=0.0938</td>
+        </tr>
+        <tr>
+            <td>XTTS-v2</td>
+            <td>63.64</td>
+            <td>51.34</td>
+            <td>+19.3%</td>
+            <td>W=11.0, p=0.2188</td>
+        </tr>
+        <tr>
+            <td>Kokoro (no-adaptation baseline)</td>
+            <td>64.08</td>
+            <td>53.55</td>
+            <td>+16.4%</td>
+            <td>W=15.0, p=0.0312 *</td>
+        </tr>
+</table>
+
+<div class="fig-container">
+    <p>Figure not available.</p>
+    <p><em>Figure: F0 Standard Deviation by Model and Condition (error bars = SE)</em></p>
+</div>
+
+<h2>Per-Model Descriptive Statistics</h2>
+<h3>Chatterbox</h3>
+        <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; margin-bottom:20px;">
+        <tr><th>Metric</th><th>Condition</th><th>N</th><th>Mean</th><th>SD</th><th>SE</th><th>Min</th><th>Max</th></tr>
+        
+                <tr>
+                    <td>f0_std</td>
+                    <td>control</td>
+                    <td>5</td>
+                    <td>24.956</td>
+                    <td>5.1891</td>
+                    <td>2.3206</td>
+                    <td>17.5</td>
+                    <td>29.68</td>
+                </tr>
+                <tr>
+                    <td>f0_std</td>
+                    <td>subliminal</td>
+                    <td>5</td>
+                    <td>18.648</td>
+                    <td>4.5107</td>
+                    <td>2.0173</td>
+                    <td>15.32</td>
+                    <td>26.38</td>
+                </tr>
+                <tr>
+                    <td>f0_mean</td>
+                    <td>control</td>
+                    <td>5</td>
+                    <td>188.446</td>
+                    <td>5.8499</td>
+                    <td>2.6161</td>
+                    <td>181.29</td>
+                    <td>194.85</td>
+                </tr>
+                <tr>
+                    <td>f0_mean</td>
+                    <td>subliminal</td>
+                    <td>5</td>
+                    <td>177.306</td>
+                    <td>4.0464</td>
+                    <td>1.8096</td>
+                    <td>173.16</td>
+                    <td>183.35</td>
+                </tr>
+                <tr>
+                    <td>energy_std</td>
+                    <td>control</td>
+                    <td>5</td>
+                    <td>0.0592</td>
+                    <td>0.0053</td>
+                    <td>0.0024</td>
+                    <td>0.0544</td>
+                    <td>0.0674</td>
+                </tr>
+                <tr>
+                    <td>energy_std</td>
+                    <td>subliminal</td>
+                    <td>5</td>
+                    <td>0.0576</td>
+                    <td>0.0043</td>
+                    <td>0.0019</td>
+                    <td>0.0543</td>
+                    <td>0.0648</td>
+                </tr></table><h3>XTTS-v2</h3>
+        <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; margin-bottom:20px;">
+        <tr><th>Metric</th><th>Condition</th><th>N</th><th>Mean</th><th>SD</th><th>SE</th><th>Min</th><th>Max</th></tr>
+        
+                <tr>
+                    <td>f0_std</td>
+                    <td>control</td>
+                    <td>5</td>
+                    <td>63.642</td>
+                    <td>21.291</td>
+                    <td>9.5216</td>
+                    <td>41.8</td>
+                    <td>94.8</td>
+                </tr>
+                <tr>
+                    <td>f0_std</td>
+                    <td>subliminal</td>
+                    <td>5</td>
+                    <td>51.344</td>
+                    <td>8.185</td>
+                    <td>3.6604</td>
+                    <td>42.83</td>
+                    <td>63.87</td>
+                </tr>
+                <tr>
+                    <td>f0_mean</td>
+                    <td>control</td>
+                    <td>5</td>
+                    <td>197.67</td>
+                    <td>17.6276</td>
+                    <td>7.8833</td>
+                    <td>167.07</td>
+                    <td>208.47</td>
+                </tr>
+                <tr>
+                    <td>f0_mean</td>
+                    <td>subliminal</td>
+                    <td>5</td>
+                    <td>205.078</td>
+                    <td>7.6511</td>
+                    <td>3.4217</td>
+                    <td>191.78</td>
+                    <td>209.96</td>
+                </tr>
+                <tr>
+                    <td>energy_std</td>
+                    <td>control</td>
+                    <td>5</td>
+                    <td>0.0974</td>
+                    <td>0.0056</td>
+                    <td>0.0025</td>
+                    <td>0.0882</td>
+                    <td>0.1027</td>
+                </tr>
+                <tr>
+                    <td>energy_std</td>
+                    <td>subliminal</td>
+                    <td>5</td>
+                    <td>0.12</td>
+                    <td>0.0107</td>
+                    <td>0.0048</td>
+                    <td>0.108</td>
+                    <td>0.1309</td>
+                </tr></table><h3>Kokoro (no-adaptation baseline)</h3>
+        <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; margin-bottom:20px;">
+        <tr><th>Metric</th><th>Condition</th><th>N</th><th>Mean</th><th>SD</th><th>SE</th><th>Min</th><th>Max</th></tr>
+        
+                <tr>
+                    <td>f0_std</td>
+                    <td>control</td>
+                    <td>5</td>
+                    <td>64.082</td>
+                    <td>2.0977</td>
+                    <td>0.9381</td>
+                    <td>60.33</td>
+                    <td>65.05</td>
+                </tr>
+                <tr>
+                    <td>f0_std</td>
+                    <td>subliminal</td>
+                    <td>5</td>
+                    <td>53.552</td>
+                    <td>2.7397</td>
+                    <td>1.2252</td>
+                    <td>50.15</td>
+                    <td>57.16</td>
+                </tr>
+                <tr>
+                    <td>f0_mean</td>
+                    <td>control</td>
+                    <td>5</td>
+                    <td>197.336</td>
+                    <td>1.9367</td>
+                    <td>0.8661</td>
+                    <td>196.43</td>
+                    <td>200.8</td>
+                </tr>
+                <tr>
+                    <td>f0_mean</td>
+                    <td>subliminal</td>
+                    <td>5</td>
+                    <td>201.836</td>
+                    <td>6.3464</td>
+                    <td>2.8382</td>
+                    <td>192.04</td>
+                    <td>207.95</td>
+                </tr>
+                <tr>
+                    <td>energy_std</td>
+                    <td>control</td>
+                    <td>5</td>
+                    <td>0.0398</td>
+                    <td>0.0</td>
+                    <td>0.0</td>
+                    <td>0.0397</td>
+                    <td>0.0398</td>
+                </tr>
+                <tr>
+                    <td>energy_std</td>
+                    <td>subliminal</td>
+                    <td>5</td>
+                    <td>0.0401</td>
+                    <td>0.0015</td>
+                    <td>0.0007</td>
+                    <td>0.0381</td>
+                    <td>0.0414</td>
+                </tr></table>
+
+<h2>Raw Data</h2>
+<table>
+<tr><th>Model</th><th>Condition</th><th>Run</th><th>F0 Mean</th><th>F0 Std</th><th>Energy Std</th><th>Duration (s)</th></tr>
+
+        <tr>
+            <td>chatterbox</td>
+            <td>control</td>
+            <td>1</td>
+            <td>190.7</td>
+            <td>29.68</td>
+            <td>0.067367</td>
+            <td>3.44</td>
+        </tr>
+        <tr>
+            <td>chatterbox</td>
+            <td>control</td>
+            <td>2</td>
+            <td>194.85</td>
+            <td>25.64</td>
+            <td>0.059365</td>
+            <td>3.4</td>
+        </tr>
+        <tr>
+            <td>chatterbox</td>
+            <td>control</td>
+            <td>3</td>
+            <td>183.31</td>
+            <td>17.5</td>
+            <td>0.05443</td>
+            <td>3.58</td>
+        </tr>
+        <tr>
+            <td>chatterbox</td>
+            <td>control</td>
+            <td>4</td>
+            <td>192.08</td>
+            <td>29.67</td>
+            <td>0.054512</td>
+            <td>3.61</td>
+        </tr>
+        <tr>
+            <td>chatterbox</td>
+            <td>control</td>
+            <td>5</td>
+            <td>181.29</td>
+            <td>22.29</td>
+            <td>0.060316</td>
+            <td>3.25</td>
+        </tr>
+        <tr>
+            <td>chatterbox</td>
+            <td>subliminal</td>
+            <td>1</td>
+            <td>178.65</td>
+            <td>15.32</td>
+            <td>0.064764</td>
+            <td>4.64</td>
+        </tr>
+        <tr>
+            <td>chatterbox</td>
+            <td>subliminal</td>
+            <td>2</td>
+            <td>173.16</td>
+            <td>18.28</td>
+            <td>0.054318</td>
+            <td>5.49</td>
+        </tr>
+        <tr>
+            <td>chatterbox</td>
+            <td>subliminal</td>
+            <td>3</td>
+            <td>183.35</td>
+            <td>15.57</td>
+            <td>0.055289</td>
+            <td>9.33</td>
+        </tr>
+        <tr>
+            <td>chatterbox</td>
+            <td>subliminal</td>
+            <td>4</td>
+            <td>177.22</td>
+            <td>17.69</td>
+            <td>0.055416</td>
+            <td>6.17</td>
+        </tr>
+        <tr>
+            <td>chatterbox</td>
+            <td>subliminal</td>
+            <td>5</td>
+            <td>174.15</td>
+            <td>26.38</td>
+            <td>0.05846</td>
+            <td>6.01</td>
+        </tr>
+        <tr>
+            <td>xtts</td>
+            <td>control</td>
+            <td>1</td>
+            <td>206.27</td>
+            <td>68.67</td>
+            <td>0.096978</td>
+            <td>1.947</td>
+        </tr>
+        <tr>
+            <td>xtts</td>
+            <td>control</td>
+            <td>2</td>
+            <td>198.11</td>
+            <td>41.8</td>
+            <td>0.099476</td>
+            <td>4.174</td>
+        </tr>
+        <tr>
+            <td>xtts</td>
+            <td>control</td>
+            <td>3</td>
+            <td>208.43</td>
+            <td>94.8</td>
+            <td>0.099932</td>
+            <td>1.666</td>
+        </tr>
+        <tr>
+            <td>xtts</td>
+            <td>control</td>
+            <td>4</td>
+            <td>167.07</td>
+            <td>45.58</td>
+            <td>0.088153</td>
+            <td>1.665</td>
+        </tr>
+        <tr>
+            <td>xtts</td>
+            <td>control</td>
+            <td>5</td>
+            <td>208.47</td>
+            <td>67.36</td>
+            <td>0.102669</td>
+            <td>1.894</td>
+        </tr>
+        <tr>
+            <td>xtts</td>
+            <td>subliminal</td>
+            <td>1</td>
+            <td>205.34</td>
+            <td>54.12</td>
+            <td>0.108029</td>
+            <td>7.368</td>
+        </tr>
+        <tr>
+            <td>xtts</td>
+            <td>subliminal</td>
+            <td>2</td>
+            <td>208.86</td>
+            <td>49.93</td>
+            <td>0.130914</td>
+            <td>7.357</td>
+        </tr>
+        <tr>
+            <td>xtts</td>
+            <td>subliminal</td>
+            <td>3</td>
+            <td>209.45</td>
+            <td>42.83</td>
+            <td>0.130448</td>
+            <td>7.333</td>
+        </tr>
+        <tr>
+            <td>xtts</td>
+            <td>subliminal</td>
+            <td>4</td>
+            <td>209.96</td>
+            <td>63.87</td>
+            <td>0.120145</td>
+            <td>8.785</td>
+        </tr>
+        <tr>
+            <td>xtts</td>
+            <td>subliminal</td>
+            <td>5</td>
+            <td>191.78</td>
+            <td>45.97</td>
+            <td>0.110521</td>
+            <td>8.736</td>
+        </tr>
+        <tr>
+            <td>kokoro</td>
+            <td>control</td>
+            <td>1</td>
+            <td>196.52</td>
+            <td>65.05</td>
+            <td>0.039799</td>
+            <td>3.78</td>
+        </tr>
+        <tr>
+            <td>kokoro</td>
+            <td>control</td>
+            <td>2</td>
+            <td>196.43</td>
+            <td>65.01</td>
+            <td>0.039772</td>
+            <td>3.78</td>
+        </tr>
+        <tr>
+            <td>kokoro</td>
+            <td>control</td>
+            <td>3</td>
+            <td>196.45</td>
+            <td>64.97</td>
+            <td>0.039673</td>
+            <td>3.78</td>
+        </tr>
+        <tr>
+            <td>kokoro</td>
+            <td>control</td>
+            <td>4</td>
+            <td>196.48</td>
+            <td>65.05</td>
+            <td>0.039768</td>
+            <td>3.78</td>
+        </tr>
+        <tr>
+            <td>kokoro</td>
+            <td>control</td>
+            <td>5</td>
+            <td>200.8</td>
+            <td>60.33</td>
+            <td>0.039775</td>
+            <td>3.78</td>
+        </tr>
+        <tr>
+            <td>kokoro</td>
+            <td>subliminal</td>
+            <td>1</td>
+            <td>207.95</td>
+            <td>52.01</td>
+            <td>0.040821</td>
+            <td>6.805</td>
+        </tr>
+        <tr>
+            <td>kokoro</td>
+            <td>subliminal</td>
+            <td>2</td>
+            <td>192.04</td>
+            <td>55.26</td>
+            <td>0.039072</td>
+            <td>6.335</td>
+        </tr>
+        <tr>
+            <td>kokoro</td>
+            <td>subliminal</td>
+            <td>3</td>
+            <td>207.0</td>
+            <td>53.18</td>
+            <td>0.041353</td>
+            <td>6.26</td>
+        </tr>
+        <tr>
+            <td>kokoro</td>
+            <td>subliminal</td>
+            <td>4</td>
+            <td>201.1</td>
+            <td>57.16</td>
+            <td>0.038071</td>
+            <td>6.34</td>
+        </tr>
+        <tr>
+            <td>kokoro</td>
+            <td>subliminal</td>
+            <td>5</td>
+            <td>201.09</td>
+            <td>50.15</td>
+            <td>0.041255</td>
+            <td>8.62</td>
+        </tr>
+</table>
+
+<h2>Interpretation</h2>
+<p>
+<b>Chatterbox</b> showed a <b>25.3% drop</b> in f0_std (subliminal < control), but was <b>not statistically significant</b>.<br><b>XTTS-v2</b> showed a <b>19.3% drop</b> in f0_std (subliminal < control), but was <b>not statistically significant</b>.<br><b>Kokoro (no-adaptation baseline)</b> showed a <b>16.4% drop</b> in f0_std (subliminal < control), which was <b>statistically significant</b> (p&lt;0.05).
+</p>
+<p>
+<b>Worst "hangover" candidate:</b> Chatterbox showed the largest f0_std suppression.
+</p>
+
+<h2>Caveats</h2>
+<ul>
+    <li><b>N is very small:</b> n=5 per condition per model. Results are descriptive, not conclusive.</li>
+    <li><b>VAD boundary detection:</b> RMS-based pause detection is a proxy; boundary placement adds variance.</li>
+    <li><b>No forced alignment:</b> Target segment boundaries are estimated, not anchored to phonemes.</li>
+    <li><b>Kokoro baseline:</b> No voice cloning — different speaker default (af_bella), not directly comparable.</li>
+    <li><b>XTTS-v2 sentence splitting:</b> XTTS internally splits text on sentence boundaries and processes independently — this may reduce contextual bleed compared to single-segment generation.</li>
+    <li><b>Acoustic proxy:</b> F0 StdDev is an acoustic measure, not perceptual monotonicity.</li>
+</ul>
+
+<hr>
+<p style="color:#888; font-size:0.85em;">
+Generated by <code>make_report.py</code> | TTS Research Benchmark Suite
+</p>
+
+</body>
+</html>

@@ -33,5 +33,10 @@ Measures whether TTS models respect punctuation: periods, questions, exclamation
 Finding: Chatterbox has best F0-based differentiation (question rise +68.5 Hz/s) but weak pause hierarchy (0.67). XTTS-v2 has perfect pause ordering (1.00) but near-zero question F0 rise (−5.0 Hz/s). Kokoro (no-adaptation baseline) shows intermediate F0 sensitivity (+25.7 Hz/s) with same hierarchy score (0.67). F0 sensitivity and pause ordering are independent dimensions — no model scores high on both.
 → _5-punctuation-sensitivity/
 
+### 6. Owl Semantic Priming / Prior-Context Prosody Probe
+Tests whether a preceding paragraph changes the prosody of an identical neutral target sentence, using target-only segmentation after full-context generation.
+Finding: segmentation QC passed and repetitions are real. Kokoro shows strong prior-context carryover, mostly cold vs any preceding paragraph. Chatterbox and XTTS-v2 show no reliable condition effect at n=5. Evidence for semantic content-specific priming is weak.
+→ _6-owl-semantic-priming/
+
 ### Related
 - CodeSOTA TTS ELO: https://codesota.com/text-to-speech/elo
