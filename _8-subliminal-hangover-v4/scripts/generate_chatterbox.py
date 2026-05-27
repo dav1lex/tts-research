@@ -25,6 +25,12 @@ MANIFEST_CSV = PROJECT_DIR / "manifest.csv"
 REF_AUDIO = PROJECT_DIR.parent / "_3-prosody-transfer-benchmark" / "references" / "modal_p229_002.wav"
 
 SR = 24000
+SEED_BASE = 42
+SEED_OFFSETS = {
+    # Mirror _7 naming: numbers == "subliminal"
+    "number": 100,
+    "noun": 200,
+}
 
 
 def main() -> int:
@@ -72,17 +78,22 @@ def main() -> int:
         sample_id = r["id"]
         text = (r.get("text") or "").strip()
         out_rel = (r.get("output_relpath") or "").strip()
-        seed_s = (r.get("seed") or "").strip()
+        cond = (r.get("condition") or "").strip()
+        rep_s = (r.get("repetition") or "").strip()
 
         if not text or not out_rel:
             print(f"SKIP {sample_id}: missing text/output_relpath")
             fail += 1
             continue
 
+        # Match _7 seed schedule exactly:
+        #   seed = 42 + condition_offset + run_index
         try:
-            seed = int(seed_s) if seed_s else 0
+            rep = int(rep_s) if rep_s else 0
         except ValueError:
-            seed = 0
+            rep = 0
+        seed_off = SEED_OFFSETS.get(cond, 0)
+        seed = SEED_BASE + seed_off + rep
 
         out_path = PROJECT_DIR / out_rel
         out_path.parent.mkdir(parents=True, exist_ok=True)

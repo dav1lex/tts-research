@@ -1,21 +1,21 @@
 {
-  "total_rows": 40,
-  "passed_rows": 40,
+  "total_rows": 39,
+  "passed_rows": 39,
   "failed_rows": 0,
   "fail_details": [],
   "n_counts": {
-    "kokoro_noun": 20,
-    "kokoro_number": 20
+    "chatterbox_noun": 20,
+    "chatterbox_number": 19
   },
   "summary": {
-    "kokoro_noun": {
+    "chatterbox_noun": {
       "viable": 20,
       "total": 20,
       "passed": true
     },
-    "kokoro_number": {
-      "viable": 20,
-      "total": 20,
+    "chatterbox_number": {
+      "viable": 19,
+      "total": 19,
       "passed": true
     }
   },
