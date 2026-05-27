@@ -7,6 +7,11 @@ multi-target, larger-n replication.
 
 Status: scaffold only (no audio generated yet).
 
+## CUDA Requirement
+
+This V4 workflow is intended to run on GPU only. The `_8` scripts will refuse to run if
+`torch.cuda.is_available()` is false.
+
 ## Order Of Operations (do not skip)
 
 1. Write/lock `PROTOCOL.md` (preregistration).
@@ -45,4 +50,3 @@ _8-subliminal-hangover-v4/
     gate_check.json
     alignment_log.json
 ```
-

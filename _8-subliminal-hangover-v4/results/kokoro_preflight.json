@@ -1,0 +1,60 @@
+{
+  "target_id": "t01",
+  "condition": "number",
+  "prime_id": "p01",
+  "reps": 5,
+  "seed_base": 4242,
+  "same_seed": false,
+  "full_text_preview": "847, 23, 5091, 312, 74, 6208, 19, 445, 1337, 88, 702, 56, 9143, 27. You have absolutely no right to speak to me that way",
+  "files": [
+    {
+      "rep": 1,
+      "seed": 4243,
+      "path": "/home/davilex/tts-research/_8-subliminal-hangover-v4/results/preflight_kokoro/kokoro_preflight_number_t01_p01_r01.wav",
+      "sha256": "ca20bd468f6fe081c443a76e35014a2bd1a30319d61e4a1647f7d3c385264aa0",
+      "duration_s": 19.65,
+      "f0_cv_full": 0.198888
+    },
+    {
+      "rep": 2,
+      "seed": 4244,
+      "path": "/home/davilex/tts-research/_8-subliminal-hangover-v4/results/preflight_kokoro/kokoro_preflight_number_t01_p01_r02.wav",
+      "sha256": "143a082db653cf1fa546edcb76dae5615f8ec52d319c4efc730c7f4336459013",
+      "duration_s": 19.65,
+      "f0_cv_full": 0.210729
+    },
+    {
+      "rep": 3,
+      "seed": 4245,
+      "path": "/home/davilex/tts-research/_8-subliminal-hangover-v4/results/preflight_kokoro/kokoro_preflight_number_t01_p01_r03.wav",
+      "sha256": "44d6c2ac397f1be5c9ab4ac3fb67da0923717da2190de69bda0fd7390de73422",
+      "duration_s": 19.65,
+      "f0_cv_full": 0.1993
+    },
+    {
+      "rep": 4,
+      "seed": 4246,
+      "path": "/home/davilex/tts-research/_8-subliminal-hangover-v4/results/preflight_kokoro/kokoro_preflight_number_t01_p01_r04.wav",
+      "sha256": "eecbf98375a25bf1d27096f546113d3c183749b431f2daf81aa5ca8542966648",
+      "duration_s": 19.65,
+      "f0_cv_full": 0.195246
+    },
+    {
+      "rep": 5,
+      "seed": 4247,
+      "path": "/home/davilex/tts-research/_8-subliminal-hangover-v4/results/preflight_kokoro/kokoro_preflight_number_t01_p01_r05.wav",
+      "sha256": "13ee5cfafaff4ce82347205f274861d71a3b2b5a79a114bf82e2db181710bbaf",
+      "duration_s": 19.65,
+      "f0_cv_full": 0.201596
+    }
+  ],
+  "hash_unique": 5,
+  "f0_cv_values": [
+    0.1988880298167935,
+    0.21072853200980274,
+    0.19930031464356182,
+    0.19524562743846333,
+    0.20159587220026623
+  ],
+  "f0_cv_std": 0.005202817002795893
+}
