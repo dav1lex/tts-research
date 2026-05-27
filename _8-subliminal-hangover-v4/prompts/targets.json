@@ -1,0 +1,76 @@
+{
+  "version": "v4",
+  "notes": "Fixed before generation. Single clause, no commas/semicolons. ~15-20 syllables.",
+  "targets": [
+    {
+      "id": "t01",
+      "emotion_tag": "anger",
+      "text": "You have absolutely no right to speak to me that way!",
+      "syllables": 17,
+      "notes": ""
+    },
+    {
+      "id": "t02",
+      "emotion_tag": "disbelief",
+      "text": "I cannot believe you actually did that without telling me!",
+      "syllables": 18,
+      "notes": ""
+    },
+    {
+      "id": "t03",
+      "emotion_tag": "fear",
+      "text": "Something is seriously wrong and I am genuinely terrified right now!",
+      "syllables": 19,
+      "notes": ""
+    },
+    {
+      "id": "t04",
+      "emotion_tag": "sadness",
+      "text": "I never thought you would actually leave and never look back!",
+      "syllables": 18,
+      "notes": ""
+    },
+    {
+      "id": "t05",
+      "emotion_tag": "joy",
+      "text": "This is honestly the most wonderful thing that has ever happened!",
+      "syllables": 18,
+      "notes": ""
+    },
+    {
+      "id": "t06",
+      "emotion_tag": "urgency",
+      "text": "You need to get out of this building right now immediately!",
+      "syllables": 17,
+      "notes": ""
+    },
+    {
+      "id": "t07",
+      "emotion_tag": "disappointment",
+      "text": "I genuinely expected so much better from someone like you!",
+      "syllables": 17,
+      "notes": ""
+    },
+    {
+      "id": "t08",
+      "emotion_tag": "relief",
+      "text": "Thank goodness you are finally safe and back here with me!",
+      "syllables": 17,
+      "notes": ""
+    },
+    {
+      "id": "t09",
+      "emotion_tag": "frustration",
+      "text": "We have been over this exact same problem a hundred times already!",
+      "syllables": 19,
+      "notes": ""
+    },
+    {
+      "id": "t10",
+      "emotion_tag": "surprise",
+      "text": "I had absolutely no idea any of this was even happening!",
+      "syllables": 18,
+      "notes": ""
+    }
+  ]
+}
