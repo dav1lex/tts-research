@@ -29,6 +29,7 @@ MANIFEST_CSV = PROJECT_DIR / "manifest.csv"
 
 MODELS_DEFAULT = ["chatterbox", "xtts", "kokoro"]
 CONDITIONS_DEFAULT = ["noun", "number"]
+SEED_OFFSETS_DEFAULT = {"number": 100, "noun": 200}
 
 
 @dataclass(frozen=True)
@@ -105,6 +106,12 @@ def main() -> None:
     ap.add_argument("--models", type=str, default=",".join(MODELS_DEFAULT))
     ap.add_argument("--conditions", type=str, default=",".join(CONDITIONS_DEFAULT))
     ap.add_argument("--seed-base", type=int, default=1000, help="Optional numeric seed base for determinism control.")
+    ap.add_argument(
+        "--seed-offsets",
+        type=str,
+        default="number:100,noun:200",
+        help="Condition seed offsets, e.g. 'number:100,noun:200' (prevents seed coupling).",
+    )
     args = ap.parse_args()
 
     reps = 2 if args.stage_a else args.reps
@@ -117,6 +124,24 @@ def main() -> None:
     for c in conditions:
         if c not in ("noun", "number"):
             _die(f"unsupported condition: {c} (only noun,number scaffolded)")
+
+    seed_offsets = dict(SEED_OFFSETS_DEFAULT)
+    if args.seed_offsets.strip():
+        for part in args.seed_offsets.split(","):
+            part = part.strip()
+            if not part:
+                continue
+            if ":" not in part:
+                _die(f"bad --seed-offsets part: {part}")
+            k, v = part.split(":", 1)
+            k = k.strip()
+            v = v.strip()
+            if k not in ("noun", "number"):
+                _die(f"bad --seed-offsets key: {k}")
+            try:
+                seed_offsets[k] = int(v)
+            except ValueError:
+                _die(f"bad --seed-offsets value for {k}: {v}")
 
     targets = _load_targets()
     primes_by_condition = _load_primes()
@@ -138,7 +163,8 @@ def main() -> None:
                     prime_id = prime_ids_by_condition[cond][rep - 1]
                     prime_text = primes_by_condition[cond][prime_id].strip()
                     full_text = f"{prime_text} {target.text}".strip()
-                    seed = str(args.seed_base + rep)
+                    # Prevent seed coupling between paired conditions by adding a condition-specific offset.
+                    seed = str(args.seed_base + seed_offsets.get(cond, 0) + rep)
                     sample_id = f"{model}_{cond}_{target.id}_r{rep:02d}"
                     out_rel = f"outputs/{model}/{sample_id}.wav"
                     rows.append(
@@ -181,4 +207,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

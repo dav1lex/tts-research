@@ -45,6 +45,8 @@ Repetitions:
 
 - `N_REPS = 10` paired repetitions per (model, condition, target).
 - Pairing is by `repetition` index: for each `target_id` and `rep`, generate both noun and number conditions.
+- **Seed independence requirement:** noun vs number generations must not share the same PRNG seed. Use condition-specific
+  seed offsets so paired runs are comparable but not artificially correlated (seed coupling can mask or flip effects).
 
 Total sample size (main study):
 
@@ -122,4 +124,3 @@ Before including Kokoro in Stage A:
 
 - All generations come from `manifest.csv`.
 - No ad hoc runs are allowed in the analysis folder.
-
