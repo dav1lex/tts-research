@@ -1,11 +1,15 @@
 {
-  "total_rows": 39,
-  "passed_rows": 39,
+  "total_rows": 119,
+  "passed_rows": 119,
   "failed_rows": 0,
   "fail_details": [],
   "n_counts": {
+    "kokoro_noun": 20,
+    "kokoro_number": 20,
     "chatterbox_noun": 20,
-    "chatterbox_number": 19
+    "chatterbox_number": 19,
+    "xtts_noun": 20,
+    "xtts_number": 20
   },
   "summary": {
     "chatterbox_noun": {
@@ -16,6 +20,26 @@
     "chatterbox_number": {
       "viable": 19,
       "total": 19,
+      "passed": true
+    },
+    "kokoro_noun": {
+      "viable": 20,
+      "total": 20,
+      "passed": true
+    },
+    "kokoro_number": {
+      "viable": 20,
+      "total": 20,
+      "passed": true
+    },
+    "xtts_noun": {
+      "viable": 20,
+      "total": 20,
+      "passed": true
+    },
+    "xtts_number": {
+      "viable": 20,
+      "total": 20,
       "passed": true
     }
   },

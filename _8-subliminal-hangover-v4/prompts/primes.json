@@ -1,20 +1,30 @@
 {
   "version": "v4",
-  "notes": "14 items each. Digit strings for numbers. Shuffled variants p01-p05.",
+  "notes": "14 items each. Digit strings for numbers. Variants p01-p10 (required for reps=10). Noun lists avoid emotionally loaded words.",
   "conditions": ["noun", "number"],
   "prime_item_count": 14,
   "noun_primes": {
     "p01": "Apple, bridge, window, carpet, ladder, pencil, bottle, hammer, candle, mirror, basket, pillow, river, curtain.",
-    "p02": "Tunnel, feather, blanket, anchor, marble, bucket, forest, lantern, pocket, saddle, copper, barrel, cinder, tablet.",
-    "p03": "Gravel, helmet, socket, ribbon, plaster, kettle, canvas, spindle, mortar, cradle, funnel, timber, pebble, hinge.",
-    "p04": "Beacon, shovel, pulley, locket, parcel, casket, needle, trellis, cobble, flicker, sponge, girder, mantle, wedge.",
-    "p05": "Bracket, nozzle, tarpot, wicket, dowel, cotter, plunger, socket, rafter, mallet, awning, ferrule, spigot, latch."
+    "p02": "Table, garden, bucket, lantern, jacket, notebook, suitcase, teacup, doorway, sidewalk, bookshelf, postcard, flashlight, coaster.",
+    "p03": "Stone, folder, kettle, toolbox, hallway, picture, calendar, keyboard, backpack, doormat, radiator, handrail, clipboard, cupboard.",
+    "p04": "Button, paperclip, shoelace, umbrella, doorknob, potholder, stapler, marker, envelope, bookmark, shoebox, keyring, mug, towel.",
+    "p05": "Bracket, nozzle, dowel, pulley, hinge, socket, gasket, washer, clamp, fastener, rivet, handle, spool, latch.",
+    "p06": "Bottlecap, stopwatch, headphone, charger, adapter, cable, monitor, mousepad, notepad, ruler, eraser, sharpener, binder, folder.",
+    "p07": "Pinecone, seashell, pebbles, sidewalk, mailbox, fencepost, flagpole, rooftop, driveway, sidewalk, storefront, lamppost, busstop, crosswalk.",
+    "p08": "Grapes, oranges, bananas, crackers, cereal, yogurt, spinach, carrots, tomatoes, onions, peppers, lemons, cookies, sandwich.",
+    "p09": "Screwdriver, wrench, pliers, drillbit, tape, level, bracket, clamp, hose, valve, gasket, bolt, nut, washer.",
+    "p10": "Curtain, pillowcase, bedsheet, blanket, towel, napkin, placemat, doormat, rug, coaster, cushion, cover, mat, liner."
   },
   "number_primes": {
     "p01": "847, 23, 5091, 312, 74, 6208, 19, 445, 1337, 88, 702, 56, 9143, 27.",
     "p02": "391, 5802, 47, 614, 2903, 71, 488, 13, 5560, 239, 84, 7421, 36, 905.",
     "p03": "502, 67, 3841, 19, 724, 4406, 88, 253, 6019, 41, 876, 32, 5503, 197.",
     "p04": "714, 3928, 55, 841, 206, 4773, 93, 512, 37, 6640, 128, 84, 2951, 66.",
-    "p05": "263, 5017, 42, 889, 304, 7152, 61, 430, 18, 5594, 247, 73, 3806, 91."
+    "p05": "263, 5017, 42, 889, 304, 7152, 61, 430, 18, 5594, 247, 73, 3806, 91.",
+    "p06": "104, 9055, 28, 771, 63, 2409, 512, 77, 330, 6091, 14, 8888, 205, 39.",
+    "p07": "908, 17, 4500, 222, 61, 7007, 93, 318, 540, 86, 1024, 49, 6103, 75.",
+    "p08": "611, 3902, 44, 806, 27, 501, 7104, 19, 260, 77, 4321, 58, 900, 13.",
+    "p09": "812, 66, 2718, 5012, 33, 740, 95, 120, 608, 47, 9090, 21, 305, 888.",
+    "p10": "404, 73, 9901, 116, 52, 208, 700, 389, 65, 5120, 29, 840, 1777, 91."
   }
 }

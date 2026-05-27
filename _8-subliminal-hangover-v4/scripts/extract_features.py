@@ -169,6 +169,11 @@ def main() -> int:
         default="",
         help="Optional model filter (e.g. chatterbox, kokoro, xtts). Comma-separated allowed.",
     )
+    ap.add_argument(
+        "--reset",
+        action="store_true",
+        help="Reset outputs (features/features.csv and results/alignment_log.json) before writing.",
+    )
     args = ap.parse_args()
 
     if not MANIFEST_CSV.exists():
@@ -196,11 +201,36 @@ def main() -> int:
     FEATURES_DIR.mkdir(parents=True, exist_ok=True)
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
+    if args.reset:
+        if FEATURES_CSV.exists():
+            FEATURES_CSV.unlink()
+        if ALIGN_LOG.exists():
+            ALIGN_LOG.unlink()
+
+    # If appending to an existing file, avoid duplicates by id.
+    existing_ids: set[str] = set()
+    if FEATURES_CSV.exists():
+        with FEATURES_CSV.open("r", newline="", encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                if r.get("id"):
+                    existing_ids.add(r["id"])
+
+    existing_logs = []
+    if ALIGN_LOG.exists():
+        try:
+            existing_logs = json.loads(ALIGN_LOG.read_text(encoding="utf-8"))
+            if not isinstance(existing_logs, list):
+                existing_logs = []
+        except Exception:
+            existing_logs = []
+
     feats_rows = []
     logs = []
 
     for r in rows:
         sample_id = r["id"]
+        if sample_id in existing_ids:
+            continue
         model = r.get("model", "")
         cond = r.get("condition", "")
         target_id = r.get("target_id", "")
@@ -266,7 +296,7 @@ def main() -> int:
         )
         feats_rows.append(feat)
 
-    # Write features
+    # Write features (append if file exists)
     fieldnames = [
         "id",
         "model",
@@ -281,17 +311,20 @@ def main() -> int:
         "speaking_rate",
         "target_duration_s",
     ]
-    with FEATURES_CSV.open("w", newline="", encoding="utf-8") as f:
+    write_header = not FEATURES_CSV.exists()
+    with FEATURES_CSV.open("a", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fieldnames)
-        w.writeheader()
+        if write_header:
+            w.writeheader()
         w.writerows(feats_rows)
 
-    ALIGN_LOG.write_text(json.dumps(logs, indent=2), encoding="utf-8")
-    print(f"Saved {len(feats_rows)} rows to {FEATURES_CSV}")
-    print(f"Alignment log saved to {ALIGN_LOG}")
+    all_logs = existing_logs + logs
+    ALIGN_LOG.write_text(json.dumps(all_logs, indent=2), encoding="utf-8")
+    print(f"Saved {len(feats_rows)} new rows to {FEATURES_CSV}")
+    print(f"Alignment log saved to {ALIGN_LOG} (+{len(logs)} entries)")
 
-    ok = sum(1 for l in logs if l.get("status") == "ok")
-    bad = sum(1 for l in logs if l.get("status") == "error")
+    ok = sum(1 for l in all_logs if l.get("status") == "ok")
+    bad = sum(1 for l in all_logs if l.get("status") == "error")
     print(f"Alignment: {ok} OK, {bad} failed")
     return 0
 
