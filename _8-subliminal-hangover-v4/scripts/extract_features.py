@@ -158,6 +158,10 @@ def _features(y_seg: np.ndarray, sr: int, syllables: int) -> dict[str, float]:
 
 
 def main() -> int:
+    if DEVICE != "cuda":
+        print("ERROR: CUDA is required for WhisperX alignment in this workflow. Refusing to run on CPU.", file=sys.stderr)
+        return 2
+
     if not MANIFEST_CSV.exists():
         print(f"ERROR: missing {MANIFEST_CSV}", file=sys.stderr)
         return 2

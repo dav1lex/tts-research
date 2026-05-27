@@ -31,6 +31,10 @@ def main() -> int:
     os.environ.setdefault("HF_HUB_OFFLINE", "1")
     os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 
+    if not torch.cuda.is_available():
+        print("ERROR: CUDA is required (torch.cuda.is_available() is False). Refusing to run on CPU.", file=sys.stderr)
+        return 2
+
     if not MANIFEST_CSV.exists():
         print(f"ERROR: missing {MANIFEST_CSV}", file=sys.stderr)
         return 2

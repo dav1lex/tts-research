@@ -120,6 +120,9 @@ def main() -> None:
     ap.add_argument("--online", action="store_true", help="Allow network access (disable HF offline mode).")
     args = ap.parse_args()
 
+    if not torch.cuda.is_available():
+        _die("CUDA is required (torch.cuda.is_available() is False). Refusing to run on CPU.")
+
     if args.reps <= 1:
         _die("--reps must be >= 2")
 
