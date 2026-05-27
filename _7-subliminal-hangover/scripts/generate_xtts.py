@@ -33,46 +33,42 @@ def main():
     target = texts["target"]
     control_prime = texts["control_prime"]
     subliminal_primes = texts["subliminal_primes"]
+    noun_primes = texts["noun_primes"]
 
-    # Condition A: Control
-    for run in range(1, texts["n_reps"] + 1):
-        out_path = OUT_DIR / f"xtts_control_run{run}.wav"
-        if out_path.exists():
-            print(f"SKIP {out_path.name} (exists)")
-            continue
+    # Mapping condition name -> (prime_source, seed_offset)
+    conditions = {
+        "control":    (control_prime, 0),
+        "subliminal": (subliminal_primes, 100),
+        "noun":       (noun_primes, 200),
+    }
 
-        full_text = f"{control_prime} {target}"
-        torch.manual_seed(SEED + run)
-        print(f"[control run{run}] {full_text[:60]}...")
-        tts.tts_to_file(
-            text=full_text,
-            speaker_wav=str(REF_AUDIO),
-            language="en",
-            file_path=str(out_path),
-        )
+    for cond_name, (prime_source, seed_off) in conditions.items():
+        for run in range(1, texts["n_reps"] + 1):
+            out_path = OUT_DIR / f"xtts_{cond_name}_run{run}.wav"
+            if out_path.exists():
+                print(f"SKIP {out_path.name} (exists)")
+                continue
 
-    # Condition B: Subliminal
-    for run in range(1, texts["n_reps"] + 1):
-        out_path = OUT_DIR / f"xtts_subliminal_run{run}.wav"
-        if out_path.exists():
-            print(f"SKIP {out_path.name} (exists)")
-            continue
+            if cond_name == "control":
+                prime_text = prime_source
+            else:
+                prime_text = prime_source[f"run{run}"]
 
-        prime = subliminal_primes[f"run{run}"]
-        full_text = f"{prime} {target}"
-        torch.manual_seed(SEED + run + 100)
-        print(f"[subliminal run{run}] {full_text[:60]}...")
-        tts.tts_to_file(
-            text=full_text,
-            speaker_wav=str(REF_AUDIO),
-            language="en",
-            file_path=str(out_path),
-        )
+            full_text = f"{prime_text} {target}"
+            torch.manual_seed(SEED + seed_off + run)
+            print(f"[{cond_name} run{run}] {full_text[:60]}...")
+            tts.tts_to_file(
+                text=full_text,
+                speaker_wav=str(REF_AUDIO),
+                language="en",
+                file_path=str(out_path),
+            )
 
     if device == "cuda":
         torch.cuda.empty_cache()
 
-    print(f"Done. 10 files in {OUT_DIR}")
+    n_total = len(conditions) * texts["n_reps"]
+    print(f"Done. {n_total} files in {OUT_DIR}")
     return 0
 
 

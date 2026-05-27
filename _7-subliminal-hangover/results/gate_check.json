@@ -1,18 +1,26 @@
 {
-  "total_rows": 30,
-  "passed_rows": 30,
+  "total_rows": 44,
+  "passed_rows": 44,
   "failed_rows": 0,
   "fail_details": [],
   "n_counts": {
-    "chatterbox_control": 5,
+    "chatterbox_control": 4,
     "chatterbox_subliminal": 5,
+    "chatterbox_noun": 5,
     "xtts_control": 5,
     "xtts_subliminal": 5,
+    "xtts_noun": 5,
     "kokoro_control": 5,
-    "kokoro_subliminal": 5
+    "kokoro_subliminal": 5,
+    "kokoro_noun": 5
   },
   "summary": {
     "chatterbox_control": {
+      "viable": 4,
+      "total": 4,
+      "passed": true
+    },
+    "chatterbox_noun": {
       "viable": 5,
       "total": 5,
       "passed": true
@@ -27,12 +35,22 @@
       "total": 5,
       "passed": true
     },
+    "kokoro_noun": {
+      "viable": 5,
+      "total": 5,
+      "passed": true
+    },
     "kokoro_subliminal": {
       "viable": 5,
       "total": 5,
       "passed": true
     },
     "xtts_control": {
+      "viable": 5,
+      "total": 5,
+      "passed": true
+    },
+    "xtts_noun": {
       "viable": 5,
       "total": 5,
       "passed": true
@@ -47,6 +65,8 @@
   "thresholds": {
     "min_voiced_f0": 50.0,
     "max_sane_f0": 500.0,
-    "min_target_duration_s": 0.5
+    "min_speaking_rate": 1.0,
+    "max_speaking_rate": 15.0,
+    "min_target_duration_s": 0.3
   }
 }

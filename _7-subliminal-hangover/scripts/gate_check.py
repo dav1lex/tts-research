@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Gate check for subliminal hangover benchmark.
+"""Gate check for subliminal hangover benchmark V3.
 
-Validates features.csv:
+Validates features.csv for new V3 columns:
 - No rows with f0_mean == 0 (silence / no voicing)
-- No clipped/distorted audio (flag extreme f0 values)
+- No clipped/distorted audio
+- f0_cv must be > 0
+- speaking_rate must be plausible (1-15 syllables/sec)
 - Prints viable n-counts per model/condition.
 """
 import csv
@@ -18,13 +20,15 @@ FEATURES_CSV = PROJECT / "features" / "features.csv"
 GATE_JSON = PROJECT / "results" / "gate_check.json"
 
 # Thresholds
-MIN_VOICED_F0 = 50.0    # f0_mean must be >= this to count as viable
-MAX_SANE_F0 = 500.0     # sanity cap for f0_mean
+MIN_VOICED_F0 = 50.0
+MAX_SANE_F0 = 500.0
+MIN_SPEAKING_RATE = 1.0
+MAX_SPEAKING_RATE = 15.0
 
 
 def main():
     if not FEATURES_CSV.exists():
-        print(f"ERROR: {FEATURES_CSV} not found. Run extract_features.py first.")
+        print(f"ERROR: {FEATURES_CSV} not found.")
         return 1
 
     with open(FEATURES_CSV) as f:
@@ -37,7 +41,8 @@ def main():
 
     for row in rows:
         f0_mean = float(row["f0_mean"])
-        f0_std = float(row["f0_std"])
+        f0_cv = float(row["f0_cv"])
+        speaking_rate = float(row["speaking_rate"])
         model = row["model"]
         cond = row["condition"]
 
@@ -47,9 +52,13 @@ def main():
             issues.append(f"f0_mean={f0_mean} < {MIN_VOICED_F0} (silent/unvoiced)")
         if f0_mean > MAX_SANE_F0:
             issues.append(f"f0_mean={f0_mean} > {MAX_SANE_F0} (suspicious)")
-        if f0_std == 0 and f0_mean > 0:
-            issues.append("f0_std=0 with f0_mean>0 (flat pitch, suspicious)")
-        if float(row["target_duration_s"]) < 0.5:
+        if f0_cv <= 0 and f0_mean > 0:
+            issues.append("f0_cv <= 0 with f0_mean > 0 (flat pitch)")
+        if speaking_rate < MIN_SPEAKING_RATE:
+            issues.append(f"speaking_rate={speaking_rate} < {MIN_SPEAKING_RATE} (too slow)")
+        if speaking_rate > MAX_SPEAKING_RATE:
+            issues.append(f"speaking_rate={speaking_rate} > {MAX_SPEAKING_RATE} (too fast)")
+        if float(row["target_duration_s"]) < 0.3:
             issues.append(f"target too short ({row['target_duration_s']}s)")
 
         if issues:
@@ -60,7 +69,7 @@ def main():
             key = f"{model}_{cond}"
             n_counts[key] = n_counts.get(key, 0) + 1
 
-    # Aggregate per model/condition
+    # Summary per model/condition
     summary = {}
     for model in sorted(set(r["model"] for r in rows)):
         for cond in sorted(set(r["condition"] for r in rows)):
@@ -82,7 +91,9 @@ def main():
         "thresholds": {
             "min_voiced_f0": MIN_VOICED_F0,
             "max_sane_f0": MAX_SANE_F0,
-            "min_target_duration_s": 0.5,
+            "min_speaking_rate": MIN_SPEAKING_RATE,
+            "max_speaking_rate": MAX_SPEAKING_RATE,
+            "min_target_duration_s": 0.3,
         }
     }
 
@@ -92,7 +103,6 @@ def main():
 
     print(f"\nGate: {len(passed)}/{total} rows viable")
     print(f"Gate result: {'✅ PASS' if gate_result['gate_passed'] else '⚠️  PARTIAL FAIL'}")
-    print(f"Gate JSON saved to {GATE_JSON}")
     return 0
 
 

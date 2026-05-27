@@ -1,258 +1,584 @@
 {
   "descriptive": {
     "chatterbox": {
-      "f0_std": {
+      "f0_cv": {
         "control": {
+          "n": 4,
+          "mean": 0.258,
+          "std": 0.0273,
+          "se": 0.0137,
+          "min": 0.2242,
+          "max": 0.2884
+        },
+        "noun": {
           "n": 5,
-          "mean": 24.956,
-          "std": 5.1891,
-          "se": 2.3206,
-          "min": 17.5,
-          "max": 29.68
+          "mean": 0.251,
+          "std": 0.1127,
+          "se": 0.0504,
+          "min": 0.1446,
+          "max": 0.4131
         },
         "subliminal": {
           "n": 5,
-          "mean": 18.648,
-          "std": 4.5107,
-          "se": 2.0173,
-          "min": 15.32,
-          "max": 26.38
+          "mean": 0.1524,
+          "std": 0.0968,
+          "se": 0.0433,
+          "min": 0.0697,
+          "max": 0.2603
+        }
+      },
+      "f0_std": {
+        "control": {
+          "n": 4,
+          "mean": 49.38,
+          "std": 5.1783,
+          "se": 2.5891,
+          "min": 42.86,
+          "max": 55.12
+        },
+        "noun": {
+          "n": 5,
+          "mean": 48.918,
+          "std": 23.4173,
+          "se": 10.4725,
+          "min": 26.07,
+          "max": 83.29
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 28.318,
+          "std": 18.028,
+          "se": 8.0623,
+          "min": 12.62,
+          "max": 48.6
         }
       },
       "f0_mean": {
         "control": {
+          "n": 4,
+          "mean": 191.3925,
+          "std": 0.7536,
+          "se": 0.3768,
+          "min": 190.81,
+          "max": 192.5
+        },
+        "noun": {
           "n": 5,
-          "mean": 188.446,
-          "std": 5.8499,
-          "se": 2.6161,
-          "min": 181.29,
-          "max": 194.85
+          "mean": 192.84,
+          "std": 10.5031,
+          "se": 4.6971,
+          "min": 176.89,
+          "max": 202.09
         },
         "subliminal": {
           "n": 5,
-          "mean": 177.306,
-          "std": 4.0464,
-          "se": 1.8096,
-          "min": 173.16,
-          "max": 183.35
+          "mean": 185.656,
+          "std": 4.779,
+          "se": 2.1372,
+          "min": 180.95,
+          "max": 193.13
+        }
+      },
+      "speaking_rate": {
+        "control": {
+          "n": 4,
+          "mean": 5.0475,
+          "std": 0.3641,
+          "se": 0.182,
+          "min": 4.61,
+          "max": 5.44
+        },
+        "noun": {
+          "n": 5,
+          "mean": 5.626,
+          "std": 0.2688,
+          "se": 0.1202,
+          "min": 5.32,
+          "max": 5.87
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 6.428,
+          "std": 0.9309,
+          "se": 0.4163,
+          "min": 5.17,
+          "max": 7.62
         }
       },
       "energy_std": {
         "control": {
+          "n": 4,
+          "mean": 0.0612,
+          "std": 0.0064,
+          "se": 0.0032,
+          "min": 0.0528,
+          "max": 0.0683
+        },
+        "noun": {
           "n": 5,
-          "mean": 0.0592,
-          "std": 0.0053,
-          "se": 0.0024,
-          "min": 0.0544,
-          "max": 0.0674
+          "mean": 0.0617,
+          "std": 0.0064,
+          "se": 0.0029,
+          "min": 0.0503,
+          "max": 0.0657
         },
         "subliminal": {
           "n": 5,
-          "mean": 0.0576,
-          "std": 0.0043,
-          "se": 0.0019,
-          "min": 0.0543,
-          "max": 0.0648
+          "mean": 0.0485,
+          "std": 0.0061,
+          "se": 0.0027,
+          "min": 0.0408,
+          "max": 0.0573
         }
       }
     },
     "kokoro": {
-      "f0_std": {
+      "f0_cv": {
         "control": {
           "n": 5,
-          "mean": 64.082,
-          "std": 2.0977,
-          "se": 0.9381,
-          "min": 60.33,
-          "max": 65.05
+          "mean": 0.2842,
+          "std": 0.0061,
+          "se": 0.0027,
+          "min": 0.2738,
+          "max": 0.2898
+        },
+        "noun": {
+          "n": 5,
+          "mean": 0.2897,
+          "std": 0.0235,
+          "se": 0.0105,
+          "min": 0.265,
+          "max": 0.3169
         },
         "subliminal": {
           "n": 5,
-          "mean": 53.552,
-          "std": 2.7397,
-          "se": 1.2252,
-          "min": 50.15,
-          "max": 57.16
+          "mean": 0.2529,
+          "std": 0.1038,
+          "se": 0.0464,
+          "min": 0.1415,
+          "max": 0.3736
+        }
+      },
+      "f0_std": {
+        "control": {
+          "n": 5,
+          "mean": 56.85,
+          "std": 1.3526,
+          "se": 0.6049,
+          "min": 54.5,
+          "max": 57.99
+        },
+        "noun": {
+          "n": 5,
+          "mean": 60.51,
+          "std": 3.7025,
+          "se": 1.6558,
+          "min": 56.47,
+          "max": 63.88
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 48.492,
+          "std": 17.8704,
+          "se": 7.9919,
+          "min": 29.78,
+          "max": 71.78
         }
       },
       "f0_mean": {
         "control": {
           "n": 5,
-          "mean": 197.336,
-          "std": 1.9367,
-          "se": 0.8661,
-          "min": 196.43,
-          "max": 200.8
+          "mean": 200.044,
+          "std": 0.5737,
+          "se": 0.2566,
+          "min": 199.04,
+          "max": 200.38
+        },
+        "noun": {
+          "n": 5,
+          "mean": 209.166,
+          "std": 5.8675,
+          "se": 2.624,
+          "min": 200.79,
+          "max": 213.49
         },
         "subliminal": {
           "n": 5,
-          "mean": 201.836,
-          "std": 6.3464,
-          "se": 2.8382,
-          "min": 192.04,
-          "max": 207.95
+          "mean": 195.162,
+          "std": 14.3636,
+          "se": 6.4236,
+          "min": 178.29,
+          "max": 210.5
+        }
+      },
+      "speaking_rate": {
+        "control": {
+          "n": 5,
+          "mean": 5.58,
+          "std": 0.0,
+          "se": 0.0,
+          "min": 5.58,
+          "max": 5.58
+        },
+        "noun": {
+          "n": 5,
+          "mean": 5.68,
+          "std": 0.03,
+          "se": 0.0134,
+          "min": 5.65,
+          "max": 5.72
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 7.172,
+          "std": 0.9502,
+          "se": 0.4249,
+          "min": 6.47,
+          "max": 8.73
         }
       },
       "energy_std": {
         "control": {
           "n": 5,
-          "mean": 0.0398,
-          "std": 0.0,
+          "mean": 0.0363,
+          "std": 0.0001,
           "se": 0.0,
-          "min": 0.0397,
-          "max": 0.0398
+          "min": 0.0361,
+          "max": 0.0364
+        },
+        "noun": {
+          "n": 5,
+          "mean": 0.036,
+          "std": 0.0006,
+          "se": 0.0003,
+          "min": 0.0352,
+          "max": 0.0367
         },
         "subliminal": {
           "n": 5,
-          "mean": 0.0401,
-          "std": 0.0015,
-          "se": 0.0007,
-          "min": 0.0381,
-          "max": 0.0414
+          "mean": 0.0388,
+          "std": 0.0046,
+          "se": 0.002,
+          "min": 0.0347,
+          "max": 0.0456
         }
       }
     },
     "xtts": {
-      "f0_std": {
+      "f0_cv": {
         "control": {
           "n": 5,
-          "mean": 63.642,
-          "std": 21.291,
-          "se": 9.5216,
-          "min": 41.8,
-          "max": 94.8
+          "mean": 0.1981,
+          "std": 0.0823,
+          "se": 0.0368,
+          "min": 0.0831,
+          "max": 0.3021
+        },
+        "noun": {
+          "n": 5,
+          "mean": 0.2972,
+          "std": 0.1167,
+          "se": 0.0522,
+          "min": 0.1347,
+          "max": 0.452
         },
         "subliminal": {
           "n": 5,
-          "mean": 51.344,
-          "std": 8.185,
-          "se": 3.6604,
-          "min": 42.83,
-          "max": 63.87
+          "mean": 0.2107,
+          "std": 0.0957,
+          "se": 0.0428,
+          "min": 0.1024,
+          "max": 0.2925
+        }
+      },
+      "f0_std": {
+        "control": {
+          "n": 5,
+          "mean": 38.6,
+          "std": 16.0341,
+          "se": 7.1707,
+          "min": 16.47,
+          "max": 58.14
+        },
+        "noun": {
+          "n": 5,
+          "mean": 58.224,
+          "std": 22.212,
+          "se": 9.9335,
+          "min": 25.85,
+          "max": 86.84
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 42.5,
+          "std": 19.949,
+          "se": 8.9215,
+          "min": 19.71,
+          "max": 58.85
         }
       },
       "f0_mean": {
         "control": {
           "n": 5,
-          "mean": 197.67,
-          "std": 17.6276,
-          "se": 7.8833,
-          "min": 167.07,
-          "max": 208.47
+          "mean": 194.966,
+          "std": 4.9358,
+          "se": 2.2073,
+          "min": 188.01,
+          "max": 200.65
+        },
+        "noun": {
+          "n": 5,
+          "mean": 196.208,
+          "std": 6.1808,
+          "se": 2.7641,
+          "min": 191.78,
+          "max": 205.45
         },
         "subliminal": {
           "n": 5,
-          "mean": 205.078,
-          "std": 7.6511,
-          "se": 3.4217,
-          "min": 191.78,
-          "max": 209.96
+          "mean": 199.958,
+          "std": 5.2797,
+          "se": 2.3611,
+          "min": 192.55,
+          "max": 206.46
+        }
+      },
+      "speaking_rate": {
+        "control": {
+          "n": 5,
+          "mean": 6.08,
+          "std": 0.2954,
+          "se": 0.1321,
+          "min": 5.68,
+          "max": 6.51
+        },
+        "noun": {
+          "n": 5,
+          "mean": 5.476,
+          "std": 0.2805,
+          "se": 0.1254,
+          "min": 5.28,
+          "max": 5.95
+        },
+        "subliminal": {
+          "n": 5,
+          "mean": 7.512,
+          "std": 1.1176,
+          "se": 0.4998,
+          "min": 5.7,
+          "max": 8.73
         }
       },
       "energy_std": {
         "control": {
           "n": 5,
-          "mean": 0.0974,
-          "std": 0.0056,
-          "se": 0.0025,
-          "min": 0.0882,
-          "max": 0.1027
+          "mean": 0.0997,
+          "std": 0.0044,
+          "se": 0.0019,
+          "min": 0.0928,
+          "max": 0.1039
+        },
+        "noun": {
+          "n": 5,
+          "mean": 0.0961,
+          "std": 0.0049,
+          "se": 0.0022,
+          "min": 0.0915,
+          "max": 0.104
         },
         "subliminal": {
           "n": 5,
-          "mean": 0.12,
-          "std": 0.0107,
-          "se": 0.0048,
-          "min": 0.108,
-          "max": 0.1309
+          "mean": 0.104,
+          "std": 0.0139,
+          "se": 0.0062,
+          "min": 0.092,
+          "max": 0.1246
         }
       }
     }
   },
   "paired_tests": {
-    "chatterbox": {
-      "metric": "f0_std",
-      "control_mean": 24.956,
-      "subliminal_mean": 18.648,
-      "mean_difference": 6.308,
-      "mean_difference_pct": 25.28,
-      "control_values": [
-        29.68,
-        25.64,
-        17.5,
-        29.67,
-        22.29
-      ],
-      "subliminal_values": [
-        15.32,
-        18.28,
-        15.57,
-        17.69,
-        26.38
-      ],
-      "wilcoxon_statistic": 13.0,
-      "wilcoxon_p_value": 0.09375,
-      "significance": "not significant",
-      "n_pairs": 5
+    "nouns_vs_subliminal": {
+      "chatterbox": {
+        "condition_a_mean": 0.251,
+        "condition_b_mean": 0.1524,
+        "mean_difference": 0.0985,
+        "mean_difference_pct": 39.27,
+        "condition_a_values": [
+          0.2493,
+          0.1474,
+          0.3004,
+          0.4131,
+          0.1446
+        ],
+        "condition_b_values": [
+          0.0999,
+          0.0771,
+          0.2603,
+          0.2551,
+          0.0697
+        ],
+        "wilcoxon_statistic": 15.0,
+        "wilcoxon_p_value": 0.03125,
+        "significance": "significant",
+        "n_pairs": 5,
+        "test": "wilcoxon signed-rank (greater): f0_cv a > f0_cv b",
+        "speaking_rate_check": {
+          "condition_a_mean": 5.626,
+          "condition_b_mean": 6.428,
+          "wilcoxon_p_value": 0.1875,
+          "significant_difference": false
+        }
+      },
+      "kokoro": {
+        "condition_a_mean": 0.2897,
+        "condition_b_mean": 0.2529,
+        "mean_difference": 0.0369,
+        "mean_difference_pct": 12.72,
+        "condition_a_values": [
+          0.3169,
+          0.2651,
+          0.265,
+          0.3021,
+          0.2995
+        ],
+        "condition_b_values": [
+          0.3524,
+          0.2107,
+          0.3736,
+          0.1415,
+          0.1861
+        ],
+        "wilcoxon_statistic": 11.0,
+        "wilcoxon_p_value": 0.21875,
+        "significance": "not significant",
+        "n_pairs": 5,
+        "test": "wilcoxon signed-rank (greater): f0_cv a > f0_cv b",
+        "speaking_rate_check": {
+          "condition_a_mean": 5.68,
+          "condition_b_mean": 7.172,
+          "wilcoxon_p_value": 0.0625,
+          "significant_difference": false
+        }
+      },
+      "xtts": {
+        "condition_a_mean": 0.2972,
+        "condition_b_mean": 0.2107,
+        "mean_difference": 0.0865,
+        "mean_difference_pct": 29.1,
+        "condition_a_values": [
+          0.452,
+          0.2694,
+          0.2781,
+          0.3519,
+          0.1347
+        ],
+        "condition_b_values": [
+          0.2838,
+          0.1024,
+          0.2642,
+          0.1108,
+          0.2925
+        ],
+        "wilcoxon_statistic": 13.0,
+        "wilcoxon_p_value": 0.09375,
+        "significance": "not significant",
+        "n_pairs": 5,
+        "test": "wilcoxon signed-rank (greater): f0_cv a > f0_cv b",
+        "speaking_rate_check": {
+          "condition_a_mean": 5.476,
+          "condition_b_mean": 7.512,
+          "wilcoxon_p_value": 0.125,
+          "significant_difference": false
+        }
+      }
     },
-    "kokoro": {
-      "metric": "f0_std",
-      "control_mean": 64.082,
-      "subliminal_mean": 53.552,
-      "mean_difference": 10.53,
-      "mean_difference_pct": 16.43,
-      "control_values": [
-        65.05,
-        65.01,
-        64.97,
-        65.05,
-        60.33
-      ],
-      "subliminal_values": [
-        52.01,
-        55.26,
-        53.18,
-        57.16,
-        50.15
-      ],
-      "wilcoxon_statistic": 15.0,
-      "wilcoxon_p_value": 0.03125,
-      "significance": "significant",
-      "n_pairs": 5
-    },
-    "xtts": {
-      "metric": "f0_std",
-      "control_mean": 63.642,
-      "subliminal_mean": 51.344,
-      "mean_difference": 12.298,
-      "mean_difference_pct": 19.32,
-      "control_values": [
-        68.67,
-        41.8,
-        94.8,
-        45.58,
-        67.36
-      ],
-      "subliminal_values": [
-        54.12,
-        49.93,
-        42.83,
-        63.87,
-        45.97
-      ],
-      "wilcoxon_statistic": 11.0,
-      "wilcoxon_p_value": 0.21875,
-      "significance": "not significant",
-      "n_pairs": 5
+    "subliminal_vs_control": {
+      "kokoro": {
+        "condition_a_mean": 0.2529,
+        "condition_b_mean": 0.2842,
+        "mean_difference": -0.0313,
+        "mean_difference_pct": -12.39,
+        "condition_a_values": [
+          0.3524,
+          0.2107,
+          0.3736,
+          0.1415,
+          0.1861
+        ],
+        "condition_b_values": [
+          0.2859,
+          0.2854,
+          0.286,
+          0.2898,
+          0.2738
+        ],
+        "wilcoxon_statistic": 4.0,
+        "wilcoxon_p_value": 0.84375,
+        "significance": "not significant",
+        "n_pairs": 5,
+        "test": "wilcoxon signed-rank (greater): f0_cv a > f0_cv b",
+        "speaking_rate_check": {
+          "condition_a_mean": 7.172,
+          "condition_b_mean": 5.58,
+          "wilcoxon_p_value": 0.0625,
+          "significant_difference": false
+        }
+      },
+      "xtts": {
+        "condition_a_mean": 0.2107,
+        "condition_b_mean": 0.1981,
+        "mean_difference": 0.0126,
+        "mean_difference_pct": 5.98,
+        "condition_a_values": [
+          0.2838,
+          0.1024,
+          0.2642,
+          0.1108,
+          0.2925
+        ],
+        "condition_b_values": [
+          0.0831,
+          0.3021,
+          0.2039,
+          0.2395,
+          0.1621
+        ],
+        "wilcoxon_statistic": 9.0,
+        "wilcoxon_p_value": 0.40625,
+        "significance": "not significant",
+        "n_pairs": 5,
+        "test": "wilcoxon signed-rank (greater): f0_cv a > f0_cv b",
+        "speaking_rate_check": {
+          "condition_a_mean": 7.512,
+          "condition_b_mean": 6.08,
+          "wilcoxon_p_value": 0.0625,
+          "significant_difference": false
+        }
+      }
     }
   },
+  "condition_labels": {
+    "control": "Nature Sentence (short)",
+    "noun": "Nouns (length-matched)",
+    "subliminal": "Numbers (robotic)"
+  },
+  "model_labels": {
+    "chatterbox": "Chatterbox",
+    "xtts": "XTTS-v2",
+    "kokoro": "Kokoro"
+  },
   "analysis_params": {
-    "primary_metric": "f0_std",
-    "test": "wilcoxon signed-rank (one-sided, alternative='greater': control > subliminal)",
+    "primary_metric": "f0_cv (coefficient of variation = f0_std / f0_mean)",
+    "test": "wilcoxon signed-rank (one-sided, alternative='greater': condition_a f0_cv > condition_b f0_cv)",
+    "primary_comparison": "nouns_vs_subliminal \u2014 tests noun f0_cv > number f0_cv (isolates robotic hangover)",
     "metrics_tracked": [
+      "f0_cv",
       "f0_std",
       "f0_mean",
+      "speaking_rate",
       "energy_std"
-    ]
+    ],
+    "speaking_rate_note": "If speaking_rate is flat across conditions but f0_cv drops, the effect is clean"
   }
 }

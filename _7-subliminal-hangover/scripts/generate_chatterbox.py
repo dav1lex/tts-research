@@ -33,56 +33,47 @@ def main():
     target = texts["target"]
     control_prime = texts["control_prime"]
     subliminal_primes = texts["subliminal_primes"]
+    noun_primes = texts["noun_primes"]
 
     from chatterbox.tts import ChatterboxTTS
     model = ChatterboxTTS.from_pretrained(device=device)
 
-    # Condition A: Control
-    for run in range(1, texts["n_reps"] + 1):
-        out_path = OUT_DIR / f"chatterbox_control_run{run}.wav"
-        if out_path.exists():
-            print(f"SKIP {out_path.name} (exists)")
-            continue
+    # Mapping condition name -> (prime_source, seed_offset)
+    conditions = {
+        "control":    (control_prime, 0),
+        "subliminal": (subliminal_primes, 100),
+        "noun":       (noun_primes, 200),
+    }
 
-        full_text = f"{control_prime} {target}"
-        torch.manual_seed(SEED + run)
-        if device == "cuda":
-            torch.cuda.manual_seed(SEED + run)
+    for cond_name, (prime_source, seed_off) in conditions.items():
+        for run in range(1, texts["n_reps"] + 1):
+            out_path = OUT_DIR / f"chatterbox_{cond_name}_run{run}.wav"
+            if out_path.exists():
+                print(f"SKIP {out_path.name} (exists)")
+                continue
 
-        print(f"[control run{run}] {full_text[:60]}...")
-        wav = model.generate(text=full_text, audio_prompt_path=str(REF_AUDIO), exaggeration=0.3)
-        if wav.ndim == 2:
-            wav = wav.squeeze(0)
+            if cond_name == "control":
+                prime_text = prime_source
+            else:
+                prime_text = prime_source[f"run{run}"]
 
-        import soundfile as sf
-        sf.write(str(out_path), wav.cpu().numpy(), 24000)
-        if device == "cuda":
-            torch.cuda.empty_cache()
+            full_text = f"{prime_text} {target}"
+            torch.manual_seed(SEED + seed_off + run)
+            if device == "cuda":
+                torch.cuda.manual_seed(SEED + seed_off + run)
 
-    # Condition B: Subliminal (5 different number sequences)
-    for run in range(1, texts["n_reps"] + 1):
-        out_path = OUT_DIR / f"chatterbox_subliminal_run{run}.wav"
-        if out_path.exists():
-            print(f"SKIP {out_path.name} (exists)")
-            continue
+            print(f"[{cond_name} run{run}] {full_text[:60]}...")
+            wav = model.generate(text=full_text, audio_prompt_path=str(REF_AUDIO), exaggeration=0.3)
+            if wav.ndim == 2:
+                wav = wav.squeeze(0)
 
-        prime = subliminal_primes[f"run{run}"]
-        full_text = f"{prime} {target}"
-        torch.manual_seed(SEED + run + 100)
-        if device == "cuda":
-            torch.cuda.manual_seed(SEED + run + 100)
+            import soundfile as sf
+            sf.write(str(out_path), wav.cpu().numpy(), 24000)
+            if device == "cuda":
+                torch.cuda.empty_cache()
 
-        print(f"[subliminal run{run}] {full_text[:60]}...")
-        wav = model.generate(text=full_text, audio_prompt_path=str(REF_AUDIO), exaggeration=0.3)
-        if wav.ndim == 2:
-            wav = wav.squeeze(0)
-
-        import soundfile as sf
-        sf.write(str(out_path), wav.cpu().numpy(), 24000)
-        if device == "cuda":
-            torch.cuda.empty_cache()
-
-    print(f"Done. 10 files in {OUT_DIR}")
+    n_total = len(conditions) * texts["n_reps"]
+    print(f"Done. {n_total} files in {OUT_DIR}")
     return 0
 
 

@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""Statistical analysis for subliminal hangover benchmark.
+"""Statistical analysis for subliminal hangover benchmark V3.
 
-Loads features.csv, groups by model/condition, computes mean and SE for f0_std,
-and runs a paired test (Wilcoxon signed-rank) comparing control vs subliminal
-per model.
+Primary metric: f0_cv (coefficient of variation of pitch).
+Adds speaking_rate as control metric — if f0_cv drops after numbers
+but speaking_rate is flat, the hangover effect is clean.
+
+Wilcoxon signed-rank tests on f0_cv for:
+  - Subliminal vs Nouns (primary — isolates robotic hangover)
+  - Subliminal vs Control (original comparison)
 """
 import csv
 import json
@@ -20,6 +24,26 @@ PROJECT = SCRIPT_DIR.parent
 FEATURES_CSV = PROJECT / "features" / "features.csv"
 STATS_JSON = PROJECT / "results" / "stats.json"
 
+CONDITION_LABELS = {
+    "control": "Nature Sentence (short)",
+    "noun": "Nouns (length-matched)",
+    "subliminal": "Numbers (robotic)",
+}
+
+MODEL_LABELS = {
+    "chatterbox": "Chatterbox",
+    "xtts": "XTTS-v2",
+    "kokoro": "Kokoro",
+}
+
+# Two primary comparisons
+COMPARISONS = [
+    ("nouns_vs_subliminal", "noun", "subliminal",
+     "Nouns (length-matched) vs Numbers — primary: noun f0_cv > number f0_cv?"),
+    ("subliminal_vs_control", "subliminal", "control",
+     "Numbers vs Nature Sentence (original comparison)"),
+]
+
 
 def load_features() -> list[dict]:
     with open(FEATURES_CSV) as f:
@@ -27,23 +51,75 @@ def load_features() -> list[dict]:
 
 
 def group_by_model_condition(rows: list[dict]):
-    """Group rows by (model, condition) and by (model) for paired testing."""
     groups = defaultdict(list)
     for r in rows:
-        key = (r["model"], r["condition"])
-        groups[key].append(r)
+        groups[(r["model"], r["condition"])].append(r)
     return groups
 
 
 def compute_stats(values: list[float]):
     arr = np.array(values)
     return {
-        "n": len(arr),
+        "n": int(len(arr)),
         "mean": round(float(np.mean(arr)), 4),
         "std": round(float(np.std(arr, ddof=1)), 4) if len(arr) > 1 else 0.0,
         "se": round(float(np.std(arr, ddof=1) / np.sqrt(len(arr))), 4) if len(arr) > 1 else 0.0,
         "min": round(float(np.min(arr)), 4),
         "max": round(float(np.max(arr)), 4),
+    }
+
+
+def run_paired_test(a_rows, b_rows):
+    """Wilcoxon signed-rank, alternative='greater': a > b (higher f0_cv in first condition)."""
+    if len(a_rows) != len(b_rows) or len(a_rows) < 2:
+        return None
+
+    a_vals = np.array([float(r["f0_cv"]) for r in a_rows])
+    b_vals = np.array([float(r["f0_cv"]) for r in b_rows])
+    diff = a_vals - b_vals
+    diff_mean = float(np.mean(diff))
+    diff_pct = float((diff_mean / np.mean(a_vals)) * 100) if np.mean(a_vals) > 0 else 0.0
+
+    try:
+        w_stat, w_p = wilcoxon(a_vals, b_vals, alternative="greater")
+        sig = "significant" if w_p < 0.05 else "not significant"
+    except (ValueError, RuntimeError) as e:
+        w_stat, w_p = None, None
+        sig = f"test failed: {e}"
+
+    return {
+        "condition_a_mean": round(float(np.mean(a_vals)), 4),
+        "condition_b_mean": round(float(np.mean(b_vals)), 4),
+        "mean_difference": round(diff_mean, 4),
+        "mean_difference_pct": round(diff_pct, 2),
+        "condition_a_values": [round(float(v), 4) for v in a_vals],
+        "condition_b_values": [round(float(v), 4) for v in b_vals],
+        "wilcoxon_statistic": float(w_stat) if w_stat is not None else None,
+        "wilcoxon_p_value": round(float(w_p), 6) if w_p is not None else None,
+        "significance": sig,
+        "n_pairs": int(len(a_vals)),
+        "test": "wilcoxon signed-rank (greater): f0_cv a > f0_cv b",
+    }
+
+
+def run_speaking_rate_test(a_rows, b_rows):
+    """Check if speaking rates differ between conditions."""
+    if len(a_rows) != len(b_rows) or len(a_rows) < 2:
+        return None
+
+    a_vals = np.array([float(r["speaking_rate"]) for r in a_rows])
+    b_vals = np.array([float(r["speaking_rate"]) for r in b_rows])
+
+    try:
+        w_stat, w_p = wilcoxon(a_vals, b_vals, alternative="two-sided")
+    except (ValueError, RuntimeError) as e:
+        return {"error": str(e)[:100]}
+
+    return {
+        "condition_a_mean": round(float(np.mean(a_vals)), 4),
+        "condition_b_mean": round(float(np.mean(b_vals)), 4),
+        "wilcoxon_p_value": round(float(w_p), 6),
+        "significant_difference": bool(w_p < 0.05),
     }
 
 
@@ -53,87 +129,78 @@ def main():
         print("ERROR: no feature rows found")
         return 1
 
-    valid_rows = [r for r in rows if float(r["f0_std"]) > 0]
+    valid_rows = [r for r in rows if float(r["f0_cv"]) > 0]
     if len(valid_rows) < len(rows):
-        print(f"WARN: {len(rows) - len(valid_rows)} rows with f0_std=0 excluded")
+        print(f"WARN: excluded {len(rows) - len(valid_rows)} rows with f0_cv <= 0")
 
     groups = group_by_model_condition(valid_rows)
-
-    # Per-model paired data: collect (control_f0_std, subliminal_f0_std) pairs
     models = sorted(set(r["model"] for r in valid_rows))
-    metrics = ["f0_std", "f0_mean", "energy_std"]
+    metrics = ["f0_cv", "f0_std", "f0_mean", "speaking_rate", "energy_std"]
+    all_conditions = sorted(set(r["condition"] for r in valid_rows))
 
-    results = {}
-    paired_results = {}
-
+    # ── Descriptive stats ───────────────────────────────────────────
+    descriptive = {}
     for model in models:
-        model_data = {}
+        descriptive[model] = {}
         for metric in metrics:
-            model_data[metric] = {}
-            for cond in ["control", "subliminal"]:
+            descriptive[model][metric] = {}
+            for cond in all_conditions:
                 cond_rows = groups.get((model, cond), [])
                 vals = [float(r[metric]) for r in cond_rows]
-                model_data[metric][cond] = compute_stats(vals)
+                descriptive[model][metric][cond] = compute_stats(vals)
 
-        results[model] = model_data
+    # ── Paired tests on f0_cv + speaking_rate checks ────────────────
+    paired_results = {}
 
-        # Paired test: align by run number
-        control_rows = sorted(
-            groups.get((model, "control"), []),
-            key=lambda r: int(r["run"])
-        )
-        subliminal_rows = sorted(
-            groups.get((model, "subliminal"), []),
-            key=lambda r: int(r["run"])
-        )
+    for comp_key, cond_a, cond_b, desc in COMPARISONS:
+        print(f"\n{'='*65}")
+        print(f"  {desc}")
+        print(f"{'='*65}")
+        paired_results[comp_key] = {}
 
-        if len(control_rows) == len(subliminal_rows) and len(control_rows) >= 2:
-            c_vals = np.array([float(r["f0_std"]) for r in control_rows])
-            s_vals = np.array([float(r["f0_std"]) for r in subliminal_rows])
+        for model in models:
+            a_rows = sorted(groups.get((model, cond_a), []), key=lambda r: int(r["run"]))
+            b_rows = sorted(groups.get((model, cond_b), []), key=lambda r: int(r["run"]))
 
-            # Paired difference
-            diff = c_vals - s_vals
-            diff_mean = float(np.mean(diff))
-            diff_pct = float((diff_mean / np.mean(c_vals)) * 100) if np.mean(c_vals) > 0 else 0.0
+            # Main test: f0_cv
+            result = run_paired_test(a_rows, b_rows)
+            if result is None:
+                print(f"  {model}: insufficient pairs")
+                continue
 
-            # Wilcoxon signed-rank test
-            try:
-                w_stat, w_p = wilcoxon(c_vals, s_vals, alternative="greater")
-                sig = "significant" if w_p < 0.05 else "not significant"
-            except (ValueError, RuntimeError) as e:
-                w_stat, w_p = None, None
-                sig = f"test failed: {e}"
+            # Speaking rate sanity check
+            sr_result = run_speaking_rate_test(a_rows, b_rows)
 
-            paired_results[model] = {
-                "metric": "f0_std",
-                "control_mean": round(float(np.mean(c_vals)), 4),
-                "subliminal_mean": round(float(np.mean(s_vals)), 4),
-                "mean_difference": round(diff_mean, 4),
-                "mean_difference_pct": round(diff_pct, 2),
-                "control_values": [round(float(v), 4) for v in c_vals],
-                "subliminal_values": [round(float(v), 4) for v in s_vals],
-                "wilcoxon_statistic": float(w_stat) if w_stat is not None else None,
-                "wilcoxon_p_value": round(float(w_p), 6) if w_p is not None else None,
-                "significance": sig,
-                "n_pairs": len(c_vals),
-            }
+            result["speaking_rate_check"] = sr_result
+            paired_results[comp_key][model] = result
 
-            print(f"\n--- {model} ---")
-            print(f"  Control f0_std:    {paired_results[model]['control_mean']:.2f} ± ...")
-            print(f"  Subliminal f0_std: {paired_results[model]['subliminal_mean']:.2f} ± ...")
-            print(f"  Difference:        {paired_results[model]['mean_difference']:+.2f} Hz ({paired_results[model]['mean_difference_pct']:+.1f}%)")
-            print(f"  Wilcoxon:          W={w_stat}, p={w_p:.4f} ({sig})")
-        else:
-            print(f"\n--- {model} ---")
-            print(f"  WARN: mismatched or insufficient pairs (control={len(control_rows)}, subliminal={len(subliminal_rows)})")
+            a_label = CONDITION_LABELS.get(cond_a, cond_a)
+            b_label = CONDITION_LABELS.get(cond_b, cond_b)
+            sig = result["significance"]
+            sr_note = ""
+            if sr_result and not sr_result.get("error"):
+                if sr_result.get("significant_difference"):
+                    sr_note = f" ⚠️ speaking_rate DIFFERS (p={sr_result['wilcoxon_p_value']:.4f})"
+                else:
+                    sr_note = f" ✓ speaking_rate stable (p={sr_result['wilcoxon_p_value']:.4f})"
+
+            print(f"\n  --- {model} ---")
+            print(f"  {a_label} f0_cv: {result['condition_a_mean']:.4f}")
+            print(f"  {b_label} f0_cv: {result['condition_b_mean']:.4f}")
+            print(f"  Diff: {result['mean_difference']:+.4f} ({result['mean_difference_pct']:+.1f}%)")
+            print(f"  Wilcoxon: W={result['wilcoxon_statistic']}, p={result['wilcoxon_p_value']:.4f} ({sig}){sr_note}")
 
     stats_out = {
-        "descriptive": results,
+        "descriptive": descriptive,
         "paired_tests": paired_results,
+        "condition_labels": CONDITION_LABELS,
+        "model_labels": MODEL_LABELS,
         "analysis_params": {
-            "primary_metric": "f0_std",
-            "test": "wilcoxon signed-rank (one-sided, alternative='greater': control > subliminal)",
+            "primary_metric": "f0_cv (coefficient of variation = f0_std / f0_mean)",
+            "test": "wilcoxon signed-rank (one-sided, alternative='greater': condition_a f0_cv > condition_b f0_cv)",
+            "primary_comparison": "nouns_vs_subliminal — tests noun f0_cv > number f0_cv (isolates robotic hangover)",
             "metrics_tracked": metrics,
+            "speaking_rate_note": "If speaking_rate is flat across conditions but f0_cv drops, the effect is clean",
         }
     }
 

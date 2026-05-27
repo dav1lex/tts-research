@@ -1,0 +1,405 @@
+[
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_control_run1.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 3.461,
+    "end_sec": 7.365,
+    "duration_sec": 3.904
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_control_run2.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 4.617,
+    "end_sec": 8.284,
+    "duration_sec": 3.667
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_control_run3.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 4.045,
+    "end_sec": 7.356,
+    "duration_sec": 3.311
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_control_run4.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 4.276,
+    "end_sec": 7.718,
+    "duration_sec": 3.442
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_control_run5.wav",
+    "status": "error",
+    "method": "whisperx",
+    "words_found": 20,
+    "error": "could not find target word timestamps"
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_subliminal_run1.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 10,
+    "start_sec": 2.395,
+    "end_sec": 4.997,
+    "duration_sec": 2.602
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_subliminal_run2.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 22,
+    "start_sec": 2.294,
+    "end_sec": 4.656,
+    "duration_sec": 2.362
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_subliminal_run3.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 39,
+    "start_sec": 4.702,
+    "end_sec": 8.185,
+    "duration_sec": 3.483
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_subliminal_run4.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 10,
+    "start_sec": 1.773,
+    "end_sec": 4.556,
+    "duration_sec": 2.783
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_subliminal_run5.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 10,
+    "start_sec": 2.775,
+    "end_sec": 5.797,
+    "duration_sec": 3.022
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_noun_run1.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 6.503,
+    "end_sec": 9.63,
+    "duration_sec": 3.127
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_noun_run2.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 6.988,
+    "end_sec": 10.055,
+    "duration_sec": 3.067
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_noun_run3.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 8.944,
+    "end_sec": 12.31,
+    "duration_sec": 3.366
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_noun_run4.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 6.837,
+    "end_sec": 10.222,
+    "duration_sec": 3.385
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/chatterbox/chatterbox_noun_run5.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 8.026,
+    "end_sec": 11.112,
+    "duration_sec": 3.086
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_control_run1.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 3.759,
+    "end_sec": 6.524,
+    "duration_sec": 2.765
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_control_run2.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 4.843,
+    "end_sec": 8.011,
+    "duration_sec": 3.168
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_control_run3.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 3.688,
+    "end_sec": 6.641,
+    "duration_sec": 2.953
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_control_run4.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 3.862,
+    "end_sec": 6.851,
+    "duration_sec": 2.989
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_control_run5.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 3.692,
+    "end_sec": 6.649,
+    "duration_sec": 2.957
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_subliminal_run1.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 2.093,
+    "end_sec": 4.496,
+    "duration_sec": 2.403
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_subliminal_run2.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 2.512,
+    "end_sec": 5.672,
+    "duration_sec": 3.16
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_subliminal_run3.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 2.793,
+    "end_sec": 5.055,
+    "duration_sec": 2.262
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_subliminal_run4.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 21,
+    "start_sec": 3.697,
+    "end_sec": 6.041,
+    "duration_sec": 2.344
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_subliminal_run5.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 22,
+    "start_sec": 2.554,
+    "end_sec": 4.616,
+    "duration_sec": 2.062
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_noun_run1.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 9.128,
+    "end_sec": 12.535,
+    "duration_sec": 3.407
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_noun_run2.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 11.339,
+    "end_sec": 14.362,
+    "duration_sec": 3.023
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_noun_run3.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 9.758,
+    "end_sec": 13.12,
+    "duration_sec": 3.362
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_noun_run4.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 8.643,
+    "end_sec": 12.047,
+    "duration_sec": 3.404
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/xtts/xtts_noun_run5.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 9.442,
+    "end_sec": 12.706,
+    "duration_sec": 3.264
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_control_run1.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 4.818,
+    "end_sec": 8.043,
+    "duration_sec": 3.225
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_control_run2.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 4.818,
+    "end_sec": 8.043,
+    "duration_sec": 3.225
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_control_run3.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 4.818,
+    "end_sec": 8.043,
+    "duration_sec": 3.225
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_control_run4.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 4.818,
+    "end_sec": 8.043,
+    "duration_sec": 3.225
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_control_run5.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 20,
+    "start_sec": 4.818,
+    "end_sec": 8.043,
+    "duration_sec": 3.225
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_subliminal_run1.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 2.632,
+    "end_sec": 5.372,
+    "duration_sec": 2.74
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_subliminal_run2.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 10,
+    "start_sec": 2.373,
+    "end_sec": 5.076,
+    "duration_sec": 2.703
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_subliminal_run3.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 3.074,
+    "end_sec": 5.136,
+    "duration_sec": 2.062
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_subliminal_run4.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 10,
+    "start_sec": 2.033,
+    "end_sec": 4.454,
+    "duration_sec": 2.421
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_subliminal_run5.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 22,
+    "start_sec": 2.953,
+    "end_sec": 5.735,
+    "duration_sec": 2.782
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_noun_run1.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 9.167,
+    "end_sec": 12.352,
+    "duration_sec": 3.185
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_noun_run2.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 8.624,
+    "end_sec": 11.769,
+    "duration_sec": 3.145
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_noun_run3.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 9.095,
+    "end_sec": 12.257,
+    "duration_sec": 3.162
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_noun_run4.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 8.659,
+    "end_sec": 11.822,
+    "duration_sec": 3.163
+  },
+  {
+    "path": "/home/davilex/tts-research/_7-subliminal-hangover/outputs/kokoro/kokoro_noun_run5.wav",
+    "status": "ok",
+    "method": "whisperx_aligned",
+    "words_found": 23,
+    "start_sec": 8.746,
+    "end_sec": 11.931,
+    "duration_sec": 3.185
+  }
+]

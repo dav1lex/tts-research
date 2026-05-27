@@ -1,5 +1,7 @@
 {
-  "target": "I can't believe you just did that! Get away from me right now!",
+  "target": "You absolutely cannot be serious about this ridiculous idea!",
+  "target_syllables": 18,
+  "target_first_word": "You",
   "control_prime": "The sun was shining brightly on the beautiful, warm meadow today.",
   "subliminal_primes": {
     "run1": "847, 912, 55, 104, 3.14, 99, 867, 5309, 42, 1024, 777, 911, 555, 0192.",
@@ -8,7 +10,14 @@
     "run4": "42, 104, 847, 911, 777, 5309, 55, 3.14, 867, 99, 912, 555, 1024, 0192.",
     "run5": "867, 5309, 55, 42, 3.14, 847, 1024, 912, 555, 99, 104, 777, 911, 0192."
   },
+  "noun_primes": {
+    "run1": "Apple, bridge, window, carpet, engine, river, mountain, pencil, ocean, jacket, silver, hammer, blanket, mirror.",
+    "run2": "Table, garden, basket, ladder, ribbon, candle, bucket, pillow, anchor, button, bottle, ticket, letter, pebble.",
+    "run3": "Window, engine, carpet, mountain, silver, blanket, hammer, button, anchor, pillow, candle, ladder, bucket, garden.",
+    "run4": "Bridge, pencil, river, table, basket, ribbon, anchor, button, mirror, jacket, hammer, silver, bottle, ticket.",
+    "run5": "Carpet, ladder, candle, pillow, ribbon, anchor, button, garden, bucket, table, river, pencil, window, pebble."
+  },
   "model_order": ["chatterbox", "xtts", "kokoro"],
-  "conditions": ["control", "subliminal"],
+  "conditions": ["control", "subliminal", "noun"],
   "n_reps": 5
 }
