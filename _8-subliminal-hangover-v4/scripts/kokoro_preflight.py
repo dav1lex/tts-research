@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -116,10 +117,15 @@ def main() -> None:
     ap.add_argument("--reps", type=int, default=5)
     ap.add_argument("--seed-base", type=int, default=4242)
     ap.add_argument("--same-seed", action="store_true", help="Use identical seed for all reps.")
+    ap.add_argument("--online", action="store_true", help="Allow network access (disable HF offline mode).")
     args = ap.parse_args()
 
     if args.reps <= 1:
         _die("--reps must be >= 2")
+
+    if not args.online:
+        os.environ.setdefault("HF_HUB_OFFLINE", "1")
+        os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 
     targets = _load_targets()
     if args.target_id not in targets:
@@ -203,4 +209,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

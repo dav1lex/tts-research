@@ -8,6 +8,7 @@ and writes WAVs to the path in `output_relpath`.
 from __future__ import annotations
 
 import csv
+import os
 import sys
 from pathlib import Path
 
@@ -25,6 +26,11 @@ VOICE = "af_bella"
 
 
 def main() -> int:
+    # Default to offline so we don't accidentally hit the network in normal runs.
+    # If the model isn't cached yet, run kokoro_preflight.py once with network enabled.
+    os.environ.setdefault("HF_HUB_OFFLINE", "1")
+    os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+
     if not MANIFEST_CSV.exists():
         print(f"ERROR: missing {MANIFEST_CSV}", file=sys.stderr)
         return 2
