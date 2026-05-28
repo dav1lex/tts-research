@@ -38,5 +38,15 @@ Tests whether a preceding paragraph changes the prosody of an identical neutral 
 Finding: segmentation QC passed and repetitions are real. Kokoro shows strong prior-context carryover, mostly cold vs any preceding paragraph. Chatterbox and XTTS-v2 show no reliable condition effect at n=5. Evidence for semantic content-specific priming is weak.
 → _6-owl-semantic-priming/
 
+### 7. Subliminal Hangover (Pilot)
+Tests whether a monotone/robotic number prime suppresses pitch variance in a subsequent emotional target sentence — acoustic "hangover" from context window carryover.
+Finding: Chatterbox shows pilot evidence of pitch compression (-39% f0_cv, p=0.031) with stable speaking rate. XTTS-v2 shows strong trend (-29%, p=0.094). Kokoro inconclusive. Two distinct phenotypes: pitch compression vs tempo acceleration.
+→ [_7-subliminal-hangover/](_7-subliminal-hangover/)
+
+### 8. Subliminal Hangover V4 (Preregistered Replication)
+Preregistered, manifest-driven replication of _7. Multi-target, larger-n (N=594). Mixed effects models.
+Finding: Tempo acceleration confirmed across all three architectures (Chatterbox +0.35, Kokoro +1.36, XTTS +0.70). Pitch compression is Kokoro-specific (-0.045 f0_cv, p=2e-08). Chatterbox f0_cv model unreliable (convergence failures).
+→ [_8-subliminal-hangover-v4/](_8-subliminal-hangover-v4/)
+
 ### Related
 - CodeSOTA TTS ELO: https://codesota.com/text-to-speech/elo

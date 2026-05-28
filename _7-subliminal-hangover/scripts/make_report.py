@@ -293,7 +293,7 @@ def primary_result(stats):
                 f"<b>{MODEL_LABELS[model]}</b> shows a <b>significant</b> "
                 f"{diff_pct:.1f}% f0_cv drop after numbers vs nouns "
                 f"(p={w_p:.4f}) with stable speaking rate. "
-                f"<b>Clean hangover confirmed.</b>"
+                f"<b>Worth replicating — pilot evidence.</b>"
             )
         elif diff_pct > 0:
             conclusions.append(
@@ -331,7 +331,7 @@ inertia effect, not time-on-task attention drift.</p>
 
     parts.append(f"""
 <div class="highlight">
-<p><strong>Chatterbox: hangover confirmed.</strong> Numbers suppress f0_cv by 39.3%
+<p><strong>Chatterbox: pilot evidence for hangover effect.</strong> Numbers suppress f0_cv by 39.3%
 vs length-matched nouns (p=0.031). Speaking rate is stable (p=0.19), confirming the
 effect is pitch compression, not tempo change.</p>
 </div>
@@ -478,7 +478,7 @@ target sentence?</b> Yes, in at least one of three tested models.</p>
     <li><b>Chatterbox shows a clean, significant hangover effect</b> — 39% f0_cv drop
     after numbers vs length-matched nouns (p=0.031), with stable speaking rate.
     This survives WhisperX word alignment, f0_cv normalization, and a rigorous
-    length-matched control. <em>Result is publishable as-is.</em></li>
+    length-matched control. <em>Result is worth replicating.</em></li>
 
     <li><b>Two distinct hangover phenotypes emerged:</b>
     <ul>

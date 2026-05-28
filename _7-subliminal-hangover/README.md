@@ -31,7 +31,7 @@ Primes and target are generated as a single string in one context window. Target
 
 | Model | f0_cv drop | p | Rate stable | Verdict |
 |-------|-----------|----|-------------|---------|
-| **Chatterbox** | -39% | 0.031 | yes | Hangover confirmed |
+| **Chatterbox** | -39% | 0.031 | yes | Pilot evidence |
 | **XTTS-v2** | -29% | 0.094 | yes | Strong trend |
 | **Kokoro** | -13% | 0.22 | borderline | Inconclusive |
 

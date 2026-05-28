@@ -5,7 +5,10 @@ This folder is a continuation of `_7-subliminal-hangover`.
 `_7` is the pilot (V3). `_8` is the credibility pass: preregistered, manifest-driven,
 multi-target, larger-n replication.
 
-Status: scaffold only (no audio generated yet).
+Status: Stage B complete. See:
+- [RESULTS.md](RESULTS.md) — Stage B mixed-effects analysis
+- [STORY.md](STORY.md) — full research narrative (_7 → _8)
+- [results/combined_report.pdf](results/combined_report.pdf) — combined _7 + _8 PDF report with figures
 
 ## CUDA Requirement
 
@@ -20,6 +23,10 @@ This V4 workflow is intended to run on GPU only. The `_8` scripts will refuse to
 4. (Optional) Run Kokoro determinism preflight first.
 5. Generate audio from `manifest.csv`.
 6. Align/extract features, then analyze + report.
+
+## Known Limitations
+
+- **Chatterbox f0_cv mixed model**: convergence failures at boundary. f0_cv coefficient for Chatterbox in Stage B is unreliable — treat as null pending re-fit with alternative optimizer or prior.
 
 ## Folder Layout
 
