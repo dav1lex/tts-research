@@ -1,6 +1,6 @@
 # _7 Subliminal Hangover
 
-**Blog post:** [does reading numbers break tts prosody?](https://dav1lex.github.io/blog/subliminal-hangover)
+**Blog post:** [does reading numbers break tts prosody?](https://dav1lex.titancode.pl/blog/subliminal-hangover)
 
 Does a monotone/robotic prime suppress pitch variance in a subsequent emotional target sentence? If TTS context windows carry acoustic prosody forward, a flat number-reading prime should "bleed" into the next sentence, compressing pitch variation.
 

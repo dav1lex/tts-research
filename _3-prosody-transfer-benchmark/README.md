@@ -1,6 +1,6 @@
 # Prosody Transfer Benchmark
 
-**Blog post:** [how well does voice cloning preserve pitch and prosody?](https://dav1lex.github.io/blog/prosody-transfer-benchmark)
+**Blog post:** [how well does voice cloning preserve pitch and prosody?](https://dav1lex.titancode.pl/blog/prosody-transfer-benchmark)
 
 Measure how well voice-cloning TTS models preserve speaker-level prosody (F0 characteristics) from reference audio.
 

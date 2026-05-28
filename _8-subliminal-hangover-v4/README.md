@@ -1,6 +1,6 @@
 # _8 Subliminal Hangover (V4 Preregistered Replication)
 
-**Blog post:** [does reading numbers break tts prosody?](https://dav1lex.github.io/blog/subliminal-hangover)
+**Blog post:** [does reading numbers break tts prosody?](https://dav1lex.titancode.pl/blog/subliminal-hangover)
 
 This folder is a continuation of `_7-subliminal-hangover`.
 

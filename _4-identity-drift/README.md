@@ -1,6 +1,6 @@
 # Identity Drift Benchmark
 
-**Blog post:** [do tts voices drift over 5 minutes of speech?](https://dav1lex.github.io/blog/identity-drift-benchmark)
+**Blog post:** [do tts voices drift over 5 minutes of speech?](https://dav1lex.titancode.pl/blog/identity-drift-benchmark)
 
 **Goal:** Does TTS voice identity drift over 5-minute synthesized monologues compared to a short reference clip?
 

@@ -1,7 +1,7 @@
 
 # Chatterbox Emotion Channel Analysis
 
-**Blog post:** [does emotion control work the same across tts models?](https://dav1lex.github.io/blog/chatterbox-emotion-channel-analysis)
+**Blog post:** [does emotion control work the same across tts models?](https://dav1lex.titancode.pl/blog/chatterbox-emotion-channel-analysis)
 
 Replication of Zonos acoustic channel ablation methodology on Chatterbox TTS.
 

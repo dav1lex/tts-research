@@ -1,6 +1,6 @@
 # Punctuation Sensitivity Probe
 
-**Blog post:** [do tts models actually read punctuation?](https://dav1lex.github.io/blog/punctuation-sensitivity-benchmark)
+**Blog post:** [do tts models actually read punctuation?](https://dav1lex.titancode.pl/blog/punctuation-sensitivity-benchmark)
 
 **Goal:** Do TTS models respect punctuation -- producing different prosody for periods, questions, exclamations, commas, dashes, ellipses, quotation marks, and capitalization?
 
