@@ -1,5 +1,7 @@
 # Breathiness Preservation Benchmark
 
+**Blog post:** [do voice clones keep your voice texture?](https://dav1lex.github.io/blog/breathiness-preservation-benchmark)
+
 **Goal:** Does voice-cloning TTS preserve breathy vs neutral voice quality from reference audio?
 
 **Status:** ✅ Gate passed. Rankings valid. Report + PDF generated.

@@ -1,5 +1,7 @@
 # _6 Owl - Semantic Priming Experiment
 
+**Blog post:** [does prior context leak into tts prosody?](https://dav1lex.github.io/blog/semantic-priming-experiment)
+
 Does pre-pending a semantically charged paragraph (neutral vs owl vs death)
 change the prosody of a subsequent neutral sentence? If TTS transformer
 self-attention carries context across the full input, we should see measurable

@@ -1,5 +1,7 @@
 # _8 Subliminal Hangover (V4 Preregistered Replication)
 
+**Blog post:** [does reading numbers break tts prosody?](https://dav1lex.github.io/blog/subliminal-hangover)
+
 This folder is a continuation of `_7-subliminal-hangover`.
 
 `_7` is the pilot (V3). `_8` is the credibility pass: preregistered, manifest-driven,
